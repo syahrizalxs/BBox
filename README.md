@@ -1,4 +1,4 @@
-# bbox
+# BBox IGEN+
 
 ## Project setup
 ```
