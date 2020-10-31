@@ -13,6 +13,18 @@
 				</div>
 			</div>
 		</div>
+    <div class="row">
+      <div class="col-8 _activity">
+        <div class="input-container">
+          <input type="text" class="text" placeholder="Type here..">
+          <img src="../../assets/icons/email.svg" aria-hidden="true">
+        </div>
+        <button class="_search">Search</button>
+      </div>
+      <div class="col-4 _information">
+        <h4>hihi</h4>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -88,5 +100,52 @@ export default {
 			}
 		}
 	}
+}
+._activity {
+  padding: 10px 30px 10px 30px;
+  
+  .input-container {
+    position: relative;
+    padding:0;
+    margin-top: 10px;
+  
+    input {
+      width: 500px;
+      height: 40px;
+      padding-left: 50px;
+      outline: none;
+      margin: 0;
+
+      border: none;
+      border-radius: 5px;
+      background-color: #eeeeee;
+      box-sizing: border-box;
+      font-size: 12px;
+      letter-spacing: 0.01em;
+    }
+  
+    img {
+      position:absolute;
+      top: 27%;
+      left: 15px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  ._search {
+    width: 60px;
+    height: 40px;
+
+    background: #0077B5;
+    border-radius: 5px;
+    font-size: 12px;
+
+    letter-spacing: 0.04em;
+    color: #ffffff;
+  }
+}
+._information {
+  padding: 10px 30px 10px 30px;
 }
 </style>
