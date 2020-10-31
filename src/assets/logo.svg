@@ -1,1 +1,14 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 87.5 100"><defs><style>.cls-1{fill:#1697f6;}.cls-2{fill:#7bc6ff;}.cls-3{fill:#1867c0;}.cls-4{fill:#aeddff;}</style></defs><title>Artboard 46</title><polyline class="cls-1" points="43.75 0 23.31 0 43.75 48.32"/><polygon class="cls-2" points="43.75 62.5 43.75 100 0 14.58 22.92 14.58 43.75 62.5"/><polyline class="cls-3" points="43.75 0 64.19 0 43.75 48.32"/><polygon class="cls-4" points="64.58 14.58 87.5 14.58 43.75 100 43.75 62.5 64.58 14.58"/></svg>
+<svg width="59" height="60" viewBox="0 0 59 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M58.9221 47.7844L29.4611 35.5349L29.4611 -7.62939e-06L58.9221 12.2495L58.9221 47.7844Z" fill="#C4C4C4"/>
+<path d="M0 47.7844L29.4611 35.5349L29.4611 -7.62939e-06L0 12.2495L0 47.7844Z" fill="#C4C4C4"/>
+<path d="M0 12.2156L29.4611 24.4651V60L0 47.7505V12.2156Z" fill="#4F4F4F"/>
+<path d="M58.9221 12.2156L29.4611 24.4651V60L58.9221 47.7505V12.2156Z" fill="url(#paint0_linear)"/>
+<path d="M33.7896 31.534C33.7896 30.4272 34.6154 29.1761 35.6323 28.7423L52.1302 21.7049C53.6225 21.0683 54.4877 22.5328 53.6203 24.2271L49.6389 32.0043C49.2924 32.6811 48.7322 33.234 48.1362 33.4874L35.6197 38.81C34.6078 39.2403 33.7896 38.6977 33.7896 37.5963V31.534Z" fill="white"/>
+<path d="M33.7896 43.8481C33.7896 42.7292 34.6329 41.4655 35.6608 41.0444L48.0276 35.978C48.5579 35.7607 49.0583 35.8053 49.3998 36.1003L54.1614 40.2126C55.1776 41.0902 54.2993 43.4726 52.7215 44.1187L35.5931 51.1324C34.5917 51.5425 33.7896 50.9978 33.7896 49.9076V43.8481Z" fill="white"/>
+<defs>
+<linearGradient id="paint0_linear" x1="44.1916" y1="12.2156" x2="44.1916" y2="60" gradientUnits="userSpaceOnUse">
+<stop stop-color="#2F80ED"/>
+<stop offset="1" stop-color="#004095"/>
+</linearGradient>
+</defs>
+</svg>
