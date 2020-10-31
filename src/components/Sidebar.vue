@@ -1,6 +1,6 @@
 <template>
 	<nav class="sideNav">
-		<a class="closeBtn"><img src="../assets/sidebar/hamburger.svg" @click.prevent="collapsible()"></a>
+		<a class="closeBtn"><img :src="isCollapsible ? require('../assets/sidebar/times.svg') : require('../assets/sidebar/hamburger.svg')" @click.prevent="collapsible()"></a>
 		<div class="links">
 			<a href="#"><img class="__icon active" src="../assets/sidebar/home.svg"></a>
 			<a href="#"><img class="__icon" src="../assets/sidebar/archive.svg"></a>
@@ -46,8 +46,9 @@ export default {
   transition: 0.5s;
 	justify-content: center;
 	.closeBtn {
+		padding:  8px;
 		position: absolute;
-		text-align: center;
+		margin-left: 16px;
 		width: 100%;
 		top: 0;
 		font-size: 30px;
@@ -58,12 +59,12 @@ export default {
 		flex-direction: column;
 		height: 80%;
 		a {
-			margin: 0 auto;
+			margin-left: 16px;
 			padding: 8px 8px 8px 8px;
 			text-decoration: none;
 			font-size: 25px;
 			color: #ffff;
-			display: block;
+			display: inline-block;
 			transition: 0.3s;
 		}
 	}
@@ -71,13 +72,13 @@ export default {
 		display: flex;
 		flex-direction: column;
 		a {
-			margin: 0 auto;
+			margin-left: 16px;
+			padding: 8px;
 		}
 		.line {
 			width: 24px;
 			height: 1px;
-			margin: 13px 0;
-			align-self: center;
+			margin: 18px 25px;
 			background: #949494;
 		}
 	}
@@ -87,5 +88,6 @@ export default {
 	background-color: #018eda;
 	border-radius: 30%;
 	padding: 6px;
+	margin-left: -6px;
 }
 </style>
