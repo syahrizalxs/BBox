@@ -18,6 +18,9 @@ export default {
 </script>
 
 <style lang="scss">
+  #app {
+    font-family: Helvetica, sans-serif;
+  }
   .pointer {
     cursor: pointer;
   }
