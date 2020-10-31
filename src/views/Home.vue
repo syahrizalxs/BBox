@@ -20,7 +20,7 @@ import Sidebar from '@/components/Sidebar'
 
 <style lang="scss" scoped>
   #home {
-    height: 100%;
+    height: 100vh;
   }
   .main-content {
     margin-left: 75px;
