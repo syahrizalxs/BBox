@@ -36,7 +36,7 @@
 						<img src="../assets/icons/password.svg">
 						<img class="eye" src="../assets/icons/eye.svg" @click="isShownPassword = !isShownPassword">
 					</div>
-					<button>SIGN IN</button>
+					<button @click.prevent="login">SIGN IN</button>
 					<span class="atau">ATAU</span>
 				</div>
 			</div>
@@ -51,7 +51,12 @@ export default {
 		email: '',
 		password: '',
 		isShownPassword: false
-	})
+	}),
+	methods: {
+		login () {
+			this.$router.push('/')
+		}
+	}
 }
 </script>
 

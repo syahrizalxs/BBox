@@ -19,7 +19,7 @@ export default {
 
 <style lang="scss">
   #app {
-    font-family: Helvetica, sans-serif;
+    font-family: Helvetica, sans-serif !important;
   }
   .pointer {
     cursor: pointer;
