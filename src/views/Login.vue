@@ -62,21 +62,21 @@ export default {
 
 <style lang="scss" scoped>
 #login {
-	width: 100%;
-	height: 100%;
+	width: 100vw;
+	height: 100vh;
 	display: flex;
 }
 ._left {
   background-image: url("../assets/banner-login.png");
 	background-size: cover;
-	min-height: 100% !important;
+	min-height: 100vh !important;
 	min-width: 784px;
 	z-index: 1;
 	&:before {
 		content: '';
 		position: absolute;
 		min-width: 784px;
-		height: 100%;
+		height: 100vh;
     top:0;
     left: 0;
     bottom: 0;
@@ -90,7 +90,7 @@ export default {
 		.logo-content {
 			padding: 10px;
 			display: flex;
-			margin-top: 444px !important;
+			margin-top: 334px !important;
 				img {
 					align-items: center;
 					margin-left: 63px;
