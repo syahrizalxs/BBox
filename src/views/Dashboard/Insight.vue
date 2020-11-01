@@ -30,34 +30,20 @@
 			</div>
 		</div>
     <div class="_main-home">
-      <div class="input-container">
-        <input type="text" class="text" placeholder="Type here..">
-        <img src="../../assets/icons/search.svg" aria-hidden="true">
-      </div>
-      <button class="button-search">Search</button>
+			<Search />
     </div>
-    <!-- <div class="row">
-      <div class="col-8 _activity">
-        <div class="input-container">
-          <input type="text" class="text" placeholder="Type here..">
-          <img src="../../assets/icons/email.svg" aria-hidden="true">
-        </div>
-        <button class="_search">Search</button>
-      </div>
-      <div class="col-4 _information">
-        <h4>hihi</h4>
-      </div>
-    </div> -->
   </div>
 </template>
 
 <script>
 import Avatar from '../../components/atoms/Avatar'
+import Search from '../../components/atoms/Search'
 // import VueApexCharts from 'vue-apexcharts'
 export default {
 	name: 'insight',
 	components: {
-		Avatar
+		Avatar,
+		Search
 		// VueApexCharts
 	},
 	data: () => ({
@@ -214,113 +200,6 @@ export default {
   flex-direction: column;
   height: 100%;
   min-width: 606px;
-
-  .input-container {
-    position: relative;
-    margin: 0;
-    padding: 0;
-    left: 32px;
-    top: 23px;
-
-    input {
-      width: 442px;
-      height: 48px;
-      outline: none;
-      padding-left: 56px;
-
-      border: none;
-      border-radius: 5px;
-      background: #F2F2F2;
-      box-sizing: border-box;
-
-      font-family: Helvetica;
-      font-style: normal;
-      font-weight: 500;
-      font-size: 12px;
-      line-height: 16px;
-      /* identical to box height */
-
-      letter-spacing: 0.01em;
-
-      /* Gray 4 */
-      color: #BDBDBD; 
-    }
-
-    img {
-      position: absolute;
-      left: 19px;
-      right: 17px;
-      top: 15px;
-    }
-  }
-  .button-search {
-    position: absolute;
-    width: 92px;
-    height: 48px;
-    margin-left: 482px;
-    top: 23px;
-
-    background: #0077B5;
-    border-radius: 5px;
-    // transform: matrix(-1, 0, 0, 1, 0, 0);
-
-    font-family: Helvetica;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 16px;
-    /* identical to box height */
-
-    letter-spacing: 0.01em;
-
-    color: #FFFFFF;
-  }
+	padding: 32px;
 }
-// ._activity {
-//   padding: 10px 30px 10px 30px;
-  
-//   .input-container {
-//     position: relative;
-//     padding:0;
-//     margin-top: 10px;
-  
-//     input {
-//       width: 500px;
-//       height: 40px;
-//       padding-left: 50px;
-//       outline: none;
-//       margin: 0;
-
-//       border: none;
-//       border-radius: 5px;
-//       background-color: #eeeeee;
-//       box-sizing: border-box;
-//       font-size: 12px;
-//       letter-spacing: 0.01em;
-//     }
-  
-//     img {
-//       position:absolute;
-//       top: 27%;
-//       left: 15px;
-//       width: 20px;
-//       height: 20px;
-//     }
-//   }
-
-//   ._search {
-//     width: 60px;
-//     height: 40px;
-
-//     background: #0077B5;
-//     border-radius: 5px;
-//     font-size: 12px;
-
-//     letter-spacing: 0.04em;
-//     color: #ffffff;
-//   }
-// }
-// ._information {
-//   padding: 10px 30px 10px 30px;
-// }
 </style>
