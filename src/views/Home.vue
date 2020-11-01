@@ -1,5 +1,6 @@
 <template>
   <div id="home">
+    <Loading v-if="isLoading"/>
     <Sidebar />
     <div class="main-content">
       <router-view />
@@ -9,12 +10,17 @@
 
 <script>
 import Sidebar from '@/components/Sidebar'
+import Loading from '@/components/Loading'
   export default {
     name: 'Home',
     components: {
-      Sidebar
+      Sidebar,
+      Loading
     },
-    data: () => ({ drawer: null }),
+    data: () => ({ 
+      drawer: null,
+      isLoading: true
+    }),
   }
 </script>
 
