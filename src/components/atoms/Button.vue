@@ -47,7 +47,6 @@ export default {
       /* identical to box height */
       
       letter-spacing: 0.01em;
-      color: #ffffff;
     }
 
     img {
@@ -56,21 +55,28 @@ export default {
     }
   }
   .primary {
-      background-color: #0077B5;
-    }
+    background-color: #0077B5;
+    color: #ffffff;
+  }
 
   .outline-primary {
     background-color: rgba(0, 119, 181, 0.1);
     border: 1px solid #0077B5;
-    color: #0077B5;
+    color: #0077B5 !important;
+
+    &:hover {
+      background-color: #0076b536;
+    }
   }
 
   .danger {
     background-color: red;
+    color: #ffffff;
   }
 
   .purple {
     background-color: #610085;
+    color: #ffffff;
     &:hover {
       background-color: #620085f5 !important;
     }

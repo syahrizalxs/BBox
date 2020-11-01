@@ -84,6 +84,14 @@ export default {
       width: 100%;
       padding: 26px;
     }
+
+    .modal-footer {
+      width: 100%;
+      padding: 26px;
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+    }
   }
 }
 

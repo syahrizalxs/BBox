@@ -2,7 +2,6 @@
   <div id="home">
     <Loading v-if="isLoading"/>
     <Sidebar />
-    <Modal />
     <div class="main-content">
       <router-view />
     </div>
@@ -12,13 +11,11 @@
 <script>
 import Sidebar from '@/components/Sidebar'
 import Loading from '@/components/Loading'
-import Modal from '@/components/Modal'
   export default {
     name: 'Home',
     components: {
       Sidebar,
-      Loading,
-      Modal
+      Loading
     },
     data: () => ({ 
       drawer: null,

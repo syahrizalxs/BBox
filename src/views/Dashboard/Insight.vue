@@ -91,6 +91,7 @@ export default {
 	height: 100%;
 	left: 72px;
 	top: -1px;
+	padding-top: 27px;
 
 	background-color: #F5F5F5;
 

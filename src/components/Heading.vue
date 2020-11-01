@@ -13,14 +13,15 @@ export default {
 
 <style lang="scss" scoped>
 .heading {
-		margin-top: 24px;
-		.logo {
-			width: 30px;
-		}
-		.text {
-			margin-left: 10px;
-			height: 34px;
-			width: 74px;
-		}
+  display: flex;
+  .logo {
+    width: 30px;
+    height: 30px;
+  }
+  .text {
+    margin-left: 10px;
+    height: 34px;
+    width: 74px;
+  }
 	}
 </style>
