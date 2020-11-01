@@ -1,10 +1,7 @@
 <template>
   <div class="insight">
     <div class="_profile-highlight">
-			<div class="heading">
-				<img class="logo" src="../../assets/logo.svg">
-				<img class="text" src="../../assets/bbox-text.svg">
-			</div>
+			<Heading />
 			<div class="_bio">
 				<Avatar class="avatar" :path="'https://freedesignfile.com/upload/2017/06/HD-picture-Female-face-photo.jpg'" />
 				<div>
@@ -38,12 +35,14 @@
 <script>
 import Avatar from '../../components/atoms/Avatar'
 import Search from '../../components/atoms/Search'
+import Heading from '../../components/Heading'
 // import VueApexCharts from 'vue-apexcharts'
 export default {
 	name: 'insight',
 	components: {
 		Avatar,
-		Search
+		Search,
+		Heading
 		// VueApexCharts
 	},
 	data: () => ({
@@ -70,7 +69,11 @@ export default {
 			data: [30, 40, 45, 50, 49, 60, 70, 91]
 		}]
 	}),
-	methods: {},
+	methods: {
+		test () {
+			console.log('haha')
+		}
+	},
 	created () {}
 }
 </script>
@@ -90,18 +93,6 @@ export default {
 	top: -1px;
 
 	background-color: #F5F5F5;
-
-	.heading {
-		margin-top: 24px;
-		.logo {
-			width: 30px;
-		}
-		.text {
-			margin-left: 10px;
-			height: 34px;
-			width: 74px;
-		}
-	}
 
 	._bio {
 		margin-top: 50px;
@@ -201,6 +192,6 @@ export default {
   flex-direction: column;
   height: 100%;
   min-width: 606px;
-	padding: 32px;
+	padding: 23px 32px;
 }
 </style>
