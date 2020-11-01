@@ -19,7 +19,7 @@ import Loading from '@/components/Loading'
     },
     data: () => ({ 
       drawer: null,
-      isLoading: true
+      isLoading: false
     }),
   }
 </script>
