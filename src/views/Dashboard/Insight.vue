@@ -70,7 +70,8 @@ export default {
 			data: [30, 40, 45, 50, 49, 60, 70, 91]
 		}]
 	}),
-	methods: {}
+	methods: {},
+	created () {}
 }
 </script>
 
