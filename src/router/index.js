@@ -1,3 +1,5 @@
+import storage from '../commons/config/storage.config'
+
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
@@ -31,13 +33,37 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login
+    component: Login,
+    meta: {
+      public: true,
+      onlyWhenLoggedOut: true
+    }
   }
 ]
 
 const router = new VueRouter({
   mode: 'history',
   routes
+})
+
+
+router.beforeEach((to, from, next) => {
+  const isPublic = to.matched.some(record => record.meta.public)
+  const onlyWhenLoggedOut = to.matched.some(record => record.meta.onlyWhenLoggedOut)
+  const loggedIn = !!storage.getToken()
+  
+  if (!isPublic && !loggedIn) {
+    return next({
+      path: '/login',
+      query: { redirect: to.fullPath }
+    })
+  }
+  
+  if (loggedIn && onlyWhenLoggedOut) {
+    return next('/')
+  }
+  
+  next()
 })
 
 export default router

@@ -5,8 +5,8 @@
 			<div class="_bio">
 				<Avatar class="avatar" :path="'https://freedesignfile.com/upload/2017/06/HD-picture-Female-face-photo.jpg'" />
 				<div>
-					<span class="name">Jane Doe</span>
-					<span class="job">UI/UX Designer</span>
+					<span class="name">{{authenticatedUser.fullName}}</span>
+					<span class="job">{{authenticatedUser.jobField}}</span>
 				</div>
 			</div>
 			<div class="_events">
@@ -60,6 +60,9 @@ import Search from '../../components/atoms/Search'
 import Heading from '../../components/Heading'
 import CardActivity from '../../components/CardActivity'
 import Notification from '../../components/Notification'
+
+import { mapGetters } from 'vuex'
+
 // import VueApexCharts from 'vue-apexcharts'
 export default {
 	name: 'insight',
@@ -95,7 +98,8 @@ export default {
 			name: 'series-1',
 			data: [30, 40, 45, 50, 49, 60, 70, 91]
 		}]
-	}),
+  }),
+  computed: mapGetters('auth', ['authenticatedUser']),
 	methods: {
 		test () {
 			console.log('haha')
