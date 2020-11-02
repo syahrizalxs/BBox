@@ -62,7 +62,6 @@
         
         <span class="parent">Status</span>
         <span class="child">Cleared</span>
-      
       </div>
       <div class="_participans">
         <b>Participants</b>
@@ -209,6 +208,7 @@ export default {
     background-color: #F5F5F5;
     ._notification-slot {
       width: 100%;
+      padding-right: 20px;
     }
     ._detail-event {
       margin-top: 70px;
