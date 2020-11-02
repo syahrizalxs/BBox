@@ -18,6 +18,7 @@ export default {
 		height: 37px;
 		border-radius: 50%;
 		background-size: cover;
+		object-fit: cover;
 	}
 }
 </style>
