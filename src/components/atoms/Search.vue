@@ -43,7 +43,7 @@ export default {
       letter-spacing: 0.01em;
 
       /* Gray 4 */
-      color: #BDBDBD; 
+      color: #434343; 
     }
 
     img {

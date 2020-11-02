@@ -5,8 +5,8 @@
 			<div class="_bio">
 				<Avatar class="avatar" :path="'https://freedesignfile.com/upload/2017/06/HD-picture-Female-face-photo.jpg'" />
 				<div>
-					<span class="name">Jane Doe</span>
-					<span class="job">UI/UX Designer</span>
+					<span class="name">{{authenticatedUser.fullName}}</span>
+					<span class="job">{{authenticatedUser.jobField}}</span>
 				</div>
 			</div>
 			<div class="_events">
@@ -27,7 +27,9 @@
 			</div>
 		</div>
     <div class="_main-home">
-			<Search />
+			<div class="_search-container">
+        <Search />
+      </div>
       <div class="_event-activity">
         <div class="_activity-tag">
           <div class="tag-main">
@@ -44,6 +46,11 @@
         </div>
       </div>
     </div>
+    <div class="_right-activity">
+      <div class="_notification-slot">
+        <Notification />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -52,6 +59,10 @@ import Avatar from '../../components/atoms/Avatar'
 import Search from '../../components/atoms/Search'
 import Heading from '../../components/Heading'
 import CardActivity from '../../components/CardActivity'
+import Notification from '../../components/Notification'
+
+import { mapGetters } from 'vuex'
+
 // import VueApexCharts from 'vue-apexcharts'
 export default {
 	name: 'insight',
@@ -59,14 +70,16 @@ export default {
 		Avatar,
 		Search,
 		Heading,
-    CardActivity
+    CardActivity,
+    Notification
 		// VueApexCharts
 	},
 	data: () => ({
 		eventList: [
 			{ status: 'success', title: 'Partnership dengan Brightspace' },
 			{ status: 'pending', title: 'Partnership dengan Google' },
-			{ status: 'pending', title: 'Partnership dengan Facebook' }
+			{ status: 'pending', title: 'Partnership dengan Facebook' },
+			{ status: 'pending', title: 'Partnership dengan Tesla' }
 		],
 		options: {
 			chart: {
@@ -85,7 +98,8 @@ export default {
 			name: 'series-1',
 			data: [30, 40, 45, 50, 49, 60, 70, 91]
 		}]
-	}),
+  }),
+  computed: mapGetters('auth', ['authenticatedUser']),
 	methods: {
 		test () {
 			console.log('haha')
@@ -99,6 +113,7 @@ export default {
 .insight {
 	display: flex;
 	height: 100%;
+  width: 100%;
 }
 ._profile-highlight {
 	padding: 0 32px 0 32px;
@@ -213,6 +228,11 @@ export default {
   height: 100%;
   min-width: 55%;
 	padding: 32px;
+
+  ._search-container {
+    // position: fixed;
+    // min-width: 50% !important;
+  }
 
   ._event-activity {
     margin-top: 40px;
@@ -467,6 +487,17 @@ export default {
         }
       }
     }
+  }
+}
+
+._right-activity {
+  width: 100%;
+  height: 100%;
+  
+  ._notification-slot {
+    width: 100%;
+    margin-top: 25px;
+    padding: 20px;
   }
 }
 </style>
