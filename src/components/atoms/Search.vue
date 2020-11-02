@@ -17,12 +17,13 @@ export default {
 <style lang="scss" scoped>
 .search-container {
   display: flex;
-.input-container {
+  width: 100%;
+  .input-container {
     position: relative;
     padding: 0;
-
+    width: 100%;
     input {
-      width: 442px;
+      width: 100%;
       height: 48px;
       outline: none;
       padding-left: 56px;

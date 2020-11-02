@@ -39,37 +39,8 @@
             <img src="../../assets/icons/chevron-down.svg">
           </div>
         </div>
-        <div class="_card">
-          <div class="_head">
-            <!-- <Avatar class="avatar" style="width:32px; heigh:32px" :path="'https://freedesignfile.com/upload/2017/06/HD-picture-Female-face-photo.jpg'" /> -->
-            <img class="avatar" src="https://freedesignfile.com/upload/2017/06/HD-picture-Female-face-photo.jpg">
-            <div>
-              <span class="activity"><span class="name">Jane Doe </span><span class="doing">uploaded document in </span><span class="partner">Partnership dengan Brightspace</span></span>
-              <span class="date">Sep 27, 2020 at 1:29PM</span>
-            </div>
-            <img class="more" src="../../assets/icons/more.svg">
-          </div>
-          <div class="_main-card">
-            <span class="tittle">Minutes of Meeting dengan Brightspace</span>
-            <span class="desc">Pembahasan dengan Brightspace terkait partnership agreement yang akan direview oleh pihak ICON+.</span>
-          </div>
-          <div class="_box-doc">
-            <div>
-              <img class="icon-file" src="../../assets/icons/word.svg">
-              <span class="nama-file">MoM_Brightspace_200927_ver01_WB.docx</span>
-              <img class="more" src="../../assets/icons/more.svg">
-            </div>
-          </div>
-          <div class="_keterangan">
-            <div class="category">
-              <span>Category</span>
-              <p>Subprocess</p>
-            </div>
-            <div class="expired">
-              <span>Documets Expired</span>
-              <p>Sep 27, 2021</p>
-            </div>
-          </div>
+        <div v-for="(item, index) in eventList" :key="index">
+          <CardActivity style="margin: 15px 0px;" />
         </div>
       </div>
     </div>
@@ -80,13 +51,15 @@
 import Avatar from '../../components/atoms/Avatar'
 import Search from '../../components/atoms/Search'
 import Heading from '../../components/Heading'
+import CardActivity from '../../components/CardActivity'
 // import VueApexCharts from 'vue-apexcharts'
 export default {
 	name: 'insight',
 	components: {
 		Avatar,
 		Search,
-		Heading
+		Heading,
+    CardActivity
 		// VueApexCharts
 	},
 	data: () => ({
@@ -129,10 +102,11 @@ export default {
 }
 ._profile-highlight {
 	padding: 0 32px 0 32px;
+  position:fixed;
 	display: flex;
 	flex-direction: column;
 	min-width: 309px;
-	height: 100%;
+	height: 100vh;
 	left: 72px;
 	top: -1px;
 	padding-top: 27px;
@@ -233,10 +207,11 @@ export default {
 	}
 }
 ._main-home {
+  margin-left: 304px;
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-width: 606px;
+  min-width: 55%;
 	padding: 32px;
 
   ._event-activity {
@@ -297,8 +272,7 @@ export default {
     }
 
     ._card {
-      position: absolute;
-      width: 542px;
+      width: 100%;
       height: 256px;
       padding: 16px 24px 0px 24px;
 
@@ -397,8 +371,7 @@ export default {
       }
 
       ._box-doc {
-        position: absolute;
-        width: 494px;
+        width: 100%;
         height: 48px;
         margin-top: 16px;
 
@@ -440,8 +413,7 @@ export default {
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        margin-top: 80px;
-
+        margin-top: 20px;
         .category {
           display: flex;
           flex-direction: column;
@@ -456,6 +428,7 @@ export default {
             color: #333333;
           }
           p {
+            margin-top: 5px;
             font-family: Helvetica;
             font-style: normal;
             font-weight: 500;
@@ -481,6 +454,7 @@ export default {
             color: #333333;
           }
           p {
+            margin-top: 5px;
             font-family: Helvetica;
             font-style: normal;
             font-weight: 500;
