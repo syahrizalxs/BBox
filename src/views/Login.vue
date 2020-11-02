@@ -1,5 +1,5 @@
 <template>
-  <div id="login">
+  <div id="container">
 		<div class="_left">
 			<div class="content">
 				<div class="logo-content">
@@ -28,15 +28,16 @@
 				<div class="form-input">
 					<span>Sign in to your Account</span>
 					<div class="input-container">
-						<input type="email" class="email" placeholder="Your Email">
+						<input v-model="email" type="email" class="email" placeholder="Your Email">
 						<img src="../assets/icons/email.svg" aria-hidden="true">
 					</div>
 					<div class="input-container" style="margin-top: 24px">
-						<input :type="isShownPassword ? 'text' : 'password'" class="password" placeholder="Your Password">
+						<input v-model="password" :type="isShownPassword ? 'text' : 'password'" class="password" placeholder="Your Password">
 						<img src="../assets/icons/password.svg">
 						<img class="eye" src="../assets/icons/eye.svg" @click="isShownPassword = !isShownPassword">
 					</div>
-					<button @click.prevent="login">SIGN IN</button>
+					<button @click="onLogin()">SIGN IN</button>
+					<span v-if="loginError" class="error-message">{{loginErrorMessage}}</span>
 					<span class="atau">ATAU</span>
 				</div>
 			</div>
@@ -45,26 +46,41 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-	name: 'Login',
+	name: 'SignIn',
 	data: () => ({
 		email: '',
 		password: '',
-		isShownPassword: false
+		isShownPassword: false,
+		loginError: false,
+		loginErrorMessage: ''
 	}),
 	methods: {
-		login () {
-			this.$router.push('/')
+		...mapActions('auth', [
+			'login'
+		]),
+		onLogin () {
+			this.login({ email: this.email, password: this.password, fcm: '' })
+			.then(res => {
+				if (!res.success) {
+					this.loginError = true
+					this.loginErrorMessage = res.message
+				}
+			})
 		}
 	}
 }
 </script>
 
 <style lang="scss" scoped>
-#login {
+#container {
 	width: 100vw;
 	height: 100vh;
 	display: flex;
+	justify-content: center;
+	align-content: center;
 }
 ._left {
   background-image: url("../assets/banner-login.png");
@@ -185,10 +201,12 @@ export default {
 	display: flex;
 	.form {
 		width: 100%;
+		display: flex;
+		justify-content: center;
+		flex-direction: column;
 		.headline {
 			display: flex;
 			justify-content: center;
-			margin-top: 64px;
 			width: 100%;
 		}
 		img {
@@ -207,7 +225,7 @@ export default {
 			left: 940px;
 			top: 182px;
 
-			margin-bottom: 35px;
+			margin-bottom: 10px;
 
 			font-family: Helvetica;
 			font-style: normal;
@@ -262,6 +280,9 @@ export default {
 			background: #0077B5;
 			border-radius: 5px;
 
+			outline: none;
+			border: none;
+
 			font-style: normal;
 			font-weight: bold;
 			font-size: 16px;
@@ -272,9 +293,12 @@ export default {
 			letter-spacing: 0.05em;
 
 			color: #FBFBFB;
+			&:hover {
+				background-color: #0076b5e9;
+			}
 		}
 		.atau {
-			margin-top: 40px;
+			margin-top: 20px;
 			font-weight: 600;
 			font-size: 12px;
 			line-height: 16px;
@@ -288,6 +312,14 @@ export default {
 			color: #333333;
 		}
 	}
+
+}
+.error-message {
+	color: #fa1a1a !important;
+	font-family: Helvetica !important;
+	font-size: 12px !important;
+	letter-spacing: .5px;
+	font-weight: 20;
 }
 
 </style>
