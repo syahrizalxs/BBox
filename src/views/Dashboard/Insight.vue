@@ -28,6 +28,18 @@
 		</div>
     <div class="_main-home">
 			<Search />
+      <div class="_event-activity">
+        <div class="_activity-tag">
+          <div class="tag-main">
+            <span>Event's Activity</span>
+            <p>Track every activity you've made</p>
+          </div>
+          <div class="sort">
+            <span>Latest</span>
+            <img src="../../assets/icons/chevron-down.svg">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -193,6 +205,59 @@ export default {
   flex-direction: column;
   height: 100%;
   min-width: 606px;
-	padding: 23px 32px;
+	padding: 32px;
+
+  ._event-activity {
+    margin-top: 40px;
+    width: 100%;
+
+    ._activity-tag {
+      display: flex;
+      
+      .tag-main {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        span {
+          font-family: Helvetica;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 16px;
+          line-height: 22px;
+          letter-spacing: 0.01em;
+          color: #333333;
+        }
+        p {
+          font-family: Helvetica;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 10px;
+          line-height: 13px;
+          letter-spacing: 0.01em;
+          color: #828282;
+        }
+      }
+      .sort {
+        display: flex;
+        width: 50%;
+        align-items: center;
+        span {
+          margin-left: auto;
+          font-family: Helvetica;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 16px;
+          text-align: right;
+          letter-spacing: 0.01em;
+          color: #0077B5;
+        }
+        img {
+          margin: 0px 12px 0px 12px;
+        }
+      }
+    }
+
+  }
 }
 </style>
