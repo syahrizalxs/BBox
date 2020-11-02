@@ -2,7 +2,7 @@
   <div class="archieve">
     <div class="_left">
       <div class="_left-heading">
-        <Heading />
+        <Heading style="margin-right: 200px" />
         <Search />
       </div>
       <div class="_left-starred">
