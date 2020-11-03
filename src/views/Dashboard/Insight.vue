@@ -50,6 +50,36 @@
       <div class="_notification-slot">
         <Notification />
       </div>
+      <div class="_event-information">
+        <span>Event Information</span>
+        <div class="_card-information">
+          <div class="cleared">
+            <img src="../../assets/icons/success-box.svg">
+            <span class="desc">Event Cleared</span>
+            <span class="total">10</span>
+          </div>
+          <div class="on-progress">
+            <img src="../../assets/icons/pending-box.svg">
+            <span class="desc">Event On Progress</span>
+            <span class="total">121</span>
+          </div>
+          <div class="canceled">
+            <img src="../../assets/icons/cancel-box.svg">
+            <span class="desc">Event Canceled</span>
+            <span class="total">1</span>
+          </div>
+        </div>
+        <div class="_help-care">
+          <span>About</span>
+          <span>Help Center</span>
+          <span>Privacy & Terms</span>
+          <span>More</span>
+        </div>
+      </div>
+      <div class="_powered-by">
+        <img src="../../assets/iconplus-bbox.svg">
+        <span>PT Indonesia Comnets Plus © 2020</span>
+      </div>
     </div>
   </div>
 </template>
@@ -498,6 +528,165 @@ export default {
     width: 100%;
     margin-top: 25px;
     padding: 20px;
+  }
+
+  ._event-information {
+    display: flex;
+    margin-top: 45px;
+    flex-direction: column;
+
+    span {
+      font-family: Helvetica;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 22px;
+      letter-spacing: 0.01em;
+      color: #333333;
+    }
+
+    ._card-information {
+      position: absolute;
+      width: 250px;
+      height: 170px;
+      margin: inherit;
+      background: #FFFFFF;
+      border: 1px solid #D9D9D9;
+      box-sizing: border-box;
+      border-radius: 5px;
+
+      .cleared {
+        display: flex;
+        flex-direction: row;
+        margin: 24px 0px 0px 24px;
+
+        img {
+          margin-right: 16px;
+        }
+
+        .desc {
+          font-family: Helvetica;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 21px;
+          letter-spacing: 0.01em;
+          color: #333333;
+        }
+
+        .total {
+          font-family: Helvetica;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 16px;
+          line-height: 22px;
+          text-align: right;
+          letter-spacing: 0.01em;
+          color: #333333;
+          margin: auto;
+        }
+      }
+
+      .on-progress {
+        display: flex;
+        flex-direction: row;
+        margin: 24px 0px 0px 24px;
+
+        img {
+          margin-right: 16px;
+        }
+
+        .desc {
+          font-family: Helvetica;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 21px;
+          letter-spacing: 0.01em;
+          color: #333333;
+        }
+
+        .total {
+          font-family: Helvetica;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 16px;
+          line-height: 22px;
+          text-align: right;
+          letter-spacing: 0.01em;
+          color: #333333;
+          margin: auto;
+        }
+      }
+
+      .canceled {
+        display: flex;
+        flex-direction: row;
+        margin: 24px 0px 0px 24px;
+
+        img {
+          margin-right: 16px;
+          width: 21px;
+          height: 22px;
+        }
+
+        .desc {
+          font-family: Helvetica;
+          font-style: normal;
+          font-weight: 500;
+          font-size: 16px;
+          line-height: 21px;
+          letter-spacing: 0.01em;
+          color: #333333;
+        }
+
+        .total {
+          font-family: Helvetica;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 16px;
+          line-height: 22px;
+          text-align: right;
+          letter-spacing: 0.01em;
+          color: #333333;
+          margin: auto;
+        }
+      }
+    }
+
+    ._help-care {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 210px;
+
+      span {
+        font-family: Helvetica;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 16px;
+        letter-spacing: 0.01em;
+        color: #333333;
+      }
+    }
+  }
+
+  ._powered-by {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 25px;
+
+    span {
+      font-family: Helvetica;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 16px;
+      letter-spacing: 0.01em;
+      color: #333333;
+      margin-top: 8px;
+    }
   }
 }
 </style>

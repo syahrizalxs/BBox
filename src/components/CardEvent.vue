@@ -7,7 +7,7 @@
     <div class="_right-side">
       <span :class="statusStyle">{{ status }}</span>
       <div class="_dropdown">
-        <img @click="showDropdown()" class="pointer" src="../assets/icons/more.svg">
+        <img class="pointer" src="../assets/icons/more.svg">
         <div class="_dropdown-content">
           <slot name="dropdown"></slot>
         </div>
