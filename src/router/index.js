@@ -7,6 +7,7 @@ import Login from '../views/Login.vue'
 
 import Insight from '../views/Dashboard/Insight.vue'
 import Archieve from '../views/Dashboard/Archieve.vue'
+import DetailArchieve from '../views/Dashboard/DetailArchieve'
 Vue.use(VueRouter)
 
 const routes = [
@@ -28,6 +29,11 @@ const routes = [
         component: Archieve,
         name: 'Archieve'
       },
+      {
+        path: '/archieve/:id',
+        component: DetailArchieve,
+        name: 'Detail Archieve'
+      }
     ]
   },
   {
