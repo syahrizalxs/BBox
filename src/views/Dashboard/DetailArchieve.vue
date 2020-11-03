@@ -3,7 +3,31 @@
     <div class="_left">
       <div class="_left-heading">
         <Heading style="margin-right: 200px" />
-        <Search />
+      </div>
+      <div class="_tittle">
+        <span>Partnership dengan Brightspace</span>
+      </div>
+      <div class="_button">
+        <div class="_btn-left">
+          <button><img src="../../assets/icons/sort.svg"></button>
+        </div>
+        <div class="_btn-right">
+          <Button title="Set Status" style="width: 132px; height: 39px;" type="purple">
+            <template slot="icon">
+              <img src="../../assets/icons/button/edit.svg">
+            </template>
+          </Button>
+          <Button title="Timeline View" style="margin-left: 16px; width: 132px; height: 39px;" type="green">
+            <template slot="icon">
+              <img src="../../assets/icons/eye-white.svg">
+            </template>
+          </Button>
+          <Button title="Add Process" style="margin-left: 16px; width: 132px; height: 39px;" type="primary">
+            <template slot="icon">
+              <img src="../../assets/icons/button/plus-white.svg">
+            </template>
+          </Button>
+        </div>
       </div>
     </div>
     <div class="_right">
@@ -43,12 +67,11 @@
 
 <script>
 import Heading from '../../components/Heading'
-import Search from '../../components/atoms/Search'
 // import Modal from '../../components/Modal'
 import Notification from '../../components/Notification'
 
 // Atoms Components
-// import Button from '../../components/atoms/Button'
+import Button from '../../components/atoms/Button'
 // import CardEvent from '../../components/CardEvent'
 import Avatar from '../../components/atoms/Avatar'
 
@@ -56,8 +79,8 @@ export default {
   name: 'Archieve',
   components: {
     Heading,
-    Search,
-    // Button,
+    // Search,
+    Button,
     // CardEvent,
     // Modal,
     Notification,
@@ -95,6 +118,48 @@ export default {
       width: 100%;
       justify-content: space-between;
     }
+
+    ._tittle {
+      display: flex;
+      margin-top: 37px;
+
+      span {
+        font-family: Helvetica;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 33px;
+        letter-spacing: 0.01em;
+        color: #333333;
+      }
+    }
+
+    ._button {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      ._btn-left {
+        button {
+          align-items: center;
+          width: 39px;
+          height: 39px;
+          display: flex;
+          justify-content: center;
+          background: #FFFFFF;
+          border: 1px solid #C1C1C1;
+          box-sizing: border-box;
+          border-radius: 5px;
+          transform: matrix(-1, 0, 0, 1, 0, 0);
+        }
+      }
+
+      ._btn-right {
+        display: flex;
+        flex-direction: row;
+      }
+    }
   }
   ._right {
     width: 30%;
@@ -114,12 +179,7 @@ export default {
         font-weight: 500;
         font-size: 12px;
         line-height: 16px;
-        /* identical to box height */
-
         letter-spacing: 0.01em;
-
-        /* Gray 2 */
-
         color: #4F4F4F;
       }
       .child {
@@ -129,7 +189,6 @@ export default {
         font-size: 14px;
         line-height: 19px;
         letter-spacing: 0.01em;
-
         color: #333333;
       }
     }
@@ -163,7 +222,6 @@ export default {
             font-size: 13px;
             line-height: 16px;
             letter-spacing: 0.01em;
-
             color: #0077B5;
           }
         }

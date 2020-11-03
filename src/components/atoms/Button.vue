@@ -59,6 +59,11 @@ export default {
     color: #ffffff;
   }
 
+  .green {
+    background-color: #00820D;
+    color: #ffffff;
+  }
+
   .outline-primary {
     background-color: rgba(0, 119, 181, 0.1);
     border: 1px solid #0077B5;
