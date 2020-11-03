@@ -1,6 +1,10 @@
 import axios from 'axios'
+import https from 'https'
 
 const service = axios.create({
+  httpAgent: new https.Agent({
+    rejectUnauthorized: false
+  }),
   timeout: 30000,
   transformResponse: [
     function (data) {
