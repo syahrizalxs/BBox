@@ -39,6 +39,7 @@
 					<button @click="onLogin()">SIGN IN</button>
 					<span v-if="loginError" class="error-message">{{loginErrorMessage}}</span>
 					<span class="atau">ATAU</span>
+					<a @click="redirectGoogle">Google Test</a>
 				</div>
 			</div>
 		</div>
@@ -61,6 +62,9 @@ export default {
 		...mapActions('auth', [
 			'login'
 		]),
+		redirectGoogle () {
+			window.location.replace(process.env.VUE_APP_GOOGLE_AUTH)
+		},
 		onLogin () {
 			this.login({ email: this.email, password: this.password, fcm: '' })
 			.then(res => {
