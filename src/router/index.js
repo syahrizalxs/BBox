@@ -50,7 +50,7 @@ const routes = [
   {
     path: '/login/callback',
     name: 'redirect',
-    component: Login,
+    component: RedirectGoogle,
     meta: {
       public: true,
       onlyWhenLoggedOut: true
