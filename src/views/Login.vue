@@ -273,8 +273,6 @@ export default {
 			left: 940px;
 			top: 182px;
 
-			margin-bottom: 10px;
-
 			font-family: Helvetica;
 			font-style: normal;
 			font-weight: bold;
@@ -346,6 +344,7 @@ export default {
 			}
 		}
 		.atau {
+			align-self: center;
 			margin-top: 20px;
 			font-weight: 600;
 			font-size: 12px;
