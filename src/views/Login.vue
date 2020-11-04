@@ -26,7 +26,7 @@
 					<img src="../assets/bbox-text.svg">
 				</div>
 				<div class="form-input">
-					<span>Sign in to your Account</span>
+					<span style="margin-bottom: 20px;">Sign in to your Account</span>
 					<div class="input-container">
 						<input v-model="email" type="email" class="email" placeholder="Your Email">
 						<img src="../assets/icons/email.svg" aria-hidden="true">
