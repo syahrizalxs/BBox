@@ -60,8 +60,7 @@ router.beforeEach((to, from, next) => {
   
   if (!isPublic && !loggedIn) {
     return next({
-      path: '/login',
-      query: { redirect: to.fullPath }
+      path: '/login'
     })
   }
   
