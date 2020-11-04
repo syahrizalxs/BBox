@@ -3,7 +3,9 @@ import storage from '../commons/config/storage.config'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+
 import Login from '../views/Login.vue'
+import RedirectGoogle from '../views/RedirectGoogle.vue'
 
 import Insight from '../views/Dashboard/Insight.vue'
 import Archieve from '../views/Dashboard/Archieve.vue'
@@ -44,6 +46,15 @@ const routes = [
       public: true,
       onlyWhenLoggedOut: true
     }
+  },
+  {
+    path: '/login/callback',
+    name: 'redirect',
+    component: RedirectGoogle,
+    meta: {
+      public: true,
+      onlyWhenLoggedOut: true
+    }
   }
 ]
 
@@ -60,8 +71,7 @@ router.beforeEach((to, from, next) => {
   
   if (!isPublic && !loggedIn) {
     return next({
-      path: '/login',
-      query: { redirect: to.fullPath }
+      path: '/login'
     })
   }
   

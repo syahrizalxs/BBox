@@ -50,6 +50,24 @@ const actions = {
       return true
     }
   },
+
+  async loginSSO ({ commit }, { code }) {
+    commit('loginRequest')
+
+    const requestData = Object.assign({ code })
+    const res = await authService.loginSSO(requestData)
+    if (res.status !== 200) {
+      return res
+    }
+    if (res) {
+      const user = res.data
+      storage.saveUser(user)
+      commit('loginSuccess', { accessToken: res.data.token, user: user })
+      router.push(router.history.current.query.redirect || '/')
+      return true
+    }
+  },
+
   
   async logout ({ commit }) {
     await authService.logout()

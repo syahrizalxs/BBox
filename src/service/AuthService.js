@@ -23,6 +23,26 @@ export default class AuthService extends HttpService {
       }
     })
   }
+
+  loginSSO (data) {
+    const api = process.env.VUE_APP_BASE_API + '/oauth2/google/exchange'
+    return this.post(data, api).then((response) => {
+      if (response.status === 200) {
+        storage.saveToken(response.data.token)
+        HttpService.setHeader()
+        return response
+      }
+      if (response) {
+        return response
+        // swal({
+        //   title: 'Error!!',
+        //   text: response.message,
+        //   icon: 'error',
+        //   dangerMode: true
+        // })
+      }
+    })
+  }
   
   logout () {
     const api = this.api + '/logout'

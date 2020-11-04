@@ -9,7 +9,8 @@ Vue.use(vuetify, {
     primary: '#0077B5'
 }})
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
+Vue.config.devTool = true
 
 new Vue({
   router,
