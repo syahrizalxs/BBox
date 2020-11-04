@@ -521,8 +521,11 @@ export default {
 }
 
 ._right-activity {
-  width: 100%;
   height: 100%;
+  position: fixed;
+  right: 0;
+  top: 0;
+  margin-right: 20px;
   
   ._notification-slot {
     width: 100%;
