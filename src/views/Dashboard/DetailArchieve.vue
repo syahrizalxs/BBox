@@ -22,7 +22,7 @@
               <img src="../../assets/icons/eye-white.svg">
             </template>
           </Button>
-          <Button title="Add Process" style="margin-left: 16px; width: 132px; height: 39px;" type="primary">
+          <Button title="Add Process" @click="$refs.addProcess.visible = true" style="margin-left: 16px; width: 132px; height: 39px;" type="primary">
             <template slot="icon">
               <img src="../../assets/icons/button/plus-white.svg">
             </template>
@@ -62,12 +62,37 @@
         </div>
       </div>
     </div>
+
+    <Modal :title="'Add Process'" ref="addProcess">
+      <template slot="body">
+        <label class="custom-label" for="process">Process Name</label><br>
+        <input class="custom-input" type="text" id="process" name="process"><br>
+        <label class="custom-label" for="tipe">Type</label><br>
+        <div style="margin-bottom:15px">
+          <input type="radio" id="main" name="tipe" value="main process" style="margin-right:14px">
+          <label class="custom-label-radio" for="main" style="margin-right:30px">Main Process</label>
+          <input type="radio" id="sub" name="tipe" value="sub process" style="margin-right:14px">
+          <label class="custom-label-radio" for="sub">Sub Process</label>
+        </div>
+        <label class="custom-label" for="description">Description</label><br>
+        <textarea rows="100" class="custom-input" type="text-area" id="description" name="description"></textarea><br>
+        <label class="custom-label" for="attachment">Attachment</label><br>
+        <div class="upload-btn-wrapper">
+          <button class="btn"><img src="../../assets/icons/button/plus-circle.svg"><span> Upload Here</span></button>
+          <input type="file" name="myfile" />
+        </div>
+      </template>
+
+      <template slot="footer">
+        <Button title="Save" type="primary" style="padding: 15px 25px;"></Button>
+      </template>
+    </Modal>
   </div>
 </template>
 
 <script>
 import Heading from '../../components/Heading'
-// import Modal from '../../components/Modal'
+import Modal from '../../components/Modal'
 import Notification from '../../components/Notification'
 
 // Atoms Components
@@ -82,7 +107,7 @@ export default {
     // Search,
     Button,
     // CardEvent,
-    // Modal,
+    Modal,
     Notification,
     Avatar
   },
@@ -102,6 +127,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  height: 45px;
+  width: 100%;
+}
+
+.btn {
+  font-family: Helvetica;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.01em;
+  color: #0077B5;
+
+  width: 100%;
+  height: 45px;
+  background: #FFFFFF;
+  border: 1px dashed #008FDB;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
 .archieve {
   display: flex;
   width: 100vw;
