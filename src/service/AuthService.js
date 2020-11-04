@@ -23,16 +23,38 @@ export default class AuthService extends HttpService {
       }
     })
   }
-  
-  logout () {
-    const api = this.api + '/logout'
-    return this.post({}, api).then((response) => {
-      HttpService.removeHeader()
-      storage.clearSession()
+
+  loginSSO (data) {
+    const api = process.env.VUE_APP_BASE_API + '/oauth2/google/exchange'
+    return this.post(data, api).then((response) => {
       if (response.status === 200) {
-        HttpService.removeHeader()
-        storage.clearSession()
+        storage.saveToken(response.data.token)
+        HttpService.setHeader()
+        return response
+      }
+      if (response) {
+        return response
+        // swal({
+        //   title: 'Error!!',
+        //   text: response.message,
+        //   icon: 'error',
+        //   dangerMode: true
+        // })
       }
     })
+  }
+  
+  logout () {
+    // const api = this.api + '/logout'
+    // return this.post({}, api).then((response) => {
+    //   HttpService.removeHeader()
+    //   storage.clearSession()
+    //   if (response.status === 200) {
+    //     HttpService.removeHeader()
+    //     storage.clearSession()
+    //   }
+    // })
+    HttpService.removeHeader()
+    storage.clearSession()
   }
 }

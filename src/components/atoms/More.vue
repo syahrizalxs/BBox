@@ -2,8 +2,8 @@
   <div class="_dropdown">
     <img @click="showDropdown()" class="pointer" src="../../assets/icons/more.svg">
     <div class="_dropdown-content">
-      <div v-for="(item, index) in contents" :key="index">
-        <span>{{ item }}</span>
+      <div v-for="(item, index) in options" :key="index">
+        <span @click="callback(item.function)">{{ item.title }}</span>
       </div>
     </div>
   </div>
@@ -12,7 +12,12 @@
 <script>
 export default {
   name: 'More',
-  props: ['contents']
+  props: ['options'],
+  methods: {
+    callback (e) {
+      this.$emit('click', e)
+    }
+  }
 }
 </script>
 

@@ -26,7 +26,7 @@
 					<img src="../assets/bbox-text.svg">
 				</div>
 				<div class="form-input">
-					<span>Sign in to your Account</span>
+					<span style="margin-bottom: 20px;">Sign in to your Account</span>
 					<div class="input-container">
 						<input v-model="email" type="email" class="email" placeholder="Your Email">
 						<img src="../assets/icons/email.svg" aria-hidden="true">
@@ -39,6 +39,14 @@
 					<button @click="onLogin()">SIGN IN</button>
 					<span v-if="loginError" class="error-message">{{loginErrorMessage}}</span>
 					<span class="atau">ATAU</span>
+					<a class="google-btn" @click="redirectGoogle">
+						<div class="button-container">
+							<img :src="require('../assets/icons/flat-google.svg')">
+							<span class="google-text">
+								Masuk dengan Google
+							</span>
+						</div>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -61,6 +69,9 @@ export default {
 		...mapActions('auth', [
 			'login'
 		]),
+		redirectGoogle () {
+			window.location.replace(process.env.VUE_APP_GOOGLE_AUTH)
+		},
 		onLogin () {
 			this.login({ email: this.email, password: this.password, fcm: '' })
 			.then(res => {
@@ -75,6 +86,44 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.google-btn {
+	display: flex;
+	width: 368px;
+	height: 48px;
+	padding: 10px 20px;
+	border: 1px solid #828282;
+	box-sizing: border-box;
+	border-radius: 5px;
+
+	&:hover {
+		border: 1px solid rgb(27, 26, 26);
+	}
+	.button-container {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		img {
+			align-self: center;
+			margin: 0 !important;
+			padding-right: 9px;
+		} 
+		.google-text {
+			padding-top: 7.3px;
+			font-weight: bold;
+			font-size: 14px !important;
+			line-height: 19px;
+			text-align: center;
+			letter-spacing: 0.05em;
+			align-items: center;
+			/* Gray 1 */
+			margin: 0 !important;
+
+			color: #333333;
+		}
+	}
+}
 #container {
 	width: 100vw;
 	height: 100vh;
@@ -220,12 +269,9 @@ export default {
 		justify-content: center;
 		align-items: center;
 		span {
-			width: 271px;
 			height: 33px;
 			left: 940px;
 			top: 182px;
-
-			margin-bottom: 10px;
 
 			font-family: Helvetica;
 			font-style: normal;
@@ -298,6 +344,7 @@ export default {
 			}
 		}
 		.atau {
+			align-self: center;
 			margin-top: 20px;
 			font-weight: 600;
 			font-size: 12px;

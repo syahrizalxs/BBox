@@ -3,7 +3,7 @@
     <div class="_profile-highlight">
 			<Heading />
 			<div class="_bio">
-				<Avatar class="avatar" :path="'https://freedesignfile.com/upload/2017/06/HD-picture-Female-face-photo.jpg'" />
+				<Avatar class="avatar" :path=" authenticatedUser.avatar || 'https://freedesignfile.com/upload/2017/06/HD-picture-Female-face-photo.jpg'" />
 				<div>
 					<span class="name">{{authenticatedUser.fullName}}</span>
 					<span class="job">{{authenticatedUser.jobField}}</span>
@@ -521,8 +521,11 @@ export default {
 }
 
 ._right-activity {
-  width: 100%;
   height: 100%;
+  position: fixed;
+  right: 0;
+  top: 0;
+  margin-right: 20px;
   
   ._notification-slot {
     width: 100%;
