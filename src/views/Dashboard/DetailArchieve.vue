@@ -3,44 +3,30 @@
     <div class="_left">
       <div class="_left-heading">
         <Heading style="margin-right: 200px" />
-        <Search />
       </div>
-      <div class="_left-starred">
-        <div class="_left-heading-starred">
-          <span>Starred Event</span>
-          <Button title="Add Event" @click="$refs.addEvent.visible = true" style="width: 115px; height: 39px;" :type="'outline-primary'">
+      <div class="_tittle">
+        <span>Partnership dengan Brightspace</span>
+      </div>
+      <div class="_button">
+        <div class="_btn-left">
+          <button><img src="../../assets/icons/sort.svg"></button>
+        </div>
+        <div class="_btn-right">
+          <Button title="Set Status" style="width: 132px; height: 39px;" type="purple">
             <template slot="icon">
-              <img src="../../assets/icons/button/plus.svg">
+              <img src="../../assets/icons/button/edit.svg">
             </template>
           </Button>
-        </div>
-        <div class="_left-heading-starred-card">
-          <div v-for="(item, index) in starred" :key="index">
-            <CardEvent :starred="item.starred" style="margin-bottom: 10px;" :title="item.title" :status="item.status">
-              <template slot="dropdown">
-                <span @click="toDetail('1')">Detail</span>
-                <span @click="item.starred = false">Unstar this event</span>
-              </template>
-            </CardEvent>
-          </div>
-          <span style="opacity: 0.5;" v-if="starred.length === 0">
-            There is no starred event.
-          </span>
-        </div>
-      </div>
-      <div class="_left-event-cards">
-        <div class="_left-event-cards-heading">
-          <span>Event Cards</span>
-        </div>
-        <div class="_left-event-cards-content">
-          <div v-for="(item, index) in notStarred" :key="index" style="margin-top: 10px;">
-            <CardEvent :starred="false" :title="item.title" :status="item.status">
-              <template slot="dropdown">
-                <span @click="toDetail('2')">Detail</span>
-                <span @click="item.starred = true">Star this event</span>
-              </template>
-            </CardEvent>
-          </div>
+          <Button title="Timeline View" style="margin-left: 16px; width: 132px; height: 39px;" type="green">
+            <template slot="icon">
+              <img src="../../assets/icons/eye-white.svg">
+            </template>
+          </Button>
+          <Button title="Add Process" @click="$refs.addProcess.visible = true" style="margin-left: 16px; width: 132px; height: 39px;" type="primary">
+            <template slot="icon">
+              <img src="../../assets/icons/button/plus-white.svg">
+            </template>
+          </Button>
         </div>
       </div>
     </div>
@@ -77,14 +63,24 @@
       </div>
     </div>
 
-    <Modal :title="'Add Event'" ref="addEvent">
+    <Modal :title="'Add Process'" ref="addProcess">
       <template slot="body">
-        <label class="custom-label" for="title">Event Title</label><br>
-        <input class="custom-input" type="text" id="title" name="title"><br>
-        <label class="custom-label" for="participants">Participants</label><br>
-        <input class="custom-input" type="text" id="participants" name="participants"><br>
+        <label class="custom-label" for="process">Process Name</label><br>
+        <input class="custom-input" type="text" id="process" name="process"><br>
+        <label class="custom-label" for="tipe">Type</label><br>
+        <div style="margin-bottom:15px">
+          <input type="radio" id="main" name="tipe" value="main process" style="margin-right:14px">
+          <label class="custom-label-radio" for="main" style="margin-right:30px">Main Process</label>
+          <input type="radio" id="sub" name="tipe" value="sub process" style="margin-right:14px">
+          <label class="custom-label-radio" for="sub">Sub Process</label>
+        </div>
         <label class="custom-label" for="description">Description</label><br>
         <textarea rows="100" class="custom-input" type="text-area" id="description" name="description"></textarea><br>
+        <label class="custom-label" for="attachment">Attachment</label><br>
+        <div class="upload-btn-wrapper">
+          <button class="btn"><img src="../../assets/icons/button/plus-circle.svg"><span> Upload Here</span></button>
+          <input type="file" name="myfile" />
+        </div>
       </template>
 
       <template slot="footer">
@@ -96,33 +92,27 @@
 
 <script>
 import Heading from '../../components/Heading'
-import Search from '../../components/atoms/Search'
 import Modal from '../../components/Modal'
 import Notification from '../../components/Notification'
 
 // Atoms Components
 import Button from '../../components/atoms/Button'
-import CardEvent from '../../components/CardEvent'
+// import CardEvent from '../../components/CardEvent'
 import Avatar from '../../components/atoms/Avatar'
 
 export default {
   name: 'Archieve',
   components: {
     Heading,
-    Search,
+    // Search,
     Button,
-    CardEvent,
+    // CardEvent,
     Modal,
     Notification,
     Avatar
   },
   data: () => ({
-    eventList: [
-      { status: 'cleared', title: 'Partnership dengan SpaceX', starred: true },
-      { status: 'on progress', title: 'Partnership dengan Tesla', starred: true },
-      { status: 'cleared', title: 'Partnership dengan Icon', starred: false },
-      { status: 'canceled', title: 'Partnership dengan Facebook', starred: false }
-    ]
+    
   }),
   computed: {
     starred () {
@@ -131,17 +121,45 @@ export default {
     notStarred () {
       return this.eventList.filter(item => !item.starred)
     }
-  },
-  methods: {
-    toDetail (val) {
-      this.$router.push('/archieve/' + val)
-    }
   }
 
 }
 </script>
 
 <style lang="scss" scoped>
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  height: 45px;
+  width: 100%;
+}
+
+.btn {
+  font-family: Helvetica;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.01em;
+  color: #0077B5;
+
+  width: 100%;
+  height: 45px;
+  background: #FFFFFF;
+  border: 1px dashed #008FDB;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
 .archieve {
   display: flex;
   width: 100vw;
@@ -159,49 +177,45 @@ export default {
       justify-content: space-between;
     }
 
-    ._left-starred {
-      margin-top: 52px;
+    ._tittle {
       display: flex;
-      flex-direction: column;
-      ._left-heading-starred {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        width: 100%;
+      margin-top: 37px;
 
-        span {
-          font-weight: bold;
-          font-size: 24px;
-          line-height: 33px;
-          /* identical to box height */
-
-          letter-spacing: 0.01em;
-
-          color: #333333;
-        }
-      }
-
-      ._left-heading-starred-card {
-        padding-top: 24px;
+      span {
+        font-family: Helvetica;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 33px;
+        letter-spacing: 0.01em;
+        color: #333333;
       }
     }
 
-    ._left-event-cards {
-      margin-top: 40px;
+    ._button {
+      margin-top: 24px;
       display: flex;
-      flex-direction: column;
-      width: 100%;
+      flex-direction: row;
+      justify-content: space-between;
 
-      ._left-event-cards-heading {
-        margin-bottom: 10px;
-        span {
-          font-weight: bold;
-          font-size: 24px;
-          line-height: 33px;
-          letter-spacing: 0.01em;
-
-          color: #333333;
+      ._btn-left {
+        button {
+          align-items: center;
+          width: 39px;
+          height: 39px;
+          display: flex;
+          justify-content: center;
+          background: #FFFFFF;
+          border: 1px solid #C1C1C1;
+          box-sizing: border-box;
+          border-radius: 5px;
+          transform: matrix(-1, 0, 0, 1, 0, 0);
         }
+      }
+
+      ._btn-right {
+        display: flex;
+        flex-direction: row;
       }
     }
   }
@@ -223,12 +237,7 @@ export default {
         font-weight: 500;
         font-size: 12px;
         line-height: 16px;
-        /* identical to box height */
-
         letter-spacing: 0.01em;
-
-        /* Gray 2 */
-
         color: #4F4F4F;
       }
       .child {
@@ -238,7 +247,6 @@ export default {
         font-size: 14px;
         line-height: 19px;
         letter-spacing: 0.01em;
-
         color: #333333;
       }
     }
@@ -272,7 +280,6 @@ export default {
             font-size: 13px;
             line-height: 16px;
             letter-spacing: 0.01em;
-
             color: #0077B5;
           }
         }
