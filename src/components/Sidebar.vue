@@ -8,7 +8,7 @@
 			<a href="#"><img class="__icon" src="../assets/sidebar/message.svg"></a>
 		</div>
 		<div class="bottom-links">
-			<a href="#"><img src="../assets/sidebar/cog.svg"></a>
+			<a href="#"><img src="../assets/sidebar/cog.svg"> <span @click="onLogout()">Logout</span></a>
 			<div class="line"></div>
 			<a href="#"><img src="../assets/sidebar/flag-id.svg"></a>
 		</div>
@@ -16,12 +16,20 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
 		name: 'sidebar',
 		data: () => ({
 			isCollapsible: false
 		}),
 		methods: {
+			...mapActions('auth', [
+				'logout'
+			]),
+			onLogout () {
+				this.logout()
+			},
 			collapsible () {
 				this.isCollapsible = !this.isCollapsible
 				document.querySelector('.sideNav').style.width = this.isCollapsible ? '300px' : '72px'
@@ -74,6 +82,24 @@ export default {
 		a {
 			margin-left: 16px;
 			padding: 8px;
+			display: flex;
+			span {
+				width: 100%;
+				border-radius: 8px;
+				text-align: center;
+				padding: 5px;
+				color: rgb(255, 255, 255);
+				margin-left: 24px;
+				font-size: 14px;
+				letter-spacing: .7px;
+				font-weight: bold;
+				align-self: center;
+
+				&:hover {
+					background-color: #018eda;
+					padding: 5px;
+				}
+			}
 		}
 		.line {
 			width: 24px;

@@ -45,14 +45,16 @@ export default class AuthService extends HttpService {
   }
   
   logout () {
-    const api = this.api + '/logout'
-    return this.post({}, api).then((response) => {
-      HttpService.removeHeader()
-      storage.clearSession()
-      if (response.status === 200) {
-        HttpService.removeHeader()
-        storage.clearSession()
-      }
-    })
+    // const api = this.api + '/logout'
+    // return this.post({}, api).then((response) => {
+    //   HttpService.removeHeader()
+    //   storage.clearSession()
+    //   if (response.status === 200) {
+    //     HttpService.removeHeader()
+    //     storage.clearSession()
+    //   }
+    // })
+    HttpService.removeHeader()
+    storage.clearSession()
   }
 }
