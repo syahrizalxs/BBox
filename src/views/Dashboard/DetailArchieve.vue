@@ -42,25 +42,25 @@
           <tbody>
             <tr>
               <td>Minutes of Meeting dengan Brightspace</td>
-              <td><span class="label-table">Sub Process</span></td>
+              <td><span class="label-table-sub-process">Sub Process</span></td>
               <td>Sep 27, 2020 at 1:29 PM</td>
               <td><img src="../../assets/icons/more.svg"></td>
             </tr>
             <tr class="active-row">
               <td>Minutes of Meeting dengan Brightspace</td>
-              <td><span class="label-table">Sub Process</span></td>
+              <td><span class="label-table-sub-process">Sub Process</span></td>
               <td>Sep 27, 2020 at 1:29 PM</td>
               <td><img src="../../assets/icons/more.svg"></td>
             </tr>
             <tr>
               <td>Minutes of Meeting dengan Brightspace</td>
-              <td><span class="label-table">Sub Process</span></td>
+              <td><span class="label-table-main-process">Main Process</span></td>
               <td>Sep 27, 2020 at 1:29 PM</td>
               <td><img src="../../assets/icons/more.svg"></td>
             </tr>
             <tr>
               <td>Minutes of Meeting dengan Brightspace</td>
-              <td><span class="label-table">Sub Process</span></td>
+              <td><span class="label-table-sub-process">Sub Process</span></td>
               <td>Sep 27, 2020 at 1:29 PM</td>
               <td><img src="../../assets/icons/more.svg"></td>
             </tr>
@@ -189,10 +189,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.label-table {
+.label-table-sub-process {
   // position: absolute;
   width: 120px;
-  height: 35px;
+  padding: 10px 30px;
+  font-size: 12px;
+  line-height: 16px;
+  /* identical to box height */
+
+  text-align: center;
+  letter-spacing: 0.01em;
+
+  color: #B54100;
   // left: 454px;
   // top: 306px;
 
@@ -201,6 +209,27 @@ export default {
   box-sizing: border-box;
   border-radius: 20px;
 }
+
+.label-table-main-process {
+  width: 120px;
+  padding: 10px 30px;
+  font-size: 12px;
+  line-height: 16px;
+  /* identical to box height */
+
+  text-align: center;
+  letter-spacing: 0.01em;
+
+  color: #ffffff;
+  // left: 454px;
+  // top: 306px;
+
+  background: #0077B5;
+  border-radius: 20px;
+  box-sizing: border-box;
+  border-radius: 20px;
+}
+
 .styled-table {
     border-collapse: collapse;
     border: 1px solid #C1C1C1;
@@ -230,6 +259,14 @@ export default {
 .styled-table th,
 .styled-table td {
     padding: 12px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 19px;
+    /* identical to box height */
+
+    letter-spacing: 0.01em;
+
+    color: #333333 !important;
 }
 .styled-table tbody tr {
     border-bottom: 1px solid #E2E2E2;
@@ -254,6 +291,10 @@ export default {
     // font-weight: bold;
     // color: #009879;
     box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table tbody tr:hover {
+  box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.15);
 }
 
 .upload-btn-wrapper {
