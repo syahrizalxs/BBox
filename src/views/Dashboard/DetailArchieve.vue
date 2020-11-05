@@ -29,6 +29,44 @@
           </Button>
         </div>
       </div>
+      <div style="overflow-y:auto; margin-top:16px">
+        <table class="styled-table">
+          <thead>
+            <tr>
+              <th style="text-align:left">Process Name</th>
+              <th style="text-align:left">Type</th>
+              <th style="text-align:left">Last Update</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Minutes of Meeting dengan Brightspace</td>
+              <td><span class="label-table">Sub Process</span></td>
+              <td>Sep 27, 2020 at 1:29 PM</td>
+              <td><img src="../../assets/icons/more.svg"></td>
+            </tr>
+            <tr class="active-row">
+              <td>Minutes of Meeting dengan Brightspace</td>
+              <td><span class="label-table">Sub Process</span></td>
+              <td>Sep 27, 2020 at 1:29 PM</td>
+              <td><img src="../../assets/icons/more.svg"></td>
+            </tr>
+            <tr>
+              <td>Minutes of Meeting dengan Brightspace</td>
+              <td><span class="label-table">Sub Process</span></td>
+              <td>Sep 27, 2020 at 1:29 PM</td>
+              <td><img src="../../assets/icons/more.svg"></td>
+            </tr>
+            <tr>
+              <td>Minutes of Meeting dengan Brightspace</td>
+              <td><span class="label-table">Sub Process</span></td>
+              <td>Sep 27, 2020 at 1:29 PM</td>
+              <td><img src="../../assets/icons/more.svg"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div class="_right">
       <div class="_notification-slot">
@@ -127,6 +165,73 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.label-table {
+  // position: absolute;
+  width: 120px;
+  height: 35px;
+  // left: 454px;
+  // top: 306px;
+
+  background: rgba(181, 65, 0, 0.2);
+  border: 1px solid #B54100;
+  box-sizing: border-box;
+  border-radius: 20px;
+}
+.styled-table {
+    border-collapse: collapse;
+    border: 1px solid #C1C1C1;
+    box-sizing: border-box;
+    border-radius: 5px;
+    // margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    width: 100%;
+    // padding: 18px 32px 18px 32px;
+    // box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.styled-table thead tr {
+    background-color: #ffffff;
+    // color: #ffffff;
+    // text-align: left;
+    border-bottom: 1px solid #838383;
+    height: 67px;
+    font-family: Helvetica;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 19px;
+    letter-spacing: 0.01em;
+    color: #333333;
+}
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+.styled-table tbody tr {
+    border-bottom: 1px solid #E2E2E2;
+    height: 99px;
+    font-family: Helvetica;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 19px;
+    letter-spacing: 0.01em;
+    color: #333333;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    // background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    // border-bottom: 2px solid #009879;
+}
+.styled-table tbody tr.active-row {
+    // font-weight: bold;
+    // color: #009879;
+    box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.15);
+}
+
 .upload-btn-wrapper {
   position: relative;
   overflow: hidden;
