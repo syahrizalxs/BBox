@@ -5,8 +5,8 @@
     <div class="_timeline-content" style="margin-top: 20px;" v-for="(item, index) in 3" :key="index">
       <div class="_timeline-content-left">
         <img class="_timeline-content-left-symbol" :src="index % 2 !== 0 ? require('../assets/icons/timeline/blue.svg') : require('../assets/icons/timeline/orange-circle.svg')" alt="" >
-        <div class="_timeline-content-left-vertical-line">
-          .
+        <div v-if="(index + 1) - 3 !== 0" class="_timeline-content-left-vertical-line">
+  
         </div>
       </div>
       <div class="_timeline-content-right">
