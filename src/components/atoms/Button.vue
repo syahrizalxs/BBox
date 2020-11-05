@@ -57,11 +57,17 @@ export default {
   .primary {
     background-color: #0077B5;
     color: #ffffff;
+    &:hover {
+      background-color: #00659b !important;
+    }
   }
 
   .green {
     background-color: #00820D;
     color: #ffffff;
+    &:hover {
+      background-color: #00870d !important;
+    }
   }
 
   .outline-primary {

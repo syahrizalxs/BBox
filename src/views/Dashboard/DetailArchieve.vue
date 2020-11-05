@@ -17,7 +17,7 @@
               <img src="../../assets/icons/button/edit.svg">
             </template>
           </Button>
-          <Button title="Timeline View" style="margin-left: 16px; width: 132px; height: 39px;" type="green">
+          <Button title="Timeline View" @click="$refs.timeline.visible = true" style="margin-left: 16px; width: 132px; height: 39px;" type="green">
             <template slot="icon">
               <img src="../../assets/icons/eye-white.svg">
             </template>
@@ -125,6 +125,25 @@
         <Button title="Save" type="primary" style="padding: 15px 25px;"></Button>
       </template>
     </Modal>
+    <Modal :title="'Partnership dengan Brightspace'" ref="timeline">
+      <template slot="body">
+        <Tab :tabs="tabs" :initialTab="initialTab">
+          <template slot="tab-head-activity">
+            Activity
+          </template>
+          <template slot="tab-panel-activity">
+            <Timeline />
+          </template>
+
+          <template slot="tab-head-contact">
+            Contact
+          </template>
+          <template slot="tab-head-file">
+            File
+          </template>
+        </Tab>
+      </template>
+    </Modal>
   </div>
 </template>
 
@@ -132,6 +151,8 @@
 import Heading from '../../components/Heading'
 import Modal from '../../components/Modal'
 import Notification from '../../components/Notification'
+import Tab from '../../components/Tab'
+import Timeline from '../../components/Timeline'
 
 // Atoms Components
 import Button from '../../components/atoms/Button'
@@ -147,10 +168,13 @@ export default {
     // CardEvent,
     Modal,
     Notification,
-    Avatar
+    Avatar,
+    Tab,
+    Timeline
   },
   data: () => ({
-    
+    initialTab: 'activity',
+    tabs: ['activity', 'contact', 'file']
   }),
   computed: {
     starred () {

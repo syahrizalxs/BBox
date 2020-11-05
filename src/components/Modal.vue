@@ -6,7 +6,7 @@
         <span class="title">{{title}}</span>
         <span class="close" @click="visible = false">&times;</span>
       </div>
-      <div class="line"></div>
+      <div v-if="isLiner" class="line"></div>
       <div class="modal-body">
         <slot name="body"></slot>
       </div>
@@ -20,7 +20,7 @@
 <script>
 export default {
   name: 'Loading',
-  props: ['title'],
+  props: ['title', 'isLiner'],
   data: () => ({
     visible: false
   }),
@@ -34,7 +34,7 @@ export default {
   display: block; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+  padding-top: 80px; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
@@ -51,6 +51,7 @@ export default {
     border: 1px solid #888;
     width: 50%;
     min-height: 30%;
+    margin-bottom: 30px;
 
     .modal-header {
       display: flex;
@@ -82,7 +83,7 @@ export default {
     .modal-body {
       height: 100%;
       width: 100%;
-      padding: 26px;
+      padding: 17px 26px;
     }
 
     .modal-footer {
