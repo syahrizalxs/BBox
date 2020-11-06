@@ -17,7 +17,7 @@
               <img src="../../assets/icons/button/edit.svg">
             </template>
           </Button>
-          <Button title="Timeline View" style="margin-left: 16px; width: 132px; height: 39px;" type="green">
+          <Button title="Timeline View" @click="$refs.timeline.visible = true" style="margin-left: 16px; width: 132px; height: 39px;" type="green">
             <template slot="icon">
               <img src="../../assets/icons/eye-white.svg">
             </template>
@@ -42,25 +42,25 @@
           <tbody>
             <tr>
               <td>Minutes of Meeting dengan Brightspace</td>
-              <td><span class="label-table">Sub Process</span></td>
+              <td><span class="label-table-sub-process">Sub Process</span></td>
               <td>Sep 27, 2020 at 1:29 PM</td>
               <td><img src="../../assets/icons/more.svg"></td>
             </tr>
             <tr class="active-row">
               <td>Minutes of Meeting dengan Brightspace</td>
-              <td><span class="label-table">Sub Process</span></td>
+              <td><span class="label-table-sub-process">Sub Process</span></td>
               <td>Sep 27, 2020 at 1:29 PM</td>
               <td><img src="../../assets/icons/more.svg"></td>
             </tr>
             <tr>
               <td>Minutes of Meeting dengan Brightspace</td>
-              <td><span class="label-table">Sub Process</span></td>
+              <td><span class="label-table-main-process">Main Process</span></td>
               <td>Sep 27, 2020 at 1:29 PM</td>
               <td><img src="../../assets/icons/more.svg"></td>
             </tr>
             <tr>
               <td>Minutes of Meeting dengan Brightspace</td>
-              <td><span class="label-table">Sub Process</span></td>
+              <td><span class="label-table-sub-process">Sub Process</span></td>
               <td>Sep 27, 2020 at 1:29 PM</td>
               <td><img src="../../assets/icons/more.svg"></td>
             </tr>
@@ -125,6 +125,25 @@
         <Button title="Save" type="primary" style="padding: 15px 25px;"></Button>
       </template>
     </Modal>
+    <Modal :title="'Partnership dengan Brightspace'" ref="timeline">
+      <template slot="body">
+        <Tab :tabs="tabs" :initialTab="initialTab">
+          <template slot="tab-head-activity">
+            Activity
+          </template>
+          <template slot="tab-panel-activity">
+            <Timeline />
+          </template>
+
+          <template slot="tab-head-contact">
+            Contact
+          </template>
+          <template slot="tab-head-file">
+            File
+          </template>
+        </Tab>
+      </template>
+    </Modal>
   </div>
 </template>
 
@@ -132,6 +151,8 @@
 import Heading from '../../components/Heading'
 import Modal from '../../components/Modal'
 import Notification from '../../components/Notification'
+import Tab from '../../components/Tab'
+import Timeline from '../../components/Timeline'
 
 // Atoms Components
 import Button from '../../components/atoms/Button'
@@ -147,10 +168,13 @@ export default {
     // CardEvent,
     Modal,
     Notification,
-    Avatar
+    Avatar,
+    Tab,
+    Timeline
   },
   data: () => ({
-    
+    initialTab: 'activity',
+    tabs: ['activity', 'contact', 'file']
   }),
   computed: {
     starred () {
@@ -165,10 +189,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.label-table {
+.label-table-sub-process {
   // position: absolute;
   width: 120px;
-  height: 35px;
+  padding: 10px 30px;
+  font-size: 12px;
+  line-height: 16px;
+  /* identical to box height */
+
+  text-align: center;
+  letter-spacing: 0.01em;
+
+  color: #B54100;
   // left: 454px;
   // top: 306px;
 
@@ -177,6 +209,27 @@ export default {
   box-sizing: border-box;
   border-radius: 20px;
 }
+
+.label-table-main-process {
+  width: 120px;
+  padding: 10px 30px;
+  font-size: 12px;
+  line-height: 16px;
+  /* identical to box height */
+
+  text-align: center;
+  letter-spacing: 0.01em;
+
+  color: #ffffff;
+  // left: 454px;
+  // top: 306px;
+
+  background: #0077B5;
+  border-radius: 20px;
+  box-sizing: border-box;
+  border-radius: 20px;
+}
+
 .styled-table {
     border-collapse: collapse;
     border: 1px solid #C1C1C1;
@@ -206,6 +259,14 @@ export default {
 .styled-table th,
 .styled-table td {
     padding: 12px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 19px;
+    /* identical to box height */
+
+    letter-spacing: 0.01em;
+
+    color: #333333 !important;
 }
 .styled-table tbody tr {
     border-bottom: 1px solid #E2E2E2;
@@ -230,6 +291,10 @@ export default {
     // font-weight: bold;
     // color: #009879;
     box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table tbody tr:hover {
+  box-shadow: 0px 4px 13px rgba(0, 0, 0, 0.15);
 }
 
 .upload-btn-wrapper {
