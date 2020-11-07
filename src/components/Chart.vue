@@ -21,6 +21,9 @@ export default {
     this.gradient.addColorStop(0.5, "rgba(0,119,181, 0.5)");
     this.gradient.addColorStop(1, "rgba(0,119,181, 0)");
 
+    let ctx = document.getElementById('line-chart')
+    ctx.style.backgroundColor = 'rgba(255, 255, 255, S255)';
+
     // this.gradient2.addColorStop(0, "rgba(0, 231, 255, 0.9)");
     // this.gradient2.addColorStop(0.5, "rgba(0, 231, 255, 0.25)");
     // this.gradient2.addColorStop(1, "rgba(0, 231, 255, 0)");
@@ -28,13 +31,13 @@ export default {
     this.renderChart(
       {
         labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July"
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "Mei",
+          "Jun",
+          "Jul"
         ],
         datasets: [
           {
@@ -44,7 +47,7 @@ export default {
             borderWidth: 0,
             pointBorderColor: "#0077B5",
             backgroundColor: this.gradient,
-            data: [40, 39, 10, 40, 39, 30, 40]
+            data: [40, 39, 90, 40, 39, 30, 40]
           }
           // {
           //   label: "Data Two",
@@ -58,8 +61,25 @@ export default {
         ]
       },
       { 
+        legend: {
+          display: false,
+        },
         responsive: true,
-        maintainAspectRatio: false 
+        maintainAspectRatio: false,
+        scales: {
+          xAxes: [{
+            display: false,
+            gridLines: {
+              display:false
+            }
+          }],
+          yAxes: [{
+            display: false, 
+            gridLines: {
+              display:false
+            }   
+          }]
+        },
       }
     );
   }
