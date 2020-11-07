@@ -23,7 +23,7 @@
 				</div>
 			</div>
 			<div class="_charts">
-				<!-- <VueApexCharts class="_charts" width="500" type="line" :options="options" :series="series"></VueApexCharts> -->
+        <AreaChart :width="250" :height="230"/>
 			</div>
 		</div>
     <div class="_main-home">
@@ -90,10 +90,10 @@ import Search from '../../components/atoms/Search'
 import Heading from '../../components/Heading'
 import CardActivity from '../../components/CardActivity'
 import Notification from '../../components/Notification'
+import AreaChart from '../../components/Chart'
 
 import { mapGetters } from 'vuex'
 
-// import VueApexCharts from 'vue-apexcharts'
 export default {
 	name: 'insight',
 	components: {
@@ -101,8 +101,8 @@ export default {
 		Search,
 		Heading,
     CardActivity,
-    Notification
-		// VueApexCharts
+    Notification,
+    AreaChart
 	},
 	data: () => ({
 		eventList: [
@@ -111,31 +111,31 @@ export default {
 			{ status: 'pending', title: 'Partnership dengan Facebook' },
 			{ status: 'pending', title: 'Partnership dengan Tesla' }
 		],
-		options: {
-			chart: {
-				id: 'vuechart-example',
-				toolbar: {
-					show: false
-				},
-				height: '20px',
-				width: '20px'
-			},
-			xaxis: {
-				categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-			}
-		},
-		series: [{
-			name: 'series-1',
-			data: [30, 40, 45, 50, 49, 60, 70, 91]
-		}]
+		// options: {
+		// 	chart: {
+		// 		id: 'vuechart-example',
+		// 		toolbar: {
+		// 			show: false
+		// 		},
+		// 		height: '20px',
+		// 		width: '20px'
+		// 	},
+		// 	xaxis: {
+		// 		categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+		// 	}
+		// },
+		// series: [{
+		// 	name: 'series-1',
+		// 	data: [30, 40, 45, 50, 49, 60, 70, 91]
+    // }]
   }),
   computed: mapGetters('auth', ['authenticatedUser']),
 	methods: {
-		test () {
-			console.log('haha')
-		}
+    
 	},
-	created () {}
+	mounted () {
+    
+  }
 }
 </script>
 
@@ -249,6 +249,8 @@ export default {
 	}
 
 	._charts {
+    max-height: 124px;
+    max-width: 254px;
 	}
 }
 ._main-home {
