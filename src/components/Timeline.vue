@@ -66,7 +66,7 @@ export default {
       min-height: 80% !important;
       ._timeline-content-left-vertical-line {
         width: 1px;
-        min-height: 85%;
+        min-height: 88%;
         border-bottom: 1px;
         border: 1px solid #C4C4C4;
         margin: 0 auto;

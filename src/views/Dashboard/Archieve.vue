@@ -81,10 +81,15 @@
       <template slot="body">
         <label class="custom-label" for="title">Event Title</label><br>
         <input class="custom-input" type="text" id="title" name="title"><br>
-        <label class="custom-label" for="participants">Participants</label><br>
-        <input class="custom-input" type="text" id="participants" name="participants"><br>
         <label class="custom-label" for="description">Description</label><br>
         <textarea rows="100" class="custom-input" type="text-area" id="description" name="description"></textarea><br>
+        <label class="custom-label" style="margin-bottom: 10px;" for="description">Lampiran Dokumen</label><br>
+        <div class="files-list-name">
+          <span class="files-tag-name">Document MOM dengan tesla</span>
+        </div>
+        <Upload style="margin-top: 10px !important; margin-bottom: 10px;" />
+        <label class="custom-label" for="tanggal">Tanggal Butuh Mitra</label>
+        <input class="custom-input" type="date">
       </template>
 
       <template slot="footer">
@@ -104,6 +109,7 @@ import Notification from '../../components/Notification'
 import Button from '../../components/atoms/Button'
 import CardEvent from '../../components/CardEvent'
 import Avatar from '../../components/atoms/Avatar'
+import Upload from '../../components/atoms/Upload'
 
 export default {
   name: 'Archieve',
@@ -114,7 +120,8 @@ export default {
     CardEvent,
     Modal,
     Notification,
-    Avatar
+    Avatar,
+    Upload
   },
   data: () => ({
     eventList: [
@@ -142,6 +149,29 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.files-list-name {
+  width: 100%;
+  display: flex;
+  padding-top: 5px;
+  .files-tag-name {
+    border: 1px solid #0077B5;
+    border-radius: 6px;
+    padding: 3px 5px;
+    font-size: 10px !important;
+    color: #0077B5;
+    &:hover {
+      color: #F5F5F5;
+      background-color: rgb(228, 50, 50);
+      border: none;
+      cursor: pointer;
+      &:after {
+        content: 'X';
+        font-weight: bold;
+        margin-left: 10px;    
+      }
+    }
+  }
+}
 .archieve {
   display: flex;
   width: 100vw;

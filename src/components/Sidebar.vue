@@ -3,7 +3,7 @@
 		<a class="closeBtn"><img :src="isCollapsible ? require('../assets/sidebar/times.svg') : require('../assets/sidebar/hamburger.svg')" @click.prevent="collapsible()"></a>
 		<div class="links">
 			<router-link to="/"><img class="__icon" :class="$route.name === 'Home' ? 'active' : ''" src="../assets/sidebar/home.svg"></router-link>
-			<router-link to="/archieve"><img class="__icon" :class="$route.name === 'Archieve' ? 'active' : ''" src="../assets/sidebar/archive.svg"></router-link>
+			<router-link to="/archieve"><img class="__icon" :class="$route.name === 'Archieve' || $route.name === 'Detail Archieve' ? 'active' : ''" src="../assets/sidebar/archive.svg"></router-link>
 			<a href="#"><img class="__icon" src="../assets/sidebar/bookmark.svg"></a>
 			<a href="#"><img class="__icon" src="../assets/sidebar/message.svg"></a>
 		</div>
