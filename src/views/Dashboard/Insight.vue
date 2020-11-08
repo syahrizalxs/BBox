@@ -249,8 +249,11 @@ export default {
 	}
 
 	._charts {
-    max-height: 124px;
+    max-height: 100%;
+    padding: 3px;
     max-width: 254px;
+    background-color: rgba(255, 255, 255, 0.411);
+    border-radius: 7px;
 	}
 }
 ._main-home {
