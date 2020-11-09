@@ -80,9 +80,9 @@
     <Modal :title="'Add Event'" ref="addEvent">
       <template slot="body">
         <label class="custom-label" for="title">Event Title</label><br>
-        <input class="custom-input" type="text" id="title" name="title"><br>
+        <input v-model="body.title" class="custom-input" type="text" id="title" name="title"><br>
         <label class="custom-label" for="description">Description</label><br>
-        <textarea rows="100" class="custom-input" type="text-area" id="description" name="description"></textarea><br>
+        <textarea v-model="body.description" rows="100" class="custom-input" type="text-area" id="description" name="description"></textarea><br>
         <label class="custom-label" style="margin-bottom: 10px;" for="description">Lampiran Dokumen</label><br>
         <div class="files-list-name">
           <span class="files-tag-name">Document MOM dengan tesla</span>
@@ -93,7 +93,7 @@
       </template>
 
       <template slot="footer">
-        <Button title="Save" type="primary" style="padding: 15px 25px;"></Button>
+        <Button @click="clientSubmit()" title="Save" type="primary" style="padding: 15px 25px;"></Button>
       </template>
     </Modal>
   </div>
@@ -110,6 +110,12 @@ import Button from '../../components/atoms/Button'
 import CardEvent from '../../components/CardEvent'
 import Avatar from '../../components/atoms/Avatar'
 import Upload from '../../components/atoms/Upload'
+
+import EventService from '../../service/EventService'
+import AuthService from '../../service/AuthService'
+
+const eventService = EventService.build()
+const authService = AuthService.build()
 
 export default {
   name: 'Archieve',
@@ -129,7 +135,36 @@ export default {
       { status: 'on progress', title: 'Partnership dengan Tesla', starred: true },
       { status: 'cleared', title: 'Partnership dengan Icon', starred: false },
       { status: 'canceled', title: 'Partnership dengan Facebook', starred: false }
-    ]
+    ],
+    listManager: [],
+    body: {
+      title: 'testing submit client',
+      description: 'mau mencoba integrasi post submit client',
+      expired: 30,
+      manager: {
+        id: '17ce792d-36b5-41c8-84b6-d1c4ea65a8a3'
+      },
+      financialModel: {
+        name: 'finance',
+        url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      },
+      kajianLegal: {
+        name: 'legal',
+        url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      },
+      kajianResiko: {
+        name: 'resiko',
+        url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      },
+      businessPlan: {
+        name: 'bizinis',
+        url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+      },
+      addtionalDocuments: [
+        // kalau ga ada file jadiin array kosong
+        // { name: '', url: '' }
+      ]
+    }
   }),
   computed: {
     starred () {
@@ -142,9 +177,27 @@ export default {
   methods: {
     toDetail (val) {
       this.$router.push('/archieve/' + val)
-    }
-  }
+    },
+    async clientSubmit () {
+      // this.$parent.isLoading = true
 
+      const param = this.body
+      const response = await eventService.clientSubmit(param)
+      if (response) {
+        console.log('hasil nya', response)
+      }
+    },
+    async getManager () {
+      // const param = this.body
+      const response = await authService.getListManager()
+      if (response) {
+        this.listManager = response.data
+      }
+    }
+  },
+  mounted () {
+    this.getManager()
+  }
 }
 </script>
 
