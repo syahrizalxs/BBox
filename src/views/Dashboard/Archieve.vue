@@ -81,6 +81,12 @@
       <template slot="body">
         <label class="custom-label" for="title">Event Title</label><br>
         <input v-model="body.title" class="custom-input" type="text" id="title" name="title"><br>
+        <label class="custom-label" for="manager">Manager</label><br>
+        <select class="custom-input" v-model="body.manager.id" name="manager" id="manager">
+          <template v-for="item in listManager">
+            <option v-bind:key="item.id" :value="item.id">{{item.name}}</option>
+          </template>
+        </select><br>
         <label class="custom-label" for="description">Description</label><br>
         <textarea v-model="body.description" rows="100" class="custom-input" type="text-area" id="description" name="description"></textarea><br>
         <label class="custom-label" style="margin-bottom: 10px;" for="description">Lampiran Dokumen</label><br>
@@ -88,12 +94,15 @@
           <span class="files-tag-name">Document MOM dengan tesla</span>
         </div>
         <Upload style="margin-top: 10px !important; margin-bottom: 10px;" />
-        <label class="custom-label" for="tanggal">Tanggal Butuh Mitra</label>
-        <input class="custom-input" type="date">
+        <!-- <label class="custom-label" for="tanggal">Tanggal Butuh Mitra</label>
+        <input class="custom-input" type="date"> -->
+        <label class="custom-label" for="expired">Event Duration</label><br>
+        <input v-model="body.expired" class="custom-input" type="number" id="expired" name="expired" min="30">
       </template>
 
       <template slot="footer">
-        <Button @click="clientSubmit()" title="Save" type="primary" style="padding: 15px 25px;"></Button>
+        <Button @click="clientCreate()" title="Save as Draft" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
+        <Button @click="clientSubmit()" title="Submit" type="primary" style="padding: 15px 25px;"></Button>
       </template>
     </Modal>
   </div>
@@ -113,6 +122,8 @@ import Upload from '../../components/atoms/Upload'
 
 import EventService from '../../service/EventService'
 import AuthService from '../../service/AuthService'
+
+// client/list/{status} untuk list di event nya
 
 const eventService = EventService.build()
 const authService = AuthService.build()
@@ -137,12 +148,13 @@ export default {
       { status: 'canceled', title: 'Partnership dengan Facebook', starred: false }
     ],
     listManager: [],
+    listDraft: [],
     body: {
-      title: 'testing submit client',
-      description: 'mau mencoba integrasi post submit client',
+      title: '',
+      description: '',
       expired: 30,
       manager: {
-        id: '17ce792d-36b5-41c8-84b6-d1c4ea65a8a3'
+        id: ''
       },
       financialModel: {
         name: 'finance',
@@ -178,7 +190,14 @@ export default {
     toDetail (val) {
       this.$router.push('/archieve/' + val)
     },
-    async clientSubmit () {
+    async clientCreate () { // id null kan u/ create baru, id terisi jika update data save as draft
+      const param = this.body
+      const response = await eventService.clientCreate(param)
+      if (response) {
+        console.log('hasil nya', response)
+      }
+    },
+    async clientSubmit () { // id null jika submit, id terisi jika data dari draft ke submit
       // this.$parent.isLoading = true
 
       const param = this.body
@@ -193,10 +212,18 @@ export default {
       if (response) {
         this.listManager = response.data
       }
+    },
+    async getListEvent () {
+      const paramDraft = Object.assign({ status: 'draft' })
+      const resDraft = await eventService.getEvent(paramDraft)
+      if (resDraft) {
+        this.listDraft = resDraft.data.content
+      }
     }
   },
   mounted () {
     this.getManager()
+    this.getListEvent()
   }
 }
 </script>
