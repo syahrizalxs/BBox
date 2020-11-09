@@ -23,12 +23,16 @@ export default {
   computed: {
     statusStyle () {
       let status = ''
-      if (this.status === 'cleared') {
-        status = 'cleared'
-      } else if (this.status === 'on progress') {
+      if (this.status === 'DRAFT') {
+        status = 'draft'
+      } else if (this.status === 'REQUESTED') {
+        status = 'requested'
+      } else if (this.status === 'ACCEPTED') {
+        status = 'accepted'
+      } else if (this.status === 'REJECTED') {
+        status = 'rejected'
+      } else if (this.status === 'ON_PROGRESS') {
         status = 'on-progress'
-      } else if (this.status === 'canceled') {
-        status = 'cancel'
       }
       return status
     }
@@ -83,16 +87,24 @@ export default {
     }
   }
 
-  .cleared {
-    color: #219653;
-  }
-
-  .on-progress {
+  .draft {
     color: #D56400;
   }
 
-  .cancel {
+  .requested {
     color: #EB5757;
+  }
+
+  .accepted {
+    color: #219653;
+  }
+
+  .rejected {
+    color: red;
+  }
+
+  .on-progress {
+    color: blue;
   }
 
   ._dropdown {
