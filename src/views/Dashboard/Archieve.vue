@@ -7,14 +7,15 @@
       </div>
       <div class="_left-starred">
         <div class="_left-heading-starred">
-          <span>Starred Event</span>
+          <!-- <span>Starred Event</span> -->
+          <span></span>
           <Button title="Add Event" @click="$refs.addEvent.visible = true" style="width: 115px; height: 39px;" :type="'outline-primary'">
             <template slot="icon">
               <img src="../../assets/icons/button/plus.svg">
             </template>
           </Button>
         </div>
-        <div class="_left-heading-starred-card">
+        <!-- <div class="_left-heading-starred-card">
           <div v-for="(item, index) in starred" :key="index">
             <CardEvent :starred="item.starred" style="margin-bottom: 10px;" :title="item.title" :status="item.status">
               <template slot="dropdown">
@@ -26,9 +27,9 @@
           <span style="opacity: 0.5;" v-if="starred.length === 0">
             There is no starred event.
           </span>
-        </div>
+        </div> -->
       </div>
-      <div class="_left-event-cards">
+      <!-- <div class="_left-event-cards">
         <div class="_left-event-cards-heading">
           <span>Event Cards</span>
         </div>
@@ -38,6 +39,34 @@
               <template slot="dropdown">
                 <span @click="toDetail('2')">Detail</span>
                 <span @click="item.starred = true">Star this event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div> -->
+      <div class="_left-event-cards">
+        <div class="_left-event-cards-heading">
+          <span>Event Draft</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div v-for="(item, index) in listDraft" :key="index" style="margin-top: 10px;">
+            <CardEvent :title="item.title" :status="item.status">
+              <template slot="dropdown">
+                <span @click="editData(item)">Edit</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div class="_left-event-cards">
+        <div class="_left-event-cards-heading">
+          <span>Event Requested</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div v-for="(item, index) in listRequested" :key="index" style="margin-top: 10px;">
+            <CardEvent :title="item.title" :status="item.status">
+              <template slot="dropdown">
+                <span>No Action</span>
               </template>
             </CardEvent>
           </div>
@@ -80,20 +109,29 @@
     <Modal :title="'Add Event'" ref="addEvent">
       <template slot="body">
         <label class="custom-label" for="title">Event Title</label><br>
-        <input v-model="body.title" class="custom-input" type="text" id="title" name="title"><br>
+        <input v-model="title" class="custom-input" type="text" id="title" name="title"><br>
+        <label class="custom-label" for="manager">Manager</label><br>
+        <select class="custom-input" v-model="managerId" name="manager" id="manager">
+          <template v-for="item in listManager">
+            <option v-bind:key="item.id" :value="item.id">{{item.name}}</option>
+          </template>
+        </select><br>
         <label class="custom-label" for="description">Description</label><br>
-        <textarea v-model="body.description" rows="100" class="custom-input" type="text-area" id="description" name="description"></textarea><br>
+        <textarea v-model="description" rows="100" class="custom-input" type="text-area" id="description" name="description"></textarea><br>
         <label class="custom-label" style="margin-bottom: 10px;" for="description">Lampiran Dokumen</label><br>
         <div class="files-list-name">
           <span class="files-tag-name">Document MOM dengan tesla</span>
         </div>
         <Upload style="margin-top: 10px !important; margin-bottom: 10px;" />
-        <label class="custom-label" for="tanggal">Tanggal Butuh Mitra</label>
-        <input class="custom-input" type="date">
+        <!-- <label class="custom-label" for="tanggal">Tanggal Butuh Mitra</label>
+        <input class="custom-input" type="date"> -->
+        <label class="custom-label" for="expired">Event Duration</label><br>
+        <input v-model="expired" class="custom-input" type="number" id="expired" name="expired" min="30">
       </template>
 
       <template slot="footer">
-        <Button @click="clientSubmit()" title="Save" type="primary" style="padding: 15px 25px;"></Button>
+        <Button @click="clientCreate()" title="Save as Draft" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
+        <Button @click="clientSubmit()" title="Submit" type="primary" style="padding: 15px 25px;"></Button>
       </template>
     </Modal>
   </div>
@@ -113,6 +151,8 @@ import Upload from '../../components/atoms/Upload'
 
 import EventService from '../../service/EventService'
 import AuthService from '../../service/AuthService'
+
+// client/list/{status} untuk list di event nya
 
 const eventService = EventService.build()
 const authService = AuthService.build()
@@ -136,35 +176,41 @@ export default {
       { status: 'cleared', title: 'Partnership dengan Icon', starred: false },
       { status: 'canceled', title: 'Partnership dengan Facebook', starred: false }
     ],
+
+    listDraft: [],
+    listRequested: [],
+    listAccepted: [],
+    listRejected: [],
+    listOnProgress: [],
+
     listManager: [],
-    body: {
-      title: 'testing submit client',
-      description: 'mau mencoba integrasi post submit client',
-      expired: 30,
-      manager: {
-        id: '17ce792d-36b5-41c8-84b6-d1c4ea65a8a3'
-      },
-      financialModel: {
-        name: 'finance',
-        url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
-      },
-      kajianLegal: {
-        name: 'legal',
-        url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
-      },
-      kajianResiko: {
-        name: 'resiko',
-        url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
-      },
-      businessPlan: {
-        name: 'bizinis',
-        url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
-      },
-      addtionalDocuments: [
-        // kalau ga ada file jadiin array kosong
-        // { name: '', url: '' }
-      ]
-    }
+    id: '',
+    title: '',
+    description: '',
+    expired: 30,
+    managerId: '',
+    businessPlan: {
+      name: "business_plan.docx",
+      url: "http://localhost/file/business_plan"
+    },
+    financialModel: {
+      name: "financial_model.docx",
+      url: "http://localhost/file/financial_model"
+    },
+    kajianLegal: {
+      name: "kajian_legal.docx",
+      url: "http://localhost/file/kajian_legal"
+    },
+    kajianResiko: {
+      name: "kajian_resiko.docx",
+      url: "http://localhost/file/kajian_resiko"
+    },
+    addtionalDocuments: [
+      {
+        name: "adds.docx",
+        url: "http://localhost/file/adds"
+      }
+    ]
   }),
   computed: {
     starred () {
@@ -178,25 +224,213 @@ export default {
     toDetail (val) {
       this.$router.push('/archieve/' + val)
     },
-    async clientSubmit () {
-      // this.$parent.isLoading = true
+    editData (data) {
+      console.log('data edit nya', data)
+      this.id = data.id,
+      this.title = data.title,
+      this.description = data.description,
+      this.expired = data.expired,
+      this.managerId = data.manager.id,
+      this.businessPlan.name = data.businessPlanDoc.name
+      this.businessPlan.url = data.businessPlanDoc.url
+      this.financialModel.name = data.financialModelDoc.name
+      this.financialModel.url = data.financialModelDoc.url
+      this.kajianLegal.name = data.kajianLegalDoc.name
+      this.kajianLegal.url = data.kajianLegalDoc.url
+      this.kajianResiko.name = data.kajianResikoDoc.name
+      this.kajianResiko.url = data.kajianResikoDoc.url
+      this.addtionalDocuments = data.additionalDocs
 
-      const param = this.body
+      this.$refs.addEvent.visible = true
+    },
+    async clientCreate () { // id null kan u/ create baru, id terisi jika update data save as draft
+      this.$parent.isLoading = true
+      let param
+      if (this.id) {
+        param = Object.assign({
+          id: this.id,
+          title: this.title,
+          description: this.description,
+          expired: this.expired,
+          managerId: this.managerId,
+          businessPlan: {
+            name: this.businessPlan.name,
+            url: this.businessPlan.url
+          },
+          financialModel: {
+            name: this.financialModel.name,
+            url: this.financialModel.url
+          },
+          kajianLegal: {
+            name: this.kajianLegal.name,
+            url: this.kajianLegal.url
+          },
+          kajianResiko: {
+            name: this.kajianResiko.name,
+            url: this.kajianResiko.url
+          },
+          addtionalDocuments: [
+            {
+              name: "adds.docx",
+              url: "http://localhost/file/adds"
+            }
+          ]
+        })
+      } else {
+        param = Object.assign({
+          title: this.title,
+          description: this.description,
+          expired: this.expired,
+          managerId: this.managerId,
+          businessPlan: {
+            name: this.businessPlan.name,
+            url: this.businessPlan.url
+          },
+          financialModel: {
+            name: this.financialModel.name,
+            url: this.financialModel.url
+          },
+          kajianLegal: {
+            name: this.kajianLegal.name,
+            url: this.kajianLegal.url
+          },
+          kajianResiko: {
+            name: this.kajianResiko.name,
+            url: this.kajianResiko.url
+          },
+          addtionalDocuments: [
+            {
+              name: "adds.docx",
+              url: "http://localhost/file/adds"
+            }
+          ]
+        })
+      }
+      const response = await eventService.clientCreate(param)
+      if (response) {
+        console.log('create', response)
+        this.$refs.addEvent.visible = false
+        this.$parent.isLoading = false
+        this.getListEvent()
+      }
+    },
+    async clientSubmit () { // id null jika submit, id terisi jika data dari draft ke submit
+      this.$parent.isLoading = true
+      let param
+      if (this.id) {
+        param = Object.assign({
+          id: this.id,
+          title: this.title,
+          description: this.description,
+          expired: this.expired,
+          managerId: this.managerId,
+          businessPlan: {
+            name: this.businessPlan.name,
+            url: this.businessPlan.url
+          },
+          financialModel: {
+            name: this.financialModel.name,
+            url: this.financialModel.url
+          },
+          kajianLegal: {
+            name: this.kajianLegal.name,
+            url: this.kajianLegal.url
+          },
+          kajianResiko: {
+            name: this.kajianResiko.name,
+            url: this.kajianResiko.url
+          },
+          addtionalDocuments: [
+            {
+              name: "adds.docx",
+              url: "http://localhost/file/adds"
+            }
+          ]
+        })
+      } else {
+        param = Object.assign({
+          title: this.title,
+          description: this.description,
+          expired: this.expired,
+          managerId: this.managerId,
+          businessPlan: {
+            name: this.businessPlan.name,
+            url: this.businessPlan.url
+          },
+          financialModel: {
+            name: this.financialModel.name,
+            url: this.financialModel.url
+          },
+          kajianLegal: {
+            name: this.kajianLegal.name,
+            url: this.kajianLegal.url
+          },
+          kajianResiko: {
+            name: this.kajianResiko.name,
+            url: this.kajianResiko.url
+          },
+          addtionalDocuments: [
+            {
+              name: "adds.docx",
+              url: "http://localhost/file/adds"
+            }
+          ]
+        })
+      }
       const response = await eventService.clientSubmit(param)
       if (response) {
-        console.log('hasil nya', response)
+        console.log('submit', response)
+        this.$refs.addEvent.visible = false
+        this.$parent.isLoading = false
+        this.getListEvent()
       }
     },
     async getManager () {
       // const param = this.body
+      this.$parent.isLoading = true
       const response = await authService.getListManager()
       if (response) {
         this.listManager = response.data
+        this.$parent.isLoading = false
       }
+    },
+    async getListEvent () {
+      this.$parent.isLoading = true
+      const paramDraft = Object.assign({ status: 'draft' })
+      const resDraft = await eventService.getEvent(paramDraft)
+      if (resDraft) {
+        this.listDraft = resDraft.data.content
+      }
+
+      const paramRequested = Object.assign({ status: 'requested' })
+      const resRequested = await eventService.getEvent(paramRequested)
+      if (resRequested) {
+        this.listRequested = resRequested.data.content
+      }
+
+      const paramAccepted = Object.assign({ status: 'accepted' })
+      const resAccepted = await eventService.getEvent(paramAccepted)
+      if (resAccepted) {
+        this.listAccepted = resAccepted.data.content
+      }
+
+      const paramRejected = Object.assign({ status: 'rejected' })
+      const resRejected = await eventService.getEvent(paramRejected)
+      if (resRejected) {
+        this.listRejected = resRejected.data.content
+      }
+
+      const paramOnProgress = Object.assign({ status: 'on_progress' })
+      const resOnProgress = await eventService.getEvent(paramOnProgress)
+      if (resOnProgress) {
+        this.listOnProgress = resOnProgress.data.content
+      }
+      this.$parent.isLoading = false
     }
   },
   mounted () {
     this.getManager()
+    this.getListEvent()
   }
 }
 </script>
@@ -270,13 +504,13 @@ export default {
     }
 
     ._left-event-cards {
-      margin-top: 40px;
+      margin-top: 20px;
       display: flex;
       flex-direction: column;
       width: 100%;
 
       ._left-event-cards-heading {
-        margin-bottom: 10px;
+        margin-bottom: 5px;
         span {
           font-weight: bold;
           font-size: 24px;
