@@ -72,30 +72,77 @@
           </div>
         </div>
       </div>
-      <div v-if="listAccepted.length > 0" class="_left-event-cards">
+      <div v-if="listAcceptedManager.length > 0" class="_left-event-cards">
         <div class="_left-event-cards-heading">
-          <span>Event Accepted</span>
+          <span>Event Accepted Manager</span>
         </div>
         <div class="_left-event-cards-content">
-          <div v-for="(item, index) in listAccepted" :key="index" style="margin-top: 10px;">
+          <div v-for="(item, index) in listAcceptedManager" :key="index" style="margin-top: 10px;">
             <CardEvent :title="item.title" :status="item.status">
-              <template slot="dropdown">
+              <template slot="dropdown" v-if="isVP">
+                <span @click="openRequest(item)">Open Request</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div v-if="listAcceptedVP.length > 0" class="_left-event-cards">
+        <div class="_left-event-cards-heading">
+          <span>Event Accepted VP</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div v-for="(item, index) in listAcceptedVP" :key="index" style="margin-top: 10px;">
+            <CardEvent :title="item.title" :status="item.status">
+              <template slot="dropdown" v-if="isDirectors">
+                <span @click="openRequest(item)">Open Request</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div v-if="listAcceptedDirectors.length > 0" class="_left-event-cards">
+        <div class="_left-event-cards-heading">
+          <span>Event Accepted Directors</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div v-for="(item, index) in listAcceptedDirectors" :key="index" style="margin-top: 10px;">
+            <CardEvent :title="item.title" :status="item.status">
+              <template slot="dropdown" v-if="isManager">
                 <span @click="openAssign(item)">Assign Team</span>
               </template>
             </CardEvent>
           </div>
         </div>
       </div>
-      <div v-if="listRejected.length > 0" class="_left-event-cards">
+      <div v-if="listRejectedManager.length > 0" class="_left-event-cards">
         <div class="_left-event-cards-heading">
-          <span>Event Rejected</span>
+          <span>Event Rejected Manager</span>
         </div>
         <div class="_left-event-cards-content">
-          <div v-for="(item, index) in listRejected" :key="index" style="margin-top: 10px;">
+          <div v-for="(item, index) in listRejectedManager" :key="index" style="margin-top: 10px;">
             <CardEvent :title="item.title" :status="item.status">
-              <template slot="dropdown">
-                <span>No Action</span>
-              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div v-if="listRejectedVP.length > 0" class="_left-event-cards">
+        <div class="_left-event-cards-heading">
+          <span>Event Rejected VP</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div v-for="(item, index) in listRejectedVP" :key="index" style="margin-top: 10px;">
+            <CardEvent :title="item.title" :status="item.status">
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div v-if="listRejectedDirectors.length > 0" class="_left-event-cards">
+        <div class="_left-event-cards-heading">
+          <span>Event Rejected Directors</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div v-for="(item, index) in listRejectedDirectors" :key="index" style="margin-top: 10px;">
+            <CardEvent :title="item.title" :status="item.status">
             </CardEvent>
           </div>
         </div>
@@ -150,25 +197,33 @@
 
     <Modal :title="'Add Event'" ref="addEvent">
       <template slot="body">
-        <label class="custom-label" for="title">Event Title</label><br>
-        <input v-model="title" class="custom-input" type="text" id="title" name="title"><br>
-        <label class="custom-label" for="manager">Manager</label><br>
+        <label class="custom-label" for="title">Event Title</label>
+        <input v-model="title" class="custom-input" type="text" id="title" name="title">
+        <label class="custom-label" for="manager">Manager</label>
         <select class="custom-input" v-model="managerId" name="manager" id="manager">
           <template v-for="item in listManager">
             <option v-bind:key="item.id" :value="item.id">{{item.name}}</option>
           </template>
-        </select><br>
-        <label class="custom-label" for="description">Description</label><br>
-        <textarea v-model="description" rows="100" class="custom-input" type="text-area" id="description" name="description"></textarea><br>
-        <label class="custom-label" style="margin-bottom: 10px;" for="description">Lampiran Dokumen</label><br>
+        </select>
+        <label class="custom-label" for="description">Description</label>
+        <textarea v-model="description" rows="100" class="custom-input" type="text-area" id="description" name="description"></textarea>
+        <label class="custom-label" style="margin-bottom: 10px;" for="description">Lampiran Dokumen</label>
         <div class="files-list-name">
           <span class="files-tag-name">Document MOM dengan tesla</span>
         </div>
         <Upload style="margin-top: 10px !important; margin-bottom: 10px;" />
-        <!-- <label class="custom-label" for="tanggal">Tanggal Butuh Mitra</label>
-        <input class="custom-input" type="date"> -->
-        <label class="custom-label" for="expired">Event Duration</label><br>
-        <input v-model="expired" class="custom-input" type="number" id="expired" name="expired" min="30">
+        <div class="_date">
+          <div>
+            <label class="custom-label" for="start">Start Date</label>
+            <input v-model="startDate" class="custom-input" type="date">
+          </div>
+          <div>
+            <label class="custom-label" for="end">End Date</label>
+            <input v-model="endDate" class="custom-input" type="date">
+          </div>
+        </div>
+        <!-- <label class="custom-label" for="expired">Event Duration</label><br>
+        <input v-model="expired" class="custom-input" type="number" id="expired" name="expired" min="30"> -->
       </template>
 
       <template slot="footer">
@@ -177,19 +232,19 @@
       </template>
     </Modal>
 
-    <Modal :title="'Event Approval'" ref="approvalRequest">
+    <Modal :title="isManager ? 'Event Approval Manager': isVP? 'Event Approval VP' : 'Event Approval Directors'" ref="approvalRequest">
       <template slot="body">
         <span>Event Tittle</span><br>
-        <p><b>{{ this.title }}</b></p>
+        <p><b>{{ title }}</b></p>
         <span>Description</span><br>
-        <p><b>{{ this.description }}</b></p>
+        <p><b>{{ description }}</b></p>
         <span>Documents</span><br>
-        <span><b>{{ this.businessPlan.name }}</b></span><br>
-        <span><b>{{ this.financialModel.name }}</b></span><br>
-        <span><b>{{ this.kajianLegal.name }}</b></span><br>
-        <span><b>{{ this.kajianResiko.name }}</b></span><br><br>
-        <span>Expired</span><br>
-        <p><b>{{ this.expired }}</b></p>
+        <span><b>{{ businessPlan.name }}</b></span><br>
+        <span><b>{{ financialModel.name }}</b></span><br>
+        <span><b>{{ kajianLegal.name }}</b></span><br>
+        <span><b>{{ kajianResiko.name }}</b></span><br><br>
+        <span>Sisa Hari</span><br>
+        <p><b>{{ dayLeft }}</b></p>
       </template>
 
       <template slot="footer">
@@ -222,12 +277,12 @@
       </template>
     </Modal>
 
-    <Modal :title="'Rejection'" ref="rejection">
+    <Modal :title="isManager? 'Rejection Manager': isVP? 'Rejection VP': 'Rejection Directors'" ref="rejection">
       <template slot="body">
         <span>Event Tittle</span><br>
-        <p><b>{{ this.title }}</b></p>
+        <p><b>{{ title }}</b></p>
         <span>Description</span><br>
-        <p><b>{{ this.description }}</b></p>
+        <p><b>{{ description }}</b></p>
         <label class="custom-label" for="notes">Notes</label><br>
         <input v-model="notes" class="custom-input" type="text" id="notes" name="notes"><br>
       </template>
@@ -282,11 +337,17 @@ export default {
 
     isRequester: false,
     isManager: false,
+    isVP: false,
+    isDirectors: false,
 
     listDraft: [],
     listRequested: [],
-    listAccepted: [],
-    listRejected: [],
+    listAcceptedManager: [],
+    listAcceptedVP: [],
+    listAcceptedDirectors: [],
+    listRejectedManager: [],
+    listRejectedVP: [],
+    listRejectedDirectors: [],
     listOnProgress: [],
 
     listManager: [],
@@ -299,7 +360,10 @@ export default {
     id: '',
     title: '',
     description: '',
-    expired: 30,
+    // expired: 30,
+    startDate: '',
+    endDate: '',
+    dayLeft: '',
     managerId: '',
     businessPlan: {
       name: "business_plan.docx",
@@ -340,7 +404,9 @@ export default {
       this.id = data.id,
       this.title = data.title,
       this.description = data.description,
-      this.expired = data.expired,
+      this.startDate = data.startDate
+      this.endDate = data.endDate
+      this.dayLeft = data.dayLeft
       this.managerId = data.manager.id,
       this.businessPlan.name = data.businessPlanDoc.name
       this.businessPlan.url = data.businessPlanDoc.url
@@ -356,7 +422,14 @@ export default {
       this.$refs.approvalRequest.visible = false
       this.$parent.isLoading = true
       const param = Object.assign({ id: this.id })
-      const response = await eventService.acceptByManager(param)
+      let response
+      if (this.isManager) {
+        response = await eventService.acceptByManager(param)
+      } else if (this.isVP) {
+        response = await eventService.acceptByVP(param)
+      } else if (this.isDirectors) {
+        response = await eventService.acceptByDirectors(param)
+      }
       if (response) {
         console.log('accept', response)
         this.$parent.isLoading = false
@@ -370,7 +443,14 @@ export default {
         id: this.id,
         reason: this.notes
       })
-      const response = await eventService.rejectByManager(param)
+      let response
+      if (this.isManager) {
+        response = await eventService.rejectByManager(param)
+      } else if (this.isVP) {
+        response = await eventService.rejectByVP(param)
+      } else if (this.isDirectors) {
+        response = await eventService.rejectByDirectors(param)
+      }
       if (response) {
         console.log('reject', response)
         this.$parent.isLoading = false
@@ -427,7 +507,8 @@ export default {
           id: this.id,
           title: this.title,
           description: this.description,
-          expired: this.expired,
+          startDate: this.startDate,
+          endDate: this.endDate,
           managerId: this.managerId,
           businessPlan: {
             name: this.businessPlan.name,
@@ -456,7 +537,8 @@ export default {
         param = Object.assign({
           title: this.title,
           description: this.description,
-          expired: this.expired,
+          startDate: this.startDate,
+          endDate: this.endDate,
           managerId: this.managerId,
           businessPlan: {
             name: this.businessPlan.name,
@@ -498,7 +580,8 @@ export default {
           id: this.id,
           title: this.title,
           description: this.description,
-          expired: this.expired,
+          startDate: this.startDate,
+          endDate: this.endDate,
           managerId: this.managerId,
           businessPlan: {
             name: this.businessPlan.name,
@@ -527,7 +610,8 @@ export default {
         param = Object.assign({
           title: this.title,
           description: this.description,
-          expired: this.expired,
+          startDate: this.startDate,
+          endDate: this.endDate,
           managerId: this.managerId,
           businessPlan: {
             name: this.businessPlan.name,
@@ -591,16 +675,40 @@ export default {
         this.listRequested = resRequested.data.content
       }
 
-      const paramAccepted = Object.assign({ status: 'accepted' })
-      const resAccepted = await eventService.getEvent(paramAccepted)
-      if (resAccepted) {
-        this.listAccepted = resAccepted.data.content
+      const paramAcceptedManager = Object.assign({ status: 'accepted_manager' })
+      const resAcceptedManager = await eventService.getEvent(paramAcceptedManager)
+      if (resAcceptedManager) {
+        this.listAcceptedManager = resAcceptedManager.data.content
       }
 
-      const paramRejected = Object.assign({ status: 'rejected' })
-      const resRejected = await eventService.getEvent(paramRejected)
-      if (resRejected) {
-        this.listRejected = resRejected.data.content
+      const paramAcceptedVP = Object.assign({ status: 'accepted_vp' })
+      const resAcceptedVP = await eventService.getEvent(paramAcceptedVP)
+      if (resAcceptedVP) {
+        this.listAcceptedVP = resAcceptedVP.data.content
+      }
+
+      const paramAcceptedDirectors = Object.assign({ status: 'accepted_direksi' })
+      const resAcceptedDirectors = await eventService.getEvent(paramAcceptedDirectors)
+      if (resAcceptedDirectors) {
+        this.listAcceptedDirectors = resAcceptedDirectors.data.content
+      }
+
+      const paramRejectedManager = Object.assign({ status: 'rejected_manager' })
+      const resRejectedManager = await eventService.getEvent(paramRejectedManager)
+      if (resRejectedManager) {
+        this.listRejectedManager = resRejectedManager.data.content
+      }
+
+      const paramRejectedVP = Object.assign({ status: 'rejected_vp' })
+      const resRejectedVP = await eventService.getEvent(paramRejectedVP)
+      if (resRejectedVP) {
+        this.listRejectedVP = resRejectedVP.data.content
+      }
+
+      const paramRejectedDirectors = Object.assign({ status: 'rejected_direksi' })
+      const resRejectedDirectors = await eventService.getEvent(paramRejectedDirectors)
+      if (resRejectedDirectors) {
+        this.listRejectedDirectors = resRejectedDirectors.data.content
       }
 
       const paramOnProgress = Object.assign({ status: 'on_progress' })
@@ -619,6 +727,10 @@ export default {
       } else if (role === 'MANAGER') {
         this.isManager = true
         this.getEmployee()
+      } else if (role === 'VP') {
+        this.isVP = true
+      } else if (role === 'DIREKSI') {
+        this.isDirectors = true
       }
     }
   },
@@ -630,6 +742,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+._date {
+  display: flex;
+  justify-content: space-between;
+  div {
+    width:48%;
+  }
+}
 .files-list-name {
   width: 100%;
   display: flex;

@@ -23,8 +23,28 @@ export default class EventService extends HttpService {
     return this.get(param, api)
   }
 
+  acceptByVP (param) {
+    const api = this.api + '/vp/accept'
+    return this.get(param, api)
+  }
+
+  acceptByDirectors (param) {
+    const api = this.api + '/directors/accept'
+    return this.get(param, api)
+  }
+
   rejectByManager (param) {
     const api = this.api + '/manager/reject'
+    return this.post(param, api)
+  }
+
+  rejectByVP (param) {
+    const api = this.api + '/vp/reject'
+    return this.post(param, api)
+  }
+
+  rejectByDirectors (param) {
+    const api = this.api + '/directors/reject'
     return this.post(param, api)
   }
 
