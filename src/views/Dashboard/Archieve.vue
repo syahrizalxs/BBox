@@ -50,7 +50,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listDraft" :key="index" style="margin-top: 10px;">
-            <CardEvent :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
               <template slot="dropdown" v-if="isRequester">
                 <span @click="editData(item)">Edit</span>
               </template>
@@ -64,7 +64,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listRequested" :key="index" style="margin-top: 10px;">
-            <CardEvent :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
               <template slot="dropdown" v-if="isManager">
                 <span @click="openRequest(item)">Open Request</span>
               </template>
@@ -78,7 +78,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listAcceptedManager" :key="index" style="margin-top: 10px;">
-            <CardEvent :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
               <template slot="dropdown" v-if="isVP">
                 <span @click="openRequest(item)">Open Request</span>
               </template>
@@ -92,7 +92,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listAcceptedVP" :key="index" style="margin-top: 10px;">
-            <CardEvent :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
               <template slot="dropdown" v-if="isDirectors">
                 <span @click="openRequest(item)">Open Request</span>
               </template>
@@ -106,7 +106,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listAcceptedDirectors" :key="index" style="margin-top: 10px;">
-            <CardEvent :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
               <template slot="dropdown" v-if="isManager">
                 <span @click="openAssign(item)">Assign Team</span>
               </template>
@@ -120,7 +120,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listRejectedManager" :key="index" style="margin-top: 10px;">
-            <CardEvent :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
             </CardEvent>
           </div>
         </div>
@@ -131,7 +131,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listRejectedVP" :key="index" style="margin-top: 10px;">
-            <CardEvent :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
             </CardEvent>
           </div>
         </div>
@@ -142,7 +142,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listRejectedDirectors" :key="index" style="margin-top: 10px;">
-            <CardEvent :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
             </CardEvent>
           </div>
         </div>
@@ -153,7 +153,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listOnProgress" :key="index" style="margin-top: 10px;">
-            <CardEvent :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
               <template slot="dropdown">
                 <span>Detail</span>
               </template>
@@ -169,27 +169,27 @@
       <div class="_detail-event">
         <h2 style="margin-bottom: 40px;">Detail Event</h2>
 
-        <span class="parent">Event Title</span>
-        <span class="child">Partnership Dengan Brightspace</span>
+        <span class="parent">Title</span>
+        <span class="child">{{ detailActivity.title || '-' }}</span>
         
         <span class="parent">Created</span>
-        <span class="child">Jan 01, 2020 at 8:00 AM</span>
+        <span class="child">{{ detailActivity.createdDate | convertDate }}</span>
         
         <span class="parent">Last Update</span>
-        <span class="child">Sep 27, 2020 at 1:29 PM</span>
+        <span class="child">{{ detailActivity.modifiedDate | convertDate }}</span>
         
         <span class="parent">Status</span>
-        <span class="child">Cleared</span>
+        <span v-if="detailActivity.status" class="child">{{ detailActivity.status | convertStatus }}</span>
       </div>
       <div class="_participans">
         <b>Participants</b>
         <div class="_participants-ava">
-          <Avatar class="_ava" path="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Natalie_Portman_Cannes_2015_5_%28cropped%29.jpg/230px-Natalie_Portman_Cannes_2015_5_%28cropped%29.jpg"/>
-          <Avatar class="_ava" path="https://1.bp.blogspot.com/-7osU1A9QpAE/Tcf0jD5KoDI/AAAAAAAAAIs/AFEsHouE14w/s1600/travis-barker-profile.png"/>
-          <Avatar class="_ava" path="https://media.suara.com/pictures/970x544/2019/08/18/23065-niki-zefanya.jpg"/>
-          <Avatar class="_ava" path="https://p01.lacasting.com.castingnetworks.io/photos/mm/4/0/e0e9cde28b3542dfab980f9ed9046d04.jpg "/>
-          <div class="_over-ava">
+          <Avatar v-for="item in detailActivity.participants" :key="item" class="_ava" :path="item.avatar"/>
+          <div class="_over-ava" v-if="detailActivity && detailActivity.participants && detailActivity.participants.length > 5">
             <span class="_ava-number">+3</span>
+          </div>
+          <div v-if="detailActivity && detailActivity.participants && !detailActivity.participants.length">
+            There is no participants yet.
           </div>
         </div>
       </div>
@@ -208,18 +208,18 @@
         <label class="custom-label" for="description">Description</label>
         <textarea v-model="description" rows="100" class="custom-input" type="text-area" id="description" name="description"></textarea>
         <label class="custom-label" for="businessPlan">Business Plan</label>
-        <input class="custom-input" type="file" id="businessPlan" name="businessPlan">
+        <Upload style="margin-top: 10px !important; margin-bottom: 10px;" />
         <label class="custom-label" for="financialModel">Financial Model</label>
-        <input class="custom-input" type="file" id="financialModel" name="financialModel">
+        <Upload style="margin-top: 10px !important; margin-bottom: 10px;" />
         <label class="custom-label" for="kajianLegal">Kajian Legal</label>
-        <input class="custom-input" type="file" id="kajianLegal" name="kajianLegal">
+        <Upload style="margin-top: 10px !important; margin-bottom: 10px;" />
         <label class="custom-label" for="kajianResiko">Kajian Resiko</label>
-        <input class="custom-input" type="file" id="kajianResiko" name="kajianResiko">
+        <Upload style="margin-top: 10px !important; margin-bottom: 10px;" />
         <label class="custom-label" style="margin-bottom: 10px;" for="description">Lampiran Dokumen</label>
         <div class="files-list-name">
-          <span class="files-tag-name">Document MOM dengan tesla</span>
+          <span class="files-tag-name" v-for="(item, index) in attachmentHolder" @click="attachmentHolder.splice(index, 1)" :key="index">{{ item.name }}</span>
         </div>
-        <Upload style="margin-top: 10px !important; margin-bottom: 10px;" />
+        <Upload style="margin-top: 10px !important; margin-bottom: 10px;" type="attachment" @change="handleUpload"/>
         <div class="_date">
           <div>
             <label class="custom-label" for="start">Start Date</label>
@@ -230,8 +230,6 @@
             <input v-model="endDate" class="custom-input" type="date">
           </div>
         </div>
-        <!-- <label class="custom-label" for="expired">Event Duration</label><br>
-        <input v-model="expired" class="custom-input" type="number" id="expired" name="expired" min="30"> -->
       </template>
 
       <template slot="footer">
@@ -318,6 +316,8 @@ import Upload from '../../components/atoms/Upload'
 import EventService from '../../service/EventService'
 import AuthService from '../../service/AuthService'
 
+import { convertDate, convertStatus } from '../../commons/utils/filter'
+
 // client/list/{status} untuk list di event nya
 
 const eventService = EventService.build()
@@ -325,6 +325,10 @@ const authService = AuthService.build()
 
 export default {
   name: 'Archieve',
+  filters: {
+    convertDate,
+    convertStatus
+  },
   components: {
     Heading,
     Search,
@@ -342,6 +346,8 @@ export default {
       { status: 'cleared', title: 'Partnership dengan Icon', starred: false },
       { status: 'canceled', title: 'Partnership dengan Facebook', starred: false }
     ],
+
+    detailActivity: {},
 
     isRequester: false,
     isManager: false,
@@ -373,22 +379,27 @@ export default {
     endDate: '',
     dayLeft: '',
     managerId: '',
+    attachmentHolder: [],
     businessPlan: {
       name: "business_plan.docx",
       url: "http://localhost/file/business_plan"
     },
+    businessPlanHolder: {},
     financialModel: {
       name: "financial_model.docx",
       url: "http://localhost/file/financial_model"
     },
+    financialModelHolder: {},
     kajianLegal: {
       name: "kajian_legal.docx",
       url: "http://localhost/file/kajian_legal"
     },
+    kajianLegalHolder: {},
     kajianResiko: {
       name: "kajian_resiko.docx",
       url: "http://localhost/file/kajian_resiko"
     },
+    kajianResikoHolder: {},
     addtionalDocuments: [
       {
         name: "adds.docx",
@@ -405,6 +416,18 @@ export default {
     }
   },
   methods: {
+    handleUpload (e, type) {
+      if (type === 'attachment') {
+        // Method Upload
+        this.attachmentHolder.push({
+          name: e.name,
+          file: e // ganti jadi url: dari method
+        })
+      }
+    },
+    handleCardClicked (e) {
+      this.detailActivity = e
+    },
     toDetail (val) {
       this.$router.push('/archieve/' + val)
     },
@@ -762,6 +785,7 @@ export default {
   display: flex;
   padding-top: 5px;
   .files-tag-name {
+    cursor: pointer;
     border: 1px solid #0077B5;
     border-radius: 6px;
     padding: 3px 5px;
