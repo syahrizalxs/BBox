@@ -32,11 +32,11 @@ export default {
       {
         hoverBackgroundColor: "red",
         hoverBorderWidth: 10,
-        labels: ["On Progress", "Complete", "Rejected"],
+        labels: ["On Progress", "Cleared", "Canceled"],
         datasets: [
           {
             label: "Data One",
-            backgroundColor: ["#00D8FF", "#41B883", "#E46651"],
+            backgroundColor: ["#F2994A", "#27AE60", "#EB5757"],
             data: [1, 10, 5]
           }
         ]
