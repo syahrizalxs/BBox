@@ -44,7 +44,7 @@
           </div>
         </div>
       </div> -->
-      <div class="_left-event-cards">
+      <div v-if="listDraft.length > 0" class="_left-event-cards">
         <div class="_left-event-cards-heading">
           <span>Event Draft</span>
         </div>
@@ -58,7 +58,7 @@
           </div>
         </div>
       </div>
-      <div class="_left-event-cards">
+      <div v-if="listRequested.length > 0" class="_left-event-cards">
         <div class="_left-event-cards-heading">
           <span>Event Requested</span>
         </div>
@@ -67,6 +67,49 @@
             <CardEvent :title="item.title" :status="item.status">
               <template slot="dropdown">
                 <span>No Action</span>
+                <span @click="$refs.approvalRequest.visible = true">Open Request</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div v-if="listAccepted.length > 0" class="_left-event-cards">
+        <div class="_left-event-cards-heading">
+          <span>Event Accepted</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div v-for="(item, index) in listAccepted" :key="index" style="margin-top: 10px;">
+            <CardEvent :title="item.title" :status="item.status">
+              <template slot="dropdown">
+                <span>Detail</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div v-if="listRejected.length > 0" class="_left-event-cards">
+        <div class="_left-event-cards-heading">
+          <span>Event Rejected</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div v-for="(item, index) in listRejected" :key="index" style="margin-top: 10px;">
+            <CardEvent :title="item.title" :status="item.status">
+              <template slot="dropdown">
+                <span>No Action</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div v-if="listOnProgress.length > 0" class="_left-event-cards">
+        <div class="_left-event-cards-heading">
+          <span>Event On Progress</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div v-for="(item, index) in listOnProgress" :key="index" style="margin-top: 10px;">
+            <CardEvent :title="item.title" :status="item.status">
+              <template slot="dropdown">
+                <span>Detail</span>
               </template>
             </CardEvent>
           </div>
@@ -134,6 +177,39 @@
         <Button @click="clientSubmit()" title="Submit" type="primary" style="padding: 15px 25px;"></Button>
       </template>
     </Modal>
+
+    <Modal :title="'Event Approval'" ref="approvalRequest">
+      <template slot="body">
+        
+      </template>
+
+      <template slot="footer">
+        <Button @click="($refs.rejection.visible = true).then($refs.approvalRequest.visible = false)" title="Reject" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
+        <Button @click="($refs.assignTeam.visible = true).then($refs.approvalRequest.visible = false)" title="Assign Team Member" type="primary" style="padding: 15px 25px;"></Button>
+      </template>
+    </Modal>
+
+    <Modal :title="'Assign Team Member'" ref="assignTeam">
+      <template slot="body">
+        
+      </template>
+
+      <template slot="footer">
+        <Button @click="($refs.assignTeam.visible = false).then($refs.approvalRequest.visible = true)" title="Cancel" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
+        <Button title="Approve" type="primary" style="padding: 15px 25px;"></Button>
+      </template>
+    </Modal>
+
+    <Modal :title="'Rejection'" ref="rejection">
+      <template slot="body">
+        
+      </template>
+
+      <template slot="footer">
+        <Button @click="($refs.rejection.visible = false).then($refs.approvalRequest.visible = true)" title="Cancel" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
+        <Button title="Send Rejection" type="primary" style="padding: 15px 25px;"></Button>
+      </template>
+    </Modal>
   </div>
 </template>
 
@@ -176,6 +252,9 @@ export default {
       { status: 'cleared', title: 'Partnership dengan Icon', starred: false },
       { status: 'canceled', title: 'Partnership dengan Facebook', starred: false }
     ],
+
+    isRequester: false,
+    isManager: false,
 
     listDraft: [],
     listRequested: [],
@@ -225,7 +304,6 @@ export default {
       this.$router.push('/archieve/' + val)
     },
     editData (data) {
-      console.log('data edit nya', data)
       this.id = data.id,
       this.title = data.title,
       this.description = data.description,
@@ -426,11 +504,22 @@ export default {
         this.listOnProgress = resOnProgress.data.content
       }
       this.$parent.isLoading = false
+    },
+    getRole () {
+      const dataUser = JSON.parse(localStorage.getItem('user_detail'))
+      console.log(dataUser)
+      const role = dataUser.role
+      if (role === 'CLIENT') {
+        this.isRequester = true
+      } else if (role === 'MANAGER') {
+        this.isManager = true
+      }
     }
   },
-  mounted () {
-    this.getManager()
-    this.getListEvent()
+  async mounted () {
+    this.getRole()
+    await this.getListEvent()
+    await this.getManager()
   }
 }
 </script>

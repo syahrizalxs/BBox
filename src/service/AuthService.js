@@ -48,6 +48,11 @@ export default class AuthService extends HttpService {
     const api = this.api + '/list/manager/combobox'
     return this.get(param, api)
   }
+
+  getListEmployee (param) {
+    const api = this.api + '/list/employee/combobox'
+    return this.get(param, api)
+  }
   
   logout () {
     // const api = this.api + '/logout'
