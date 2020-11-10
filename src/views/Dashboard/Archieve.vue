@@ -612,7 +612,9 @@ export default {
     }
   }
   ._right {
-    width: 30%;
+    position: fixed;
+    right: 0;
+    width: 27%;
     display: flex;
     flex-direction: column;
     padding: 30px;
