@@ -3,6 +3,7 @@ import { Pie } from "vue-chartjs";
 
 export default {
   extends: Pie,
+  props: ['data', 'label'],
   data() {
     return {
       gradient: null,
@@ -10,34 +11,16 @@ export default {
     };
   },
   mounted() {
-    // this.gradient = this.$refs.canvas
-    //   .getContext("2d")
-    //   .createLinearGradient(0, 0, 0, 450);
-    // // this.gradient2 = this.$refs.canvas
-    // //   .getContext("2d")
-    // //   .createLinearGradient(0, 0, 0, 450);
-
-    // this.gradient.addColorStop(0, "rgba(0,119,181, 1)");
-    // this.gradient.addColorStop(0.5, "rgba(0,119,181, 0.5)");
-    // this.gradient.addColorStop(1, "rgba(0,119,181, 0)");
-
-    // let ctx = document.getElementById('line-chart')
-    // ctx.style.backgroundColor = 'rgba(255, 255, 255, S255)';
-
-    // this.gradient2.addColorStop(0, "rgba(0, 231, 255, 0.9)");
-    // this.gradient2.addColorStop(0.5, "rgba(0, 231, 255, 0.25)");
-    // this.gradient2.addColorStop(1, "rgba(0, 231, 255, 0)");
-
     this.renderChart(
       {
         hoverBackgroundColor: "red",
         hoverBorderWidth: 10,
-        labels: ["On Progress", "Cleared", "Canceled"],
+        labels: this.label,
         datasets: [
           {
             label: "Data One",
             backgroundColor: ["#F2994A", "#27AE60", "#EB5757"],
-            data: [1, 10, 5]
+            data: this.data
           }
         ]
       },
