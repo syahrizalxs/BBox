@@ -33,4 +33,9 @@ export default class EventService extends HttpService {
     return this.post(param, api)
   }
 
+  getSummary () {
+    const api = this.api + '/summary'
+    return this.get(null, api)
+  }
+
 }

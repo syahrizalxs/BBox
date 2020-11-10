@@ -33,6 +33,7 @@ export default class HttpService extends BaseService {
   }
   static setHeader () {
     service.defaults.headers.common['Authorization'] = `Bearer ${storage.getToken()}`
+    service.defaults.headers.common['Content-Type'] = 'application/json'
   }
 
   static removeHeader () {

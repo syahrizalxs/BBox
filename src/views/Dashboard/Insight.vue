@@ -23,7 +23,7 @@
 				</div>
 			</div>
 			<div class="_charts">
-        <AreaChart :width="250" :height="230"/>
+        <AreaChart v-if="dataChart && dataChart.length" :width="250" :height="230" :data="dataChart" :label="labelChart"/>
 			</div>
 		</div>
     <div class="_main-home">
@@ -92,7 +92,12 @@ import CardActivity from '../../components/CardActivity'
 import Notification from '../../components/Notification'
 import AreaChart from '../../components/Chart'
 
+//Service
+import EventService from '../../service/EventService'
+
 import { mapGetters } from 'vuex'
+
+const eventService = EventService.build()
 
 export default {
 	name: 'insight',
@@ -110,31 +115,22 @@ export default {
 			{ status: 'pending', title: 'Partnership dengan Google' },
 			{ status: 'pending', title: 'Partnership dengan Facebook' },
 			{ status: 'pending', title: 'Partnership dengan Tesla' }
-		],
-		// options: {
-		// 	chart: {
-		// 		id: 'vuechart-example',
-		// 		toolbar: {
-		// 			show: false
-		// 		},
-		// 		height: '20px',
-		// 		width: '20px'
-		// 	},
-		// 	xaxis: {
-		// 		categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-		// 	}
-		// },
-		// series: [{
-		// 	name: 'series-1',
-		// 	data: [30, 40, 45, 50, 49, 60, 70, 91]
-    // }]
+    ],
+    dataChart: [],
+    labelChart: []
   }),
   computed: mapGetters('auth', ['authenticatedUser']),
 	methods: {
-    
+    async getChart () {
+      const res = await eventService.getSummary()
+      res.data.forEach(item => {
+        this.dataChart.push(item.value)
+        this.labelChart.push(item.label)
+      })
+    }
 	},
-	mounted () {
-    
+	created () {
+    this.getChart()
   }
 }
 </script>
