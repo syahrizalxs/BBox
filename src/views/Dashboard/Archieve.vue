@@ -5,7 +5,7 @@
         <Heading style="margin-right: 200px" />
         <Search />
       </div>
-      <div class="_left-starred">
+      <div v-if="isRequester" class="_left-starred">
         <div class="_left-heading-starred">
           <!-- <span>Starred Event</span> -->
           <span></span>
@@ -51,7 +51,7 @@
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listDraft" :key="index" style="margin-top: 10px;">
             <CardEvent :title="item.title" :status="item.status">
-              <template slot="dropdown">
+              <template slot="dropdown" v-if="isRequester">
                 <span @click="editData(item)">Edit</span>
               </template>
             </CardEvent>
@@ -65,9 +65,8 @@
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listRequested" :key="index" style="margin-top: 10px;">
             <CardEvent :title="item.title" :status="item.status">
-              <template slot="dropdown">
-                <span>No Action</span>
-                <span @click="$refs.approvalRequest.visible = true">Open Request</span>
+              <template slot="dropdown" v-if="isManager">
+                <span @click="openRequest(item)">Open Request</span>
               </template>
             </CardEvent>
           </div>
@@ -81,7 +80,7 @@
           <div v-for="(item, index) in listAccepted" :key="index" style="margin-top: 10px;">
             <CardEvent :title="item.title" :status="item.status">
               <template slot="dropdown">
-                <span>Detail</span>
+                <span @click="openAssign(item)">Assign Team</span>
               </template>
             </CardEvent>
           </div>
@@ -180,34 +179,62 @@
 
     <Modal :title="'Event Approval'" ref="approvalRequest">
       <template slot="body">
-        
+        <span>Event Tittle</span><br>
+        <p><b>{{ this.title }}</b></p>
+        <span>Description</span><br>
+        <p><b>{{ this.description }}</b></p>
+        <span>Documents</span><br>
+        <span><b>{{ this.businessPlan.name }}</b></span><br>
+        <span><b>{{ this.financialModel.name }}</b></span><br>
+        <span><b>{{ this.kajianLegal.name }}</b></span><br>
+        <span><b>{{ this.kajianResiko.name }}</b></span><br><br>
+        <span>Expired</span><br>
+        <p><b>{{ this.expired }}</b></p>
       </template>
 
       <template slot="footer">
-        <Button @click="($refs.rejection.visible = true).then($refs.approvalRequest.visible = false)" title="Reject" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
-        <Button @click="($refs.assignTeam.visible = true).then($refs.approvalRequest.visible = false)" title="Assign Team Member" type="primary" style="padding: 15px 25px;"></Button>
+        <Button @click="$refs.rejection.visible = true; $refs.approvalRequest.visible = false" title="Reject" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
+        <Button @click="acceptEvent()" title="Accept" type="primary" style="padding: 15px 25px;"></Button>
       </template>
     </Modal>
 
     <Modal :title="'Assign Team Member'" ref="assignTeam">
       <template slot="body">
-        
+        <span>Event Tittle</span><br>
+        <p><b>{{ this.title }}</b></p>
+        <span>Description</span><br>
+        <p><b>{{ this.description }}</b></p>
+        <label class="custom-label" for="employee">Assign</label><br>
+        <div class="files-list-name">
+          <span v-for="(item, index) in employee" :key="item.id" class="files-tag-name" @click="delEmp(index)">{{ item.name }}</span>
+        </div>
+        <span v-if="duplicateEmp" style="color:red">Team sudah ditambahkan</span>
+        <select v-model="selectEmp" class="custom-input" name="employee" id="employee" @change="addEmp($event)">
+          <template v-for="item in listEmployee">
+            <option v-bind:key="item.id" :value="item.id">{{item.name}}</option>
+          </template>
+        </select><br>
       </template>
 
       <template slot="footer">
-        <Button @click="($refs.assignTeam.visible = false).then($refs.approvalRequest.visible = true)" title="Cancel" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
-        <Button title="Approve" type="primary" style="padding: 15px 25px;"></Button>
+        <Button @click="$refs.assignTeam.visible = false" title="Cancel" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
+        <Button @click="assignTeam()" title="Assign Team Member" type="primary" style="padding: 15px 25px;"></Button>
       </template>
     </Modal>
 
     <Modal :title="'Rejection'" ref="rejection">
       <template slot="body">
-        
+        <span>Event Tittle</span><br>
+        <p><b>{{ this.title }}</b></p>
+        <span>Description</span><br>
+        <p><b>{{ this.description }}</b></p>
+        <label class="custom-label" for="notes">Notes</label><br>
+        <input v-model="notes" class="custom-input" type="text" id="notes" name="notes"><br>
       </template>
 
       <template slot="footer">
-        <Button @click="($refs.rejection.visible = false).then($refs.approvalRequest.visible = true)" title="Cancel" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
-        <Button title="Send Rejection" type="primary" style="padding: 15px 25px;"></Button>
+        <Button @click="$refs.rejection.visible = false; $refs.approvalRequest.visible = true" title="Cancel" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
+        <Button @click="RejectEvent()" title="Send Rejection" type="primary" style="padding: 15px 25px;"></Button>
       </template>
     </Modal>
   </div>
@@ -263,6 +290,12 @@ export default {
     listOnProgress: [],
 
     listManager: [],
+    listEmployee: [],
+    notes: '',
+    selectEmp: '',
+    duplicateEmp: false,
+    employee: [],
+
     id: '',
     title: '',
     description: '',
@@ -303,7 +336,7 @@ export default {
     toDetail (val) {
       this.$router.push('/archieve/' + val)
     },
-    editData (data) {
+    assignData (data) {
       this.id = data.id,
       this.title = data.title,
       this.description = data.description,
@@ -318,7 +351,72 @@ export default {
       this.kajianResiko.name = data.kajianResikoDoc.name
       this.kajianResiko.url = data.kajianResikoDoc.url
       this.addtionalDocuments = data.additionalDocs
-
+    },
+    async acceptEvent () {
+      this.$refs.approvalRequest.visible = false
+      this.$parent.isLoading = true
+      const param = Object.assign({ id: this.id })
+      const response = await eventService.acceptByManager(param)
+      if (response) {
+        console.log('accept', response)
+        this.$parent.isLoading = false
+        this.getListEvent()
+      }
+    },
+    async RejectEvent () {
+      this.$refs.rejection.visible = false
+      this.$parent.isLoading = true
+      const param = Object.assign({ 
+        id: this.id,
+        reason: this.notes
+      })
+      const response = await eventService.rejectByManager(param)
+      if (response) {
+        console.log('reject', response)
+        this.$parent.isLoading = false
+        this.getListEvent()
+      }
+    },
+    async assignTeam () {
+      this.$refs.assignTeam.visible = false
+      this.$parent.isLoading = true
+      const emp = this.employee.map(item => {
+        return item.id
+      })
+      const param = Object.assign({ 
+        eventId: this.id,
+        participants: emp
+      })
+      const response = await eventService.assignTeam(param)
+      if (response) {
+        console.log('assign', response)
+        this.$parent.isLoading = false
+        this.getListEvent()
+      }
+    },
+    addEmp (event) {
+      const checkEmp = this.employee.find(item => item.id === event.target.value)
+      if (!checkEmp) {
+        const emp = this.listEmployee.find(item => item.id === event.target.value)
+        this.employee.push(emp)
+        this.duplicateEmp = false
+      } else {
+        this.duplicateEmp = true
+      }
+    },
+    delEmp (index) {
+      this.employee.splice(index,1)
+    },
+    openAssign (data) {
+      this.assignData(data)
+      this.$refs.assignTeam.visible = true
+    },
+    openRequest (data) {
+      this.assignData(data)
+      this.$refs.approvalRequest.visible = true
+    },
+    editData (data) {
+      this.assignData(data)
       this.$refs.addEvent.visible = true
     },
     async clientCreate () { // id null kan u/ create baru, id terisi jika update data save as draft
@@ -464,11 +562,18 @@ export default {
       }
     },
     async getManager () {
-      // const param = this.body
       this.$parent.isLoading = true
       const response = await authService.getListManager()
       if (response) {
         this.listManager = response.data
+        this.$parent.isLoading = false
+      }
+    },
+    async getEmployee () {
+      this.$parent.isLoading = true
+      const response = await authService.getListEmployee()
+      if (response) {
+        this.listEmployee = response.data
         this.$parent.isLoading = false
       }
     },
@@ -511,15 +616,16 @@ export default {
       const role = dataUser.role
       if (role === 'CLIENT') {
         this.isRequester = true
+        this.getManager()
       } else if (role === 'MANAGER') {
         this.isManager = true
+        this.getEmployee()
       }
     }
   },
   async mounted () {
-    this.getRole()
+    await this.getRole()
     await this.getListEvent()
-    await this.getManager()
   }
 }
 </script>
@@ -535,12 +641,13 @@ export default {
     padding: 3px 5px;
     font-size: 10px !important;
     color: #0077B5;
+    margin-right: 5px;
     &:hover {
       color: #F5F5F5;
       background-color: rgb(228, 50, 50);
       border: none;
-      cursor: pointer;
       &:after {
+        cursor: pointer;
         content: 'X';
         font-weight: bold;
         margin-left: 10px;    
