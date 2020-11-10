@@ -23,7 +23,7 @@ export default {
   overflow: hidden;
 	width: 100%;
   min-height: 100vh;
-	background-color: rgba($color: #000000, $alpha: 0.7);
+	background-color: rgba($color: #000000, $alpha: 0.4);
   z-index: 3;
 }
 .loading {

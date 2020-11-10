@@ -159,7 +159,7 @@ export default {
 	background-color: #F5F5F5;
 
 	._bio {
-		margin-top: 50px;
+		margin-top: 30px;
 		display: flex;
 		flex-direction: row;
 

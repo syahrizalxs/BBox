@@ -28,9 +28,9 @@ export default class HttpService extends BaseService {
    * @param {Object} options
    */
   static build (options) {
+    this.setHeader()
     return new this(this.api, this.entity, options)
   }
-
   static setHeader () {
     service.defaults.headers.common['Authorization'] = `Bearer ${storage.getToken()}`
   }
@@ -106,7 +106,6 @@ export default class HttpService extends BaseService {
    * @returns {*|Promise<any>}
    */
   patch (data, url = '') {
-    console.log(data)
     const api = url === '' ? this.api : url
     const deserializeData = Deserialize(data, this.entity)
     return this.http

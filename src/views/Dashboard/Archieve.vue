@@ -612,7 +612,6 @@ export default {
     },
     getRole () {
       const dataUser = JSON.parse(localStorage.getItem('user_detail'))
-      console.log(dataUser)
       const role = dataUser.role
       if (role === 'CLIENT') {
         this.isRequester = true
@@ -623,7 +622,7 @@ export default {
       }
     }
   },
-  async mounted () {
+  async created () {
     await this.getRole()
     await this.getListEvent()
   }
@@ -722,6 +721,7 @@ export default {
     position: fixed;
     right: 0;
     width: 27%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     padding: 30px;
