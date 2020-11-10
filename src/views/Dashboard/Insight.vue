@@ -6,7 +6,7 @@
 				<Avatar class="avatar" :path=" authenticatedUser.avatar || 'https://freedesignfile.com/upload/2017/06/HD-picture-Female-face-photo.jpg'" />
 				<div>
 					<span class="name">{{authenticatedUser.fullName}}</span>
-					<span class="job">{{authenticatedUser.jobField}}</span>
+					<span class="job">{{authenticatedUser.role}} - {{authenticatedUser.division}}</span>
 				</div>
 			</div>
 			<div class="_events">
@@ -117,7 +117,13 @@ export default {
 			{ status: 'pending', title: 'Partnership dengan Tesla' }
     ],
     dataChart: [],
-    labelChart: []
+    labelChart: [],
+
+    isRequester: false,
+    isManager: false,
+    isVP: false,
+    isDirectors: false,
+
   }),
   computed: mapGetters('auth', ['authenticatedUser']),
 	methods: {
@@ -127,9 +133,23 @@ export default {
         this.dataChart.push(item.value)
         this.labelChart.push(item.label)
       })
+    },
+    getRole () {
+      const dataUser = JSON.parse(localStorage.getItem('user_detail'))
+      const role = dataUser.role
+      if (role === 'CLIENT') {
+        this.isRequester = true
+      } else if (role === 'MANAGER') {
+        this.isManager = true
+      } else if (role === 'VP') {
+        this.isVP = true
+      } else if (role === 'DIREKSI') {
+        this.isDirectors = true
+      }
     }
 	},
 	created () {
+    this.getRole()
     this.getChart()
   }
 }
