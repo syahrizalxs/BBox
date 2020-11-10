@@ -207,6 +207,14 @@
         </select>
         <label class="custom-label" for="description">Description</label>
         <textarea v-model="description" rows="100" class="custom-input" type="text-area" id="description" name="description"></textarea>
+        <label class="custom-label" for="businessPlan">Business Plan</label>
+        <input class="custom-input" type="file" id="businessPlan" name="businessPlan">
+        <label class="custom-label" for="financialModel">Financial Model</label>
+        <input class="custom-input" type="file" id="financialModel" name="financialModel">
+        <label class="custom-label" for="kajianLegal">Kajian Legal</label>
+        <input class="custom-input" type="file" id="kajianLegal" name="kajianLegal">
+        <label class="custom-label" for="kajianResiko">Kajian Resiko</label>
+        <input class="custom-input" type="file" id="kajianResiko" name="kajianResiko">
         <label class="custom-label" style="margin-bottom: 10px;" for="description">Lampiran Dokumen</label>
         <div class="files-list-name">
           <span class="files-tag-name">Document MOM dengan tesla</span>
