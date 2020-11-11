@@ -19,6 +19,7 @@ export default {
 		border-radius: 50%;
 		background-size: cover;
 		object-fit: cover;
+		cursor: pointer;
 	}
 }
 </style>

@@ -1,13 +1,19 @@
 <template>
   <div class="upload-btn-wrapper">
     <button class="btn"><img :src="require('../../assets/icons/button/plus.svg')"><span> Upload Here</span></button>
-    <input type="file" name="myfile" />
+    <input type="file" name="myfile" @change="handleChange($event)"/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Upload'
+  name: 'Upload',
+  props: ['type'],
+  methods: {
+    handleChange (e) {
+      this.$emit('change', e.target.files[0], this.type)
+    }
+  }
 }
 </script>
 

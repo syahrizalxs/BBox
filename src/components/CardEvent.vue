@@ -1,11 +1,11 @@
 <template>
-  <div class="card-event">
+  <div class="card-event" @click="handleClick($event)">
     <div class="_left-side">
       <img v-if="starred" src="../assets/icons/star.svg" alt="">
       <span>{{title}}</span>
     </div>
     <div class="_right-side">
-      <span :class="statusStyle">{{ status }}</span>
+      <span :class="statusStyle">{{ status | convertStatus }}</span>
       <div class="_dropdown">
         <img class="pointer" src="../assets/icons/more.svg">
         <div class="_dropdown-content">
@@ -17,9 +17,13 @@
 </template>
 
 <script>
+import { convertStatus } from '../commons/utils/filter'
 export default {
   name: 'CardEvent',
-  props: ['title', 'status', 'starred'],
+  filters: {
+    convertStatus
+  },
+  props: ['title', 'status', 'starred', 'data'],
   computed: {
     statusStyle () {
       let status = ''
@@ -27,9 +31,9 @@ export default {
         status = 'draft'
       } else if (this.status === 'REQUESTED') {
         status = 'requested'
-      } else if (this.status === 'ACCEPTED') {
+      } else if (this.status === 'ACCEPTED_MANAGER') {
         status = 'accepted'
-      } else if (this.status === 'REJECTED') {
+      } else if (this.status === 'REJECTED_MANAGER' || this.status === 'REJECTED_VP' || this.status === 'REJECTED_DIREKSI') {
         status = 'rejected'
       } else if (this.status === 'ON_PROGRESS') {
         status = 'on-progress'
@@ -38,8 +42,8 @@ export default {
     }
   },
   methods: {
-    showDropdown () {
-      // document.querySelectorAll('._dropdown-content')[3].style.display = 'flex'
+    handleClick () {
+      this.$emit('click', this.data)
     }
   }
 }
@@ -63,8 +67,10 @@ export default {
     }
 
     &.active {
-      border: 3px solid #0378b8;
+      border: 3px solid #0075b4;
       cursor: pointer;
+      background-color: rgba(253, 253, 253, 0.644);
+      box-shadow: 2px 4px rgba(0,0,0,0.2);
     }
     ._left-side {
       display: flex;
@@ -89,22 +95,27 @@ export default {
 
   .draft {
     color: #D56400;
+    font-weight: bold;
   }
 
   .requested {
-    color: #EB5757;
+    color: #d424e4;
+    font-weight: bold;
   }
 
   .accepted {
     color: #219653;
+    font-weight: bold;
   }
 
   .rejected {
-    color: red;
+    color: rgb(207, 70, 70);
+    font-weight: bold;
   }
 
   .on-progress {
-    color: blue;
+    color: rgb(62, 133, 199);
+    font-weight: bold;
   }
 
   ._dropdown {
