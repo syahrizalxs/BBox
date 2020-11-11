@@ -208,7 +208,10 @@
         <label class="custom-label" for="description">Description</label>
         <textarea v-model="description" rows="100" class="custom-input" type="text-area" id="description" name="description"></textarea>
         <label class="custom-label" for="businessPlan">Business Plan</label>
-        <Upload style="margin-top: 10px !important; margin-bottom: 10px;" />
+        <div class="files-list-name">
+          <span class="files-tag-name2">{{ businessPlan.name }}</span>
+        </div>
+        <Upload @change="fileUpload" type="businessPlan" style="margin-top: 10px !important; margin-bottom: 10px;" />
         <label class="custom-label" for="financialModel">Financial Model</label>
         <Upload style="margin-top: 10px !important; margin-bottom: 10px;" />
         <label class="custom-label" for="kajianLegal">Kajian Legal</label>
@@ -315,6 +318,7 @@ import Upload from '../../components/atoms/Upload'
 
 import EventService from '../../service/EventService'
 import AuthService from '../../service/AuthService'
+import UploadService from '../../service/UploadService'
 
 import { convertDate, convertStatus } from '../../commons/utils/filter'
 
@@ -322,6 +326,7 @@ import { convertDate, convertStatus } from '../../commons/utils/filter'
 
 const eventService = EventService.build()
 const authService = AuthService.build()
+const uploadService = UploadService.build()
 
 export default {
   name: 'Archieve',
@@ -381,8 +386,8 @@ export default {
     managerId: '',
     attachmentHolder: [],
     businessPlan: {
-      name: "business_plan.docx",
-      url: "http://localhost/file/business_plan"
+      name: null,
+      url: null
     },
     businessPlanHolder: {},
     financialModel: {
@@ -416,6 +421,17 @@ export default {
     }
   },
   methods: {
+    async fileUpload (e, type) {
+      console.log('isi e', e)
+      console.log('isi type', type)
+      let formdata = new FormData()
+      if (type === 'businessPlan') {
+        formdata.append('file', e)
+        const tempRes = await uploadService.uploadFile(formdata)
+        this.businessPlan.url = tempRes.fileDownloadUri
+        this.businessPlan.name = tempRes.fileName
+      }
+    },
     handleUpload (e, type) {
       if (type === 'attachment') {
         // Method Upload
@@ -803,6 +819,15 @@ export default {
         margin-left: 10px;    
       }
     }
+  }
+  .files-tag-name2 {
+    cursor: pointer;
+    border: 1px solid #0077B5;
+    border-radius: 6px;
+    padding: 3px 5px;
+    font-size: 10px !important;
+    color: #0077B5;
+    margin-right: 5px;
   }
 }
 .archieve {
