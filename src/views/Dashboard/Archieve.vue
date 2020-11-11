@@ -208,16 +208,25 @@
         <label class="custom-label" for="description">Description</label>
         <textarea v-model="description" rows="100" class="custom-input" type="text-area" id="description" name="description"></textarea>
         <label class="custom-label" for="businessPlan">Business Plan</label>
-        <div class="files-list-name">
-          <span class="files-tag-name2">{{ businessPlan.name }}</span>
+        <div v-if="businessPlanHolder" class="files-list-name">
+          <span class="files-tag-name2">{{ businessPlanHolder }}</span>
         </div>
-        <Upload @change="fileUpload" type="businessPlan" style="margin-top: 10px !important; margin-bottom: 10px;" />
+        <Upload @change="handleUpload" type="businessPlan" style="margin-top: 10px !important; margin-bottom: 10px;" />
         <label class="custom-label" for="financialModel">Financial Model</label>
-        <Upload style="margin-top: 10px !important; margin-bottom: 10px;" />
+        <div v-if="financialModelHolder" class="files-list-name">
+          <span class="files-tag-name2">{{ financialModelHolder }}</span>
+        </div>
+        <Upload @change="handleUpload" type="financialModel" style="margin-top: 10px !important; margin-bottom: 10px;" />
         <label class="custom-label" for="kajianLegal">Kajian Legal</label>
-        <Upload style="margin-top: 10px !important; margin-bottom: 10px;" />
+        <div v-if="kajianLegalHolder" class="files-list-name">
+          <span class="files-tag-name2">{{ kajianLegalHolder }}</span>
+        </div>
+        <Upload @change="handleUpload" type="kajianLegal" style="margin-top: 10px !important; margin-bottom: 10px;" />
         <label class="custom-label" for="kajianResiko">Kajian Resiko</label>
-        <Upload style="margin-top: 10px !important; margin-bottom: 10px;" />
+        <div v-if="kajianResikoHolder" class="files-list-name">
+          <span class="files-tag-name2">{{ kajianResikoHolder }}</span>
+        </div>
+        <Upload @change="handleUpload" type="kajianResiko" style="margin-top: 10px !important; margin-bottom: 10px;" />
         <label class="custom-label" style="margin-bottom: 10px;" for="description">Lampiran Dokumen</label>
         <div class="files-list-name">
           <span class="files-tag-name" v-for="(item, index) in attachmentHolder" @click="attachmentHolder.splice(index, 1)" :key="index">{{ item.name }}</span>
@@ -384,33 +393,33 @@ export default {
     endDate: '',
     dayLeft: '',
     managerId: '',
-    attachmentHolder: [],
     businessPlan: {
       name: null,
       url: null
     },
-    businessPlanHolder: {},
     financialModel: {
-      name: "financial_model.docx",
-      url: "http://localhost/file/financial_model"
+      name: '',
+      url: ''
     },
-    financialModelHolder: {},
     kajianLegal: {
-      name: "kajian_legal.docx",
-      url: "http://localhost/file/kajian_legal"
+      name: '',
+      url: ''
     },
-    kajianLegalHolder: {},
     kajianResiko: {
-      name: "kajian_resiko.docx",
-      url: "http://localhost/file/kajian_resiko"
+      name: '',
+      url: ''
     },
-    kajianResikoHolder: {},
     addtionalDocuments: [
-      {
-        name: "adds.docx",
-        url: "http://localhost/file/adds"
-      }
-    ]
+      // {
+        //   name: "adds.docx",
+      //   url: "http://localhost/file/adds"
+      // }
+    ],
+    businessPlanHolder: '',
+    financialModelHolder: '',
+    kajianLegalHolder: '',
+    kajianResikoHolder: '',
+    attachmentHolder: [],
   }),
   computed: {
     starred () {
@@ -421,16 +430,48 @@ export default {
     }
   },
   methods: {
-    async fileUpload (e, type) {
-      console.log('isi e', e)
-      console.log('isi type', type)
-      let formdata = new FormData()
-      if (type === 'businessPlan') {
-        formdata.append('file', e)
-        const tempRes = await uploadService.uploadFile(formdata)
+    async uploadFile () {
+      this.$parent.isLoading = true
+      if (this.businessPlan.name !== this.businessPlanHolder) {
+        this.businessPlan.name = this.businessPlanHolder
+        const formdataBP = new FormData()
+        formdataBP.append('file', this.businessPlan.url)
+        const tempRes = await uploadService.uploadFile(formdataBP)
         this.businessPlan.url = tempRes.fileDownloadUri
-        this.businessPlan.name = tempRes.fileName
+      } else if (!this.businessPlanHolder) {
+        console.log('file businessPlan tidak boleh kosong')
       }
+
+      if (this.financialModel.name !== this.financialModelHolder) {
+        this.financialModel.name = this.financialModelHolder
+        const formdataFM = new FormData()
+        formdataFM.append('file', this.financialModel.url)
+        const tempRes = await uploadService.uploadFile(formdataFM)
+        this.financialModel.url = tempRes.fileDownloadUri
+      } else if (!this.financialModelHolder) {
+        console.log('file financialModel tidak boleh kosong')
+      }
+
+      if (this.kajianLegal.name !== this.kajianLegalHolder) {
+        this.kajianLegal.name = this.kajianLegalHolder
+        const formdataKL = new FormData()
+        formdataKL.append('file', this.kajianLegal.url)
+        const tempRes = await uploadService.uploadFile(formdataKL)
+        this.kajianLegal.url = tempRes.fileDownloadUri
+      } else if (!this.kajianLegalHolder) {
+        console.log('file kajianLegal tidak boleh kosong')
+      }
+
+      if (this.kajianResiko.name !== this.kajianResikoHolder) {
+        this.kajianResiko.name = this.kajianResikoHolder
+        const formdataKR = new FormData()
+        formdataKR.append('file', this.kajianResiko.url)
+        const tempRes = await uploadService.uploadFile(formdataKR)
+        this.kajianResiko.url = tempRes.fileDownloadUri
+      } else if (!this.kajianResikoHolder) {
+        console.log('file kajianLegal tidak boleh kosong')
+      }
+      this.$parent.isLoading = false
     },
     handleUpload (e, type) {
       if (type === 'attachment') {
@@ -439,6 +480,18 @@ export default {
           name: e.name,
           file: e // ganti jadi url: dari method
         })
+      } else if (type === 'businessPlan') {
+        this.businessPlanHolder = e.name
+        this.businessPlan.url = e
+      } else if (type === 'financialModel') {
+        this.financialModelHolder = e.name
+        this.financialModel.url = e
+      } else if (type === 'kajianLegal') {
+        this.kajianLegalHolder = e.name
+        this.kajianLegal.url = e
+      } else if (type === 'kajianResiko') {
+        this.kajianResikoHolder = e.name
+        this.kajianResiko.url = e
       }
     },
     handleCardClicked (e) {
@@ -456,12 +509,16 @@ export default {
       this.dayLeft = data.dayLeft
       this.managerId = data.manager.id,
       this.businessPlan.name = data.businessPlanDoc.name
+      this.businessPlanHolder = data.businessPlanDoc.name
       this.businessPlan.url = data.businessPlanDoc.url
       this.financialModel.name = data.financialModelDoc.name
+      this.financialModelHolder = data.financialModelDoc.name
       this.financialModel.url = data.financialModelDoc.url
       this.kajianLegal.name = data.kajianLegalDoc.name
+      this.kajianLegalHolder = data.kajianLegalDoc.name
       this.kajianLegal.url = data.kajianLegalDoc.url
       this.kajianResiko.name = data.kajianResikoDoc.name
+      this.kajianResikoHolder = data.kajianResikoDoc.name
       this.kajianResiko.url = data.kajianResikoDoc.url
       this.addtionalDocuments = data.additionalDocs
     },
@@ -548,6 +605,7 @@ export default {
     },
     async clientCreate () { // id null kan u/ create baru, id terisi jika update data save as draft
       this.$parent.isLoading = true
+      await this.uploadFile()
       let param
       if (this.id) {
         param = Object.assign({
@@ -621,6 +679,7 @@ export default {
     },
     async clientSubmit () { // id null jika submit, id terisi jika data dari draft ke submit
       this.$parent.isLoading = true
+      await this.uploadFile()
       let param
       if (this.id) {
         param = Object.assign({
