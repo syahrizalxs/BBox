@@ -155,8 +155,62 @@
           <div v-for="(item, index) in listOnProgress" :key="index" style="margin-top: 10px;">
             <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
               <template slot="dropdown">
-                <span>Detail</span>
+                <span @click="toDetail(item.id)">Detail</span>
+                <span v-if="isEmployee" @click="completedEvent(item.id)">Completed The Event</span>
               </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div v-if="listCompleted.length > 0" class="_left-event-cards">
+        <div class="_left-event-cards-heading">
+          <span>Event Completed</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div v-for="(item, index) in listCompleted" :key="index" style="margin-top: 10px;">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+              <template slot="dropdown" v-if="isManager">
+                <span @click="openApproval(item)">Open Approval</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div v-if="listApprovedManager.length > 0" class="_left-event-cards">
+        <div class="_left-event-cards-heading">
+          <span>Event Approved Manager</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div v-for="(item, index) in listApprovedManager" :key="index" style="margin-top: 10px;">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+              <template slot="dropdown" v-if="isVP">
+                <span @click="openApproval(item)">Open Approval</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div v-if="listApprovedVP.length > 0" class="_left-event-cards">
+        <div class="_left-event-cards-heading">
+          <span>Event Approved VP</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div v-for="(item, index) in listApprovedVP" :key="index" style="margin-top: 10px;">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+              <template slot="dropdown" v-if="isDirectors">
+                <span @click="openApproval(item)">Open Approval</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div v-if="listFinished.length > 0" class="_left-event-cards">
+        <div class="_left-event-cards-heading">
+          <span>Event Finished</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div v-for="(item, index) in listFinished" :key="index" style="margin-top: 10px;">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
             </CardEvent>
           </div>
         </div>
@@ -250,7 +304,7 @@
       </template>
     </Modal>
 
-    <Modal :title="isManager ? 'Event Approval Manager': isVP? 'Event Approval VP' : 'Event Approval Directors'" ref="approvalRequest">
+    <Modal :title="isManager ? 'Event Acceptance Manager': isVP? 'Event Acceptance VP' : 'Event Acceptance Directors'" ref="acceptanceRequest">
       <template slot="body">
         <span>Event Tittle</span><br>
         <p><b>{{ title }}</b></p>
@@ -266,7 +320,7 @@
       </template>
 
       <template slot="footer">
-        <Button @click="$refs.rejection.visible = true; $refs.approvalRequest.visible = false" title="Reject" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
+        <Button @click="$refs.rejection.visible = true; $refs.acceptanceRequest.visible = false" title="Reject" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
         <Button @click="acceptEvent()" title="Accept" type="primary" style="padding: 15px 25px;"></Button>
       </template>
     </Modal>
@@ -306,8 +360,45 @@
       </template>
 
       <template slot="footer">
-        <Button @click="$refs.rejection.visible = false; $refs.approvalRequest.visible = true" title="Cancel" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
+        <Button @click="$refs.rejection.visible = false; $refs.acceptanceRequest.visible = true" title="Cancel" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
         <Button @click="RejectEvent()" title="Send Rejection" type="primary" style="padding: 15px 25px;"></Button>
+      </template>
+    </Modal>
+
+    <Modal :title="isManager ? 'Event Approval Manager': isVP? 'Event Approval VP' : 'Event Approval Directors'" ref="approvalRequest">
+      <template slot="body">
+        <span>Event Tittle</span><br>
+        <p><b>{{ title }}</b></p>
+        <span>Description</span><br>
+        <p><b>{{ description }}</b></p>
+        <span>Documents</span><br>
+        <span><b>{{ businessPlan.name }}</b></span><br>
+        <span><b>{{ financialModel.name }}</b></span><br>
+        <span><b>{{ kajianLegal.name }}</b></span><br>
+        <span><b>{{ kajianResiko.name }}</b></span><br><br>
+        <span>Sisa Hari</span><br>
+        <p><b>{{ dayLeft }}</b></p>
+      </template>
+
+      <template slot="footer">
+        <Button @click="$refs.disapprove.visible = true; $refs.approvalRequest.visible = false" title="Reject" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
+        <Button @click="approveEvent()" title="Accept" type="primary" style="padding: 15px 25px;"></Button>
+      </template>
+    </Modal>
+
+    <Modal :title="isManager? 'Disapprove Manager': isVP? 'Disapprove VP': 'Disapprove Directors'" ref="disapprove">
+      <template slot="body">
+        <span>Event Tittle</span><br>
+        <p><b>{{ title }}</b></p>
+        <span>Description</span><br>
+        <p><b>{{ description }}</b></p>
+        <label class="custom-label" for="notes">Notes</label><br>
+        <input v-model="notes" class="custom-input" type="text" id="notes" name="notes"><br>
+      </template>
+
+      <template slot="footer">
+        <Button @click="$refs.disapprove.visible = false; $refs.approvalRequest.visible = true" title="Cancel" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
+        <Button @click="disApproveEvent()" title="Send Rejection" type="primary" style="padding: 15px 25px;"></Button>
       </template>
     </Modal>
   </div>
@@ -364,6 +455,7 @@ export default {
     detailActivity: {},
 
     isRequester: false,
+    isEmployee: false,
     isManager: false,
     isVP: false,
     isDirectors: false,
@@ -377,6 +469,10 @@ export default {
     listRejectedVP: [],
     listRejectedDirectors: [],
     listOnProgress: [],
+    listCompleted: [],
+    listApprovedManager: [],
+    listApprovedVP: [],
+    listFinished: [],
 
     listManager: [],
     listEmployee: [],
@@ -522,8 +618,57 @@ export default {
       this.kajianResiko.url = data.kajianResikoDoc.url
       this.addtionalDocuments = data.additionalDocs
     },
-    async acceptEvent () {
+    async approveEvent () {
       this.$refs.approvalRequest.visible = false
+      this.$parent.isLoading = true
+      const param = Object.assign({ id: this.id })
+      let response
+      if (this.isManager) {
+        response = await eventService.approveByManager(param)
+      } else if (this.isVP) {
+        response = await eventService.approveByVP(param)
+      } else if (this.isDirectors) {
+        response = await eventService.approveByDirectors(param)
+      }
+      if (response) {
+        console.log('accept', response)
+        this.$parent.isLoading = false
+        this.getListEvent()
+      }
+    },
+    async disApproveEvent () {
+      this.$refs.disapprove.visible = false
+      this.$parent.isLoading = true
+      const param = Object.assign({ 
+        id: this.id,
+        reason: this.notes
+      })
+      let response
+      if (this.isManager) {
+        response = await eventService.disapproveByManager(param)
+      } else if (this.isVP) {
+        response = await eventService.disapproveByVP(param)
+      } else if (this.isDirectors) {
+        response = await eventService.disapproveByDirectors(param)
+      }
+      if (response) {
+        console.log('reject', response)
+        this.$parent.isLoading = false
+        this.getListEvent()
+      }
+    },
+    async completedEvent (val) {
+      this.$parent.isLoading = true
+      const param = Object.assign({ id: val})
+      const response = await eventService.completedByEmployee(param)
+      if (response) {
+        console.log('completed', response)
+        this.$parent.isLoading = false
+        this.getListEvent()
+      }
+    },
+    async acceptEvent () {
+      this.$refs.acceptanceRequest.visible = false
       this.$parent.isLoading = true
       const param = Object.assign({ id: this.id })
       let response
@@ -596,6 +741,10 @@ export default {
       this.$refs.assignTeam.visible = true
     },
     openRequest (data) {
+      this.assignData(data)
+      this.$refs.acceptanceRequest.visible = true
+    },
+    openApproval (data) {
       this.assignData(data)
       this.$refs.approvalRequest.visible = true
     },
@@ -822,6 +971,30 @@ export default {
       if (resOnProgress) {
         this.listOnProgress = resOnProgress.data.content
       }
+
+      const paramCompleted = Object.assign({ status: 'completed' })
+      const resCompleted = await eventService.getEvent(paramCompleted)
+      if (resCompleted) {
+        this.listCompleted = resCompleted.data.content
+      }
+
+      const paramApprovedManager = Object.assign({ status: 'approved_manager' })
+      const resApprovedManager = await eventService.getEvent(paramApprovedManager)
+      if (resApprovedManager) {
+        this.listApprovedManager = resApprovedManager.data.content
+      }
+
+      const paramApprovedVP = Object.assign({ status: 'approved_vp' })
+      const resApprovedVP = await eventService.getEvent(paramApprovedVP)
+      if (resApprovedVP) {
+        this.listApprovedVP = resApprovedVP.data.content
+      }
+
+      const paramFinished = Object.assign({ status: 'finished' })
+      const resFinished = await eventService.getEvent(paramFinished)
+      if (resFinished) {
+        this.listFinished = resFinished.data.content
+      }
       this.$parent.isLoading = false
     },
     getRole () {
@@ -830,6 +1003,8 @@ export default {
       if (role === 'CLIENT') {
         this.isRequester = true
         this.getManager()
+      } else if (role === 'EMPLOYEE') {
+        this.isEmployee = true
       } else if (role === 'MANAGER') {
         this.isManager = true
         this.getEmployee()
