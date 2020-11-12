@@ -1202,6 +1202,7 @@ export default {
     ._left-event-cards {
       margin-top: 20px;
       display: flex;
+      margin-bottom: 10px;
       flex-direction: column;
       width: 100%;
 

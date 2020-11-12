@@ -104,27 +104,27 @@
     <Modal :title="'Add Process'" ref="addProcess">
       <template slot="body">
         <label class="custom-label" for="process">Process Name</label><br>
-        <input class="custom-input" type="text" id="process" name="process"><br>
+        <input class="custom-input" v-model="dataModal.name" type="text" id="process" name="process"><br>
         <label class="custom-label" for="tipe">Type</label><br>
         <div style="margin-bottom:15px">
-          <input type="radio" id="main" name="tipe" value="main process" style="margin-right:14px">
+          <input type="radio" id="main" v-model="dataModal.type" name="tipe" checked="MAIN" value="MAIN" style="margin-right:14px">
           <label class="custom-label-radio" for="main" style="margin-right:30px">Main Process</label>
-          <input type="radio" id="sub" name="tipe" value="sub process" style="margin-right:14px">
+          <input type="radio" id="sub" v-model="dataModal.type" checked="SUB" name="tipe" value="SUB" style="margin-right:14px">
           <label class="custom-label-radio" for="sub">Sub Process</label>
         </div>
         <label class="custom-label" for="description">Description</label><br>
-        <textarea rows="100" class="custom-input" type="text-area" id="description" name="description"></textarea><br>
-        <label class="custom-label" for="attachment">Attachment</label><br>
-        <div class="upload-btn-wrapper">
-          <button class="btn"><img src="../../assets/icons/button/plus-circle.svg"><span> Upload Here</span></button>
-          <input type="file" name="myfile" />
+        <textarea rows="100" class="custom-input" v-model="dataModal.description" type="text-area" id="description" name="description"></textarea><br>
+        <div class="files-list-name" style="margin-bottom: 10px;">
+          <span class="files-tag-name" v-for="(item, index) in fileHolder" @click="fileHolder.splice(index, 1)" :key="index">{{ item.name }}</span>
         </div>
+        <label class="custom-label" for="attachment">Attachment</label><br>
+        <Upload @change="handleUpload" />
       </template>
-
       <template slot="footer">
-        <Button title="Save" type="primary" style="padding: 15px 25px;"></Button>
+        <Button title="Save" @click="saveProcess" type="primary" style="padding: 15px 25px;"></Button>
       </template>
     </Modal>
+
     <Modal :title="'Partnership dengan Brightspace'" ref="timeline">
       <template slot="body">
         <Tab :tabs="tabs" :initialTab="initialTab">
@@ -158,6 +158,13 @@ import Timeline from '../../components/Timeline'
 import Button from '../../components/atoms/Button'
 // import CardEvent from '../../components/CardEvent'
 import Avatar from '../../components/atoms/Avatar'
+import Upload from '../../components/atoms/Upload'
+
+import ProcessService from '../../service/ProcessService'
+import UploadService from '../../service/UploadService'
+
+const processService = ProcessService.build()
+const uploadService = UploadService.build()
 
 export default {
   name: 'Archieve',
@@ -170,11 +177,21 @@ export default {
     Notification,
     Avatar,
     Tab,
-    Timeline
+    Timeline,
+    Upload
   },
   data: () => ({
     initialTab: 'activity',
-    tabs: ['activity', 'contact', 'file']
+    tabs: ['activity', 'contact', 'file'],
+    dataModal: {
+      description: '',
+      docs: [],
+      eventId: '',
+      name: '',
+      status: '',
+      type: 'MAIN'
+    },
+    fileHolder: []
   }),
   computed: {
     starred () {
@@ -182,6 +199,30 @@ export default {
     },
     notStarred () {
       return this.eventList.filter(item => !item.starred)
+    }
+  },
+  methods: {
+    handleUpload (e) {
+      this.fileHolder.push({
+        name: e.name,
+        url: e
+      })
+    },
+    async saveProcess () {
+      this.$parent.isLoading = true
+      this.uploadService()
+      this.dataModal.eventId = this.$route.params.id
+      const res = processService.save()
+      console.log({ res })
+      this.$parent.isLoading = false
+    },
+    async uploadFile () {
+      this.fileHolder.forEach(async item => {
+        const formData = new FormData()
+        formData.append('file', item.file)
+        const tempRes = await uploadService.uploadFile(formData)
+        item.url = tempRes.fileDownloadUri
+      })
     }
   }
 
