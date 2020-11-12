@@ -58,4 +58,39 @@ export default class EventService extends HttpService {
     return this.get(null, api)
   }
 
+  completedByEmployee (param) {
+    const api = this.api + '/employee/complete'
+    return this.get(param, api)
+  }
+
+  approveByManager (param) {
+    const api = this.api + '/manager/approve'
+    return this.get(param, api)
+  }
+
+  approveByVP (param) {
+    const api = this.api + '/vp/approve'
+    return this.get(param, api)
+  }
+
+  approveByDirectors (param) {
+    const api = this.api + '/directors/approve'
+    return this.get(param, api)
+  }
+
+  disapproveByManager (param) {
+    const api = this.api + '/manager/disapprove'
+    return this.post(param, api)
+  }
+
+  disapproveByVP (param) {
+    const api = this.api + '/vp/disapprove'
+    return this.post(param, api)
+  }
+
+  disapproveByDirectors (param) {
+    const api = this.api + '/directors/disapprove'
+    return this.post(param, api)
+  }
+
 }

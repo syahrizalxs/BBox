@@ -31,12 +31,20 @@ export default {
         status = 'draft'
       } else if (this.status === 'REQUESTED') {
         status = 'requested'
-      } else if (this.status === 'ACCEPTED_MANAGER') {
+      } else if (this.status === 'ACCEPTED_MANAGER' || this.status === 'ACCEPTED_VP' || this.status === 'ACCEPTED_DIREKSI') {
         status = 'accepted'
       } else if (this.status === 'REJECTED_MANAGER' || this.status === 'REJECTED_VP' || this.status === 'REJECTED_DIREKSI') {
         status = 'rejected'
       } else if (this.status === 'ON_PROGRESS') {
         status = 'on-progress'
+      } else if (this.status === 'COMPLETED') {
+        status = 'completed'
+      } else if (this.status === 'APPROVED_MANAGER' || this.status === 'APPROVED_VP') {
+        status = 'approved'
+      } else if (this.status === 'DISAPPROVED_MANAGER' || this.status === 'DISAPPROVED_VP' || this.status === 'DISAPPROVED_DIREKSI') {
+        status = 'disapproved'
+      } else if (this.status === 'FINISHED') {
+        status = 'finished'
       }
       return status
     }
@@ -115,6 +123,26 @@ export default {
 
   .on-progress {
     color: rgb(62, 133, 199);
+    font-weight: bold;
+  }
+
+  .completed {
+    color: rgb(13, 134, 74);
+    font-weight: bold;
+  }
+
+  .approved {
+    color: #4adb89;
+    font-weight: bold;
+  }
+
+  .disapproved {
+    color: rgb(172, 17, 17);
+    font-weight: bold;
+  }
+
+  .finished {
+    color: #3ce237;
     font-weight: bold;
   }
 
