@@ -215,6 +215,39 @@
           </div>
         </div>
       </div>
+      <div v-if="listDisapprovedManager.length > 0" class="_left-event-cards">
+        <div class="_left-event-cards-heading">
+          <span>Event Disapproved Manager</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div v-for="(item, index) in listDisapprovedManager" :key="index" style="margin-top: 10px;">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div v-if="listDisapprovedVP.length > 0" class="_left-event-cards">
+        <div class="_left-event-cards-heading">
+          <span>Event Disapproved VP</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div v-for="(item, index) in listDisapprovedVP" :key="index" style="margin-top: 10px;">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div v-if="listDisapprovedDirectors.length > 0" class="_left-event-cards">
+        <div class="_left-event-cards-heading">
+          <span>Event Disapproved Directors</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div v-for="(item, index) in listDisapprovedDirectors" :key="index" style="margin-top: 10px;">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            </CardEvent>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="_right">
       <div class="_notification-slot">
@@ -238,7 +271,7 @@
       <div class="_participans">
         <b>Participants</b>
         <div class="_participants-ava">
-          <Avatar v-for="item in detailActivity.participants" :key="item" class="_ava" :path="item.avatar"/>
+          <Avatar v-for="(item, index) in detailActivity.participants" :key="index" class="_ava" :path="item.avatar"/>
           <div class="_over-ava" v-if="detailActivity && detailActivity.participants && detailActivity.participants.length > 5">
             <span class="_ava-number">+3</span>
           </div>
@@ -381,8 +414,8 @@
       </template>
 
       <template slot="footer">
-        <Button @click="$refs.disapprove.visible = true; $refs.approvalRequest.visible = false" title="Reject" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
-        <Button @click="approveEvent()" title="Accept" type="primary" style="padding: 15px 25px;"></Button>
+        <Button @click="$refs.disapprove.visible = true; $refs.approvalRequest.visible = false" title="Disapprove" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
+        <Button @click="approveEvent()" title="Approve" type="primary" style="padding: 15px 25px;"></Button>
       </template>
     </Modal>
 
@@ -398,7 +431,7 @@
 
       <template slot="footer">
         <Button @click="$refs.disapprove.visible = false; $refs.approvalRequest.visible = true" title="Cancel" type="primary" style="padding: 15px 25px; margin-right:10px"></Button>
-        <Button @click="disApproveEvent()" title="Send Rejection" type="primary" style="padding: 15px 25px;"></Button>
+        <Button @click="disApproveEvent()" title="Disapprove Event" type="primary" style="padding: 15px 25px;"></Button>
       </template>
     </Modal>
   </div>
@@ -473,6 +506,9 @@ export default {
     listApprovedManager: [],
     listApprovedVP: [],
     listFinished: [],
+    listDisapprovedManager: [],
+    listDisapprovedVP: [],
+    listDisapprovedDirectors: [],
 
     listManager: [],
     listEmployee: [],
@@ -490,8 +526,8 @@ export default {
     dayLeft: '',
     managerId: '',
     businessPlan: {
-      name: null,
-      url: null
+      name: '',
+      url: ''
     },
     financialModel: {
       name: '',
@@ -597,13 +633,13 @@ export default {
       this.$router.push('/archieve/' + val)
     },
     assignData (data) {
-      this.id = data.id,
-      this.title = data.title,
-      this.description = data.description,
+      this.id = data.id
+      this.title = data.title
+      this.description = data.description
       this.startDate = data.startDate
       this.endDate = data.endDate
       this.dayLeft = data.dayLeft
-      this.managerId = data.manager.id,
+      this.managerId = data.manager.id
       this.businessPlan.name = data.businessPlanDoc.name
       this.businessPlanHolder = data.businessPlanDoc.name
       this.businessPlan.url = data.businessPlanDoc.url
@@ -617,6 +653,36 @@ export default {
       this.kajianResikoHolder = data.kajianResikoDoc.name
       this.kajianResiko.url = data.kajianResikoDoc.url
       this.addtionalDocuments = data.additionalDocs
+    },
+    resetData () {
+      this.id = ''
+      this.title = ''
+      this.description = ''
+      this.startDate = ''
+      this.endDate = ''
+      this.dayLeft = ''
+      this.managerId = ''
+      this.businessPlan.name = ''
+      this.businessPlanHolder = ''
+      this.businessPlan.url = ''
+      this.financialModel.name = ''
+      this.financialModelHolder = ''
+      this.financialModel.url = ''
+      this.kajianLegal.name = ''
+      this.kajianLegalHolder = ''
+      this.kajianLegal.url = ''
+      this.kajianResiko.name = ''
+      this.kajianResikoHolder = ''
+      this.kajianResiko.url = ''
+      this.addtionalDocuments = []
+      this.notes = ''
+      this.selectEmp = ''
+      this.employee = []
+      this.businessPlanHolder = ''
+      this.financialModelHolder = ''
+      this.kajianLegalHolder = ''
+      this.kajianResikoHolder = ''
+      this.attachmentHolder = []
     },
     async approveEvent () {
       this.$refs.approvalRequest.visible = false
@@ -632,6 +698,7 @@ export default {
       }
       if (response) {
         console.log('accept', response)
+        this.resetData()
         this.$parent.isLoading = false
         this.getListEvent()
       }
@@ -653,6 +720,7 @@ export default {
       }
       if (response) {
         console.log('reject', response)
+        this.resetData()
         this.$parent.isLoading = false
         this.getListEvent()
       }
@@ -681,6 +749,7 @@ export default {
       }
       if (response) {
         console.log('accept', response)
+        this.resetData()
         this.$parent.isLoading = false
         this.getListEvent()
       }
@@ -702,6 +771,7 @@ export default {
       }
       if (response) {
         console.log('reject', response)
+        this.resetData()
         this.$parent.isLoading = false
         this.getListEvent()
       }
@@ -719,6 +789,7 @@ export default {
       const response = await eventService.assignTeam(param)
       if (response) {
         console.log('assign', response)
+        this.resetData()
         this.$parent.isLoading = false
         this.getListEvent()
       }
@@ -821,6 +892,7 @@ export default {
       const response = await eventService.clientCreate(param)
       if (response) {
         console.log('create', response)
+        this.resetData()
         this.$refs.addEvent.visible = false
         this.$parent.isLoading = false
         this.getListEvent()
@@ -895,6 +967,7 @@ export default {
       const response = await eventService.clientSubmit(param)
       if (response) {
         console.log('submit', response)
+        this.resetData()
         this.$refs.addEvent.visible = false
         this.$parent.isLoading = false
         this.getListEvent()
@@ -994,6 +1067,24 @@ export default {
       const resFinished = await eventService.getEvent(paramFinished)
       if (resFinished) {
         this.listFinished = resFinished.data.content
+      }
+
+      const paramDisapprovedManager = Object.assign({ status: 'disapproved_manager' })
+      const resDisapprovedManager = await eventService.getEvent(paramDisapprovedManager)
+      if (resDisapprovedManager) {
+        this.listDisapprovedManager = resDisapprovedManager.data.content
+      }
+
+      const paramDisapprovedVP = Object.assign({ status: 'disapproved_vp' })
+      const resDisapprovedVP = await eventService.getEvent(paramDisapprovedVP)
+      if (resDisapprovedVP) {
+        this.listDisapprovedVP = resDisapprovedVP.data.content
+      }
+
+      const paramDisapprovedDirectors = Object.assign({ status: 'disapproved_direksi' })
+      const resDisapprovedDirectors = await eventService.getEvent(paramDisapprovedDirectors)
+      if (resDisapprovedDirectors) {
+        this.listDisapprovedDirectors = resDisapprovedDirectors.data.content
       }
       this.$parent.isLoading = false
     },
