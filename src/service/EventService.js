@@ -49,7 +49,7 @@ export default class EventService extends HttpService {
   }
 
   assignTeam (param) {
-    const api = this.api + '/manager/add'
+    const api = this.api + '/manager/assign'
     return this.post(param, api)
   }
 
