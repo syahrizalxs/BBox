@@ -8,7 +8,7 @@
                 <div class="_left-heading-starred">
                     <!-- <span>Starred Event</span> -->
                     <span></span>
-                    <Button title="Add Event" @click="$refs.addEvent.visible = true" style="width: 115px; height: 39px;"
+                    <Button title="Add Event" @click="addData()" style="width: 115px; height: 39px;"
                             :type="'outline-primary'">
                         <template slot="icon">
                             <img src="../../assets/icons/button/plus.svg">
@@ -850,6 +850,10 @@
 							this.assignData(data)
 							this.$refs.addEvent.visible = true
 					},
+                    addData() {
+                            this.resetData()
+                            this.$refs.addEvent.visible = true
+                    },
 					async clientCreate() { // id null kan u/ create baru, id terisi jika update data save as draft
 							this.$parent.isLoading = true
 							await this.uploadFile()
