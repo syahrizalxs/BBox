@@ -17,7 +17,7 @@
         </div>
         <!-- <div class="_left-heading-starred-card">
           <div v-for="(item, index) in starred" :key="index">
-            <CardEvent :starred="item.starred" style="margin-bottom: 10px;" :title="item.title" :status="item.status">
+            <CardEvent :starred="item.starred" style="margin-bottom: 10px;" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown">
                 <span @click="toDetail('1')">Detail</span>
                 <span @click="item.starred = false">Unstar this event</span>
@@ -35,7 +35,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in notStarred" :key="index" style="margin-top: 10px;">
-            <CardEvent :starred="false" :title="item.title" :status="item.status">
+            <CardEvent :starred="false" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown">
                 <span @click="toDetail('2')">Detail</span>
                 <span @click="item.starred = true">Star this event</span>
@@ -50,7 +50,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listDraft" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown" v-if="isRequester">
                 <span @click="editData(item)">Edit</span>
               </template>
@@ -64,7 +64,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listRequested" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown" v-if="isManager">
                 <span @click="openRequest(item)">Open Request</span>
               </template>
@@ -78,7 +78,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listAcceptedManager" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown" v-if="isVP">
                 <span @click="openRequest(item)">Open Request</span>
               </template>
@@ -92,7 +92,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listAcceptedVP" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown" v-if="isDirectors">
                 <span @click="openRequest(item)">Open Request</span>
               </template>
@@ -106,7 +106,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listAcceptedDirectors" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown" v-if="isManager">
                 <span @click="openAssign(item)">Assign Team</span>
               </template>
@@ -120,7 +120,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listRejectedManager" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
             </CardEvent>
           </div>
         </div>
@@ -131,7 +131,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listRejectedVP" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
             </CardEvent>
           </div>
         </div>
@@ -142,7 +142,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listRejectedDirectors" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
             </CardEvent>
           </div>
         </div>
@@ -153,7 +153,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listOnProgress" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown">
                 <span @click="toDetail(item.id)">Detail</span>
                 <span v-if="isStaff" @click="completedEvent(item.id)">Completed The Event</span>
@@ -168,7 +168,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listCompleted" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown" v-if="isManager">
                 <span @click="openApproval(item)">Open Approval</span>
               </template>
@@ -182,7 +182,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listApprovedManager" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown" v-if="isVP">
                 <span @click="openApproval(item)">Open Approval</span>
               </template>
@@ -196,7 +196,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listApprovedVP" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown" v-if="isDirectors">
                 <span @click="openApproval(item)">Open Approval</span>
               </template>
@@ -210,7 +210,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listFinished" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
             </CardEvent>
           </div>
         </div>
@@ -221,7 +221,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listDisapprovedManager" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
             </CardEvent>
           </div>
         </div>
@@ -232,7 +232,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listDisapprovedVP" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
             </CardEvent>
           </div>
         </div>
@@ -243,7 +243,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listDisapprovedDirectors" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
             </CardEvent>
           </div>
         </div>
@@ -266,7 +266,7 @@
         <span class="child">{{ detailActivity.modifiedDate | convertDate }}</span>
         
         <span class="parent">Status</span>
-        <span v-if="detailActivity.status" class="child">{{ detailActivity.status | convertStatus }}</span>
+        <span v-if="detailActivity.currentStatus" class="child">{{ detailActivity.currentStatus | convertStatus }}</span>
       </div>
       <div class="_participans">
         <b>Participants</b>

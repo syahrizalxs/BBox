@@ -11,14 +11,14 @@ export default class ErrorService extends Error {
 
   showError () {
     // const message = {
-      // title: this.error.status === 500 ? 'Terjadi Kesalahan' : this.error.status ? 'Perhatian' : 'Jaringan Bermasalah',
-      // icon: this.error.status === 500 ? 'error' : this.error.success ? 'success' : this.error.status ? 'warning' : 'error',
-      // text: this.error.status === 500 ? this.error.message : this.error.status ? this.error.message : this.error.message.charAt(0).toUpperCase() + this.error.message.slice(1)
-      // text: this.error.status === 500 ? 'System Exception' : this.error.status ? this.error.message : this.error.message.charAt(0).toUpperCase() + this.error.message.slice(1)
+      // title: this.error.currentStatus === 500 ? 'Terjadi Kesalahan' : this.error.currentStatus ? 'Perhatian' : 'Jaringan Bermasalah',
+      // icon: this.error.currentStatus === 500 ? 'error' : this.error.success ? 'success' : this.error.currentStatus ? 'warning' : 'error',
+      // text: this.error.currentStatus === 500 ? this.error.message : this.error.currentStatus ? this.error.message : this.error.message.charAt(0).toUpperCase() + this.error.message.slice(1)
+      // text: this.error.currentStatus === 500 ? 'System Exception' : this.error.currentStatus ? this.error.message : this.error.message.charAt(0).toUpperCase() + this.error.message.slice(1)
     // }
     // console.log(message)
     // swall(message).then(() => {
-    //   if (this.error.status === 401) {
+    //   if (this.error.currentStatus === 401) {
     //     storage.clearSession()
     //     location.reload()
     //   }

@@ -7,7 +7,7 @@ export default class AuthService extends HttpService {
   login (data) {
     const api = this.api + '/login'
     return this.post(data, api).then((response) => {
-      if (response.status === 200) {
+      if (response.currentStatus === 200) {
         storage.saveToken(response.data.token)
         HttpService.setHeader()
         return response
@@ -27,7 +27,7 @@ export default class AuthService extends HttpService {
   loginSSO (data) {
     const api = process.env.VUE_APP_BASE_API + '/oauth2/google/exchange'
     return this.post(data, api).then((response) => {
-      if (response.status === 200) {
+      if (response.currentStatus === 200) {
         storage.saveToken(response.data.token)
         HttpService.setHeader()
         return response
@@ -59,7 +59,7 @@ export default class AuthService extends HttpService {
     // return this.post({}, api).then((response) => {
     //   HttpService.removeHeader()
     //   storage.clearSession()
-    //   if (response.status === 200) {
+    //   if (response.currentStatus === 200) {
     //     HttpService.removeHeader()
     //     storage.clearSession()
     //   }

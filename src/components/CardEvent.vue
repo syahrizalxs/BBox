@@ -27,23 +27,23 @@ export default {
   computed: {
     statusStyle () {
       let status = ''
-      if (this.status === 'DRAFT') {
+      if (this.currentStatus === 'DRAFT') {
         status = 'draft'
-      } else if (this.status === 'REQUESTED') {
+      } else if (this.currentStatus === 'REQUESTED') {
         status = 'requested'
-      } else if (this.status === 'ACCEPTED_MANAGER' || this.status === 'ACCEPTED_VP' || this.status === 'ACCEPTED_DIREKSI') {
+      } else if (this.currentStatus === 'ACCEPTED_MANAGER' || this.currentStatus === 'ACCEPTED_VP' || this.currentStatus === 'ACCEPTED_DIREKSI') {
         status = 'accepted'
-      } else if (this.status === 'REJECTED_MANAGER' || this.status === 'REJECTED_VP' || this.status === 'REJECTED_DIREKSI') {
+      } else if (this.currentStatus === 'REJECTED_MANAGER' || this.currentStatus === 'REJECTED_VP' || this.currentStatus === 'REJECTED_DIREKSI') {
         status = 'rejected'
-      } else if (this.status === 'ON_PROGRESS') {
+      } else if (this.currentStatus === 'ON_PROGRESS') {
         status = 'on-progress'
-      } else if (this.status === 'COMPLETED') {
+      } else if (this.currentStatus === 'COMPLETED') {
         status = 'completed'
-      } else if (this.status === 'APPROVED_MANAGER' || this.status === 'APPROVED_VP') {
+      } else if (this.currentStatus === 'APPROVED_MANAGER' || this.currentStatus === 'APPROVED_VP') {
         status = 'approved'
-      } else if (this.status === 'DISAPPROVED_MANAGER' || this.status === 'DISAPPROVED_VP' || this.status === 'DISAPPROVED_DIREKSI') {
+      } else if (this.currentStatus === 'DISAPPROVED_MANAGER' || this.currentStatus === 'DISAPPROVED_VP' || this.currentStatus === 'DISAPPROVED_DIREKSI') {
         status = 'disapproved'
-      } else if (this.status === 'FINISHED') {
+      } else if (this.currentStatus === 'FINISHED') {
         status = 'finished'
       }
       return status

@@ -16,7 +16,7 @@
 				</div>
 				<div class="_event-list">
 					<div class="_event-item pointer" v-for="(item, index) in eventList" :key="index">
-						<img class="_event-sign" :src="item.status === 'success' ? require('../../assets/icons/success-box.svg') : require('../../assets/icons/pending-box.svg')">
+						<img class="_event-sign" :src="item.currentStatus === 'success' ? require('../../assets/icons/success-box.svg') : require('../../assets/icons/pending-box.svg')">
 						<span>{{ item.title }}</span>
 						<img class="_event-detail" src="../../assets/icons/chevron-right.svg">
 					</div>
