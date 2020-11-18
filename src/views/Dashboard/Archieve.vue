@@ -3,7 +3,6 @@
     <div class="_left">
       <div class="_left-heading">
         <Heading style="margin-right: 200px" />
-        <Search />
       </div>
       <div v-if="isRequester" class="_left-starred">
         <div class="_left-heading-starred">
@@ -250,9 +249,6 @@
       </div>
     </div>
     <div class="_right">
-      <div class="_notification-slot">
-        <Notification />
-      </div>
       <div class="_detail-event">
         <h2 style="margin-bottom: 40px;">Detail Event</h2>
 
@@ -439,9 +435,7 @@
 
 <script>
 import Heading from '../../components/Heading'
-import Search from '../../components/atoms/Search'
 import Modal from '../../components/Modal'
-import Notification from '../../components/Notification'
 
 // Atoms Components
 import Button from '../../components/atoms/Button'
@@ -469,11 +463,9 @@ export default {
   },
   components: {
     Heading,
-    Search,
     Button,
     CardEvent,
     Modal,
-    Notification,
     Avatar,
     Upload
   },
