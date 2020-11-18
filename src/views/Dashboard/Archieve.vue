@@ -321,12 +321,12 @@
         <Upload style="margin-top: 10px !important; margin-bottom: 10px;" type="attachment" @change="handleUpload"/>
         <div class="_date">
           <div>
-            <label class="custom-label" for="start">Start Date</label>
-            <input v-model="startDate" class="custom-input" type="date">
+            <label class="custom-label" for="start">Expected Start</label>
+            <input v-model="expectedStartDate" class="custom-input" type="date">
           </div>
           <div>
-            <label class="custom-label" for="end">End Date</label>
-            <input v-model="endDate" class="custom-input" type="date">
+            <label class="custom-label" for="end">Expected Finish</label>
+            <input v-model="expectedFinishDate" class="custom-input" type="date">
           </div>
         </div>
       </template>
@@ -521,8 +521,8 @@ export default {
     title: '',
     description: '',
     // expired: 30,
-    startDate: '',
-    endDate: '',
+    expectedStartDate: '',
+    expectedFinishDate: '',
     dayLeft: '',
     managerId: '',
     businessPlan: {
@@ -644,8 +644,8 @@ export default {
       this.id = data.id
       this.title = data.title
       this.description = data.description
-      this.startDate = data.startDate
-      this.endDate = data.endDate
+      this.expectedStartDate = data.expectedStartDate
+      this.expectedFinishDate = data.expectedFinishDate
       this.dayLeft = data.dayLeft
       this.managerId = data.manager.id
       this.businessPlan.name = data.businessPlanDoc.name
@@ -666,8 +666,8 @@ export default {
       this.id = ''
       this.title = ''
       this.description = ''
-      this.startDate = ''
-      this.endDate = ''
+      this.expectedStartDate = ''
+      this.expectedFinishDate = ''
       this.dayLeft = ''
       this.managerId = ''
       this.businessPlan.name = ''
@@ -840,8 +840,8 @@ export default {
           id: this.id,
           title: this.title,
           description: this.description,
-          startDate: this.startDate,
-          endDate: this.endDate,
+          expectedStartDate: this.expectedStartDate,
+          expectedFinishDate: this.expectedFinishDate,
           managerId: this.managerId,
           businessPlan: {
             name: this.businessPlan.name,
@@ -870,8 +870,8 @@ export default {
         param = Object.assign({
           title: this.title,
           description: this.description,
-          startDate: this.startDate,
-          endDate: this.endDate,
+          expectedStartDate: this.expectedStartDate,
+          expectedFinishDate: this.expectedFinishDate,
           managerId: this.managerId,
           businessPlan: {
             name: this.businessPlan.name,
@@ -915,8 +915,8 @@ export default {
           id: this.id,
           title: this.title,
           description: this.description,
-          startDate: this.startDate,
-          endDate: this.endDate,
+          expectedStartDate: this.expectedStartDate,
+          expectedFinishDate: this.expectedFinishDate,
           managerId: this.managerId,
           businessPlan: {
             name: this.businessPlan.name,
@@ -940,8 +940,8 @@ export default {
         param = Object.assign({
           title: this.title,
           description: this.description,
-          startDate: this.startDate,
-          endDate: this.endDate,
+          expectedStartDate: this.expectedStartDate,
+          expectedFinishDate: this.expectedFinishDate,
           managerId: this.managerId,
           businessPlan: {
             name: this.businessPlan.name,
