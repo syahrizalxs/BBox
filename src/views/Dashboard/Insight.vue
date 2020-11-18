@@ -17,19 +17,6 @@
         </div>
         <div class="_main-home">
             <div class="_event-activity">
-                <div class="_activity-tag">
-                    <div class="tag-main">
-                        <span>Event's Activity</span>
-                        <p>Track every activity you've made</p>
-                    </div>
-                    <div class="sort">
-                        <span>Latest</span>
-                        <img src="../../assets/icons/chevron-down.svg">
-                    </div>
-                </div>
-                <div v-for="(item, index) in eventList" :key="index">
-                    <CardActivity style="margin: 15px 0px;"/>
-                </div>
             </div>
         </div>
         <div class="_right-activity">
@@ -44,7 +31,6 @@
 <script>
     import Avatar from '../../components/atoms/Avatar'
     import Heading from '../../components/Heading'
-    import CardActivity from '../../components/CardActivity'
 
     //Service
     import EventService from '../../service/EventService'
@@ -57,8 +43,7 @@
         name: 'insight',
         components: {
             Avatar,
-            Heading,
-            CardActivity
+            Heading
         },
         data: () => ({
             eventList: [
