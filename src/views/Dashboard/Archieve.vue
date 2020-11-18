@@ -156,7 +156,7 @@
             <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
               <template slot="dropdown">
                 <span @click="toDetail(item.id)">Detail</span>
-                <span v-if="isEmployee" @click="completedEvent(item.id)">Completed The Event</span>
+                <span v-if="isStaff" @click="completedEvent(item.id)">Completed The Event</span>
               </template>
             </CardEvent>
           </div>
@@ -488,7 +488,7 @@ export default {
     detailActivity: {},
 
     isRequester: false,
-    isEmployee: false,
+    isStaff: false,
     isManager: false,
     isVP: false,
     isDirectors: false,
@@ -1092,8 +1092,8 @@ export default {
       if (role === 'CLIENT') {
         this.isRequester = true
         this.getManager()
-      } else if (role === 'EMPLOYEE') {
-        this.isEmployee = true
+      } else if ( role === 'STAFF') {
+        this.isStaff = true
       } else if (role === 'MANAGER') {
         this.isManager = true
         this.getEmployee()
