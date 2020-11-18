@@ -50,7 +50,7 @@ export default class AuthService extends HttpService {
   }
 
   getListEmployee (param) {
-    const api = this.api + '/list/employee/combobox'
+    const api = this.api + '/list/staff/combobox'
     return this.get(param, api)
   }
   
