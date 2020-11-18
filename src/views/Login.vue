@@ -38,7 +38,7 @@
 					</div>
 					<button @click="onLogin()">SIGN IN</button>
 					<span v-if="loginError" class="error-message">{{loginErrorMessage}}</span>
-					<span class="atau">ATAU</span>
+					<!-- <span class="atau">ATAU</span>
 					<a class="google-btn" @click="redirectGoogle">
 						<div class="button-container">
 							<img :src="require('../assets/icons/flat-google.svg')">
@@ -46,7 +46,7 @@
 								Masuk dengan Google
 							</span>
 						</div>
-					</a>
+					</a> -->
 				</div>
 			</div>
 		</div>

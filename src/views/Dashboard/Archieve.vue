@@ -17,7 +17,7 @@
         </div>
         <!-- <div class="_left-heading-starred-card">
           <div v-for="(item, index) in starred" :key="index">
-            <CardEvent :starred="item.starred" style="margin-bottom: 10px;" :title="item.title" :status="item.status">
+            <CardEvent :starred="item.starred" style="margin-bottom: 10px;" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown">
                 <span @click="toDetail('1')">Detail</span>
                 <span @click="item.starred = false">Unstar this event</span>
@@ -35,7 +35,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in notStarred" :key="index" style="margin-top: 10px;">
-            <CardEvent :starred="false" :title="item.title" :status="item.status">
+            <CardEvent :starred="false" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown">
                 <span @click="toDetail('2')">Detail</span>
                 <span @click="item.starred = true">Star this event</span>
@@ -50,7 +50,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listDraft" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown" v-if="isRequester">
                 <span @click="editData(item)">Edit</span>
               </template>
@@ -64,7 +64,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listRequested" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown" v-if="isManager">
                 <span @click="openRequest(item)">Open Request</span>
               </template>
@@ -78,7 +78,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listAcceptedManager" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown" v-if="isVP">
                 <span @click="openRequest(item)">Open Request</span>
               </template>
@@ -92,7 +92,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listAcceptedVP" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown" v-if="isDirectors">
                 <span @click="openRequest(item)">Open Request</span>
               </template>
@@ -106,7 +106,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listAcceptedDirectors" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown" v-if="isManager">
                 <span @click="openAssign(item)">Assign Team</span>
               </template>
@@ -120,7 +120,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listRejectedManager" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
             </CardEvent>
           </div>
         </div>
@@ -131,7 +131,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listRejectedVP" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
             </CardEvent>
           </div>
         </div>
@@ -142,7 +142,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listRejectedDirectors" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
             </CardEvent>
           </div>
         </div>
@@ -153,10 +153,10 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listOnProgress" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown">
                 <span @click="toDetail(item.id)">Detail</span>
-                <span v-if="isEmployee" @click="completedEvent(item.id)">Completed The Event</span>
+                <span v-if="isStaff" @click="completedEvent(item.id)">Completed The Event</span>
               </template>
             </CardEvent>
           </div>
@@ -168,7 +168,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listCompleted" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown" v-if="isManager">
                 <span @click="openApproval(item)">Open Approval</span>
               </template>
@@ -182,7 +182,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listApprovedManager" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown" v-if="isVP">
                 <span @click="openApproval(item)">Open Approval</span>
               </template>
@@ -196,7 +196,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listApprovedVP" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
               <template slot="dropdown" v-if="isDirectors">
                 <span @click="openApproval(item)">Open Approval</span>
               </template>
@@ -210,7 +210,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listFinished" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
             </CardEvent>
           </div>
         </div>
@@ -221,7 +221,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listDisapprovedManager" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
             </CardEvent>
           </div>
         </div>
@@ -232,7 +232,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listDisapprovedVP" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
             </CardEvent>
           </div>
         </div>
@@ -243,7 +243,7 @@
         </div>
         <div class="_left-event-cards-content">
           <div v-for="(item, index) in listDisapprovedDirectors" :key="index" style="margin-top: 10px;">
-            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.status">
+            <CardEvent @click="handleCardClicked" :class="item.id === detailActivity.id ? 'active' : ''" :data="item" :title="item.title" :status="item.currentStatus">
             </CardEvent>
           </div>
         </div>
@@ -266,7 +266,7 @@
         <span class="child">{{ detailActivity.modifiedDate | convertDate }}</span>
         
         <span class="parent">Status</span>
-        <span v-if="detailActivity.status" class="child">{{ detailActivity.status | convertStatus }}</span>
+        <span v-if="detailActivity.currentStatus" class="child">{{ detailActivity.currentStatus | convertStatus }}</span>
       </div>
       <div class="_participans">
         <b>Participants</b>
@@ -321,12 +321,12 @@
         <Upload style="margin-top: 10px !important; margin-bottom: 10px;" type="attachment" @change="handleUpload"/>
         <div class="_date">
           <div>
-            <label class="custom-label" for="start">Start Date</label>
-            <input v-model="startDate" class="custom-input" type="date">
+            <label class="custom-label" for="start">Expected Start</label>
+            <input v-model="expectedStartDate" class="custom-input" type="date">
           </div>
           <div>
-            <label class="custom-label" for="end">End Date</label>
-            <input v-model="endDate" class="custom-input" type="date">
+            <label class="custom-label" for="end">Expected Finish</label>
+            <input v-model="expectedFinishDate" class="custom-input" type="date">
           </div>
         </div>
       </template>
@@ -488,7 +488,7 @@ export default {
     detailActivity: {},
 
     isRequester: false,
-    isEmployee: false,
+    isStaff: false,
     isManager: false,
     isVP: false,
     isDirectors: false,
@@ -521,8 +521,8 @@ export default {
     title: '',
     description: '',
     // expired: 30,
-    startDate: '',
-    endDate: '',
+    expectedStartDate: '',
+    expectedFinishDate: '',
     dayLeft: '',
     managerId: '',
     businessPlan: {
@@ -564,6 +564,14 @@ export default {
   methods: {
     async uploadFile () {
       this.$parent.isLoading = true
+
+      this.attachmentHolder.forEach(async item => {
+        const formdataBP = new FormData()
+        formdataBP.append('file', item.url)
+        const tempRes = await uploadService.uploadFile(formdataBP)
+        this.item.url = tempRes.fileDownloadUri
+      })
+
       if (this.businessPlan.name !== this.businessPlanHolder) {
         this.businessPlan.name = this.businessPlanHolder
         const formdataBP = new FormData()
@@ -610,7 +618,7 @@ export default {
         // Method Upload
         this.attachmentHolder.push({
           name: e.name,
-          file: e // ganti jadi url: dari method
+          url: e // ganti jadi url: dari method
         })
       } else if (type === 'businessPlan') {
         this.businessPlanHolder = e.name
@@ -636,8 +644,8 @@ export default {
       this.id = data.id
       this.title = data.title
       this.description = data.description
-      this.startDate = data.startDate
-      this.endDate = data.endDate
+      this.expectedStartDate = data.expectedStartDate
+      this.expectedFinishDate = data.expectedFinishDate
       this.dayLeft = data.dayLeft
       this.managerId = data.manager.id
       this.businessPlan.name = data.businessPlanDoc.name
@@ -658,8 +666,8 @@ export default {
       this.id = ''
       this.title = ''
       this.description = ''
-      this.startDate = ''
-      this.endDate = ''
+      this.expectedStartDate = ''
+      this.expectedFinishDate = ''
       this.dayLeft = ''
       this.managerId = ''
       this.businessPlan.name = ''
@@ -832,8 +840,8 @@ export default {
           id: this.id,
           title: this.title,
           description: this.description,
-          startDate: this.startDate,
-          endDate: this.endDate,
+          expectedStartDate: this.expectedStartDate,
+          expectedFinishDate: this.expectedFinishDate,
           managerId: this.managerId,
           businessPlan: {
             name: this.businessPlan.name,
@@ -862,8 +870,8 @@ export default {
         param = Object.assign({
           title: this.title,
           description: this.description,
-          startDate: this.startDate,
-          endDate: this.endDate,
+          expectedStartDate: this.expectedStartDate,
+          expectedFinishDate: this.expectedFinishDate,
           managerId: this.managerId,
           businessPlan: {
             name: this.businessPlan.name,
@@ -907,8 +915,8 @@ export default {
           id: this.id,
           title: this.title,
           description: this.description,
-          startDate: this.startDate,
-          endDate: this.endDate,
+          expectedStartDate: this.expectedStartDate,
+          expectedFinishDate: this.expectedFinishDate,
           managerId: this.managerId,
           businessPlan: {
             name: this.businessPlan.name,
@@ -926,19 +934,14 @@ export default {
             name: this.kajianResiko.name,
             url: this.kajianResiko.url
           },
-          addtionalDocuments: [
-            {
-              name: "adds.docx",
-              url: "http://localhost/file/adds"
-            }
-          ]
+          addtionalDocuments: this.addtionalDocuments
         })
       } else {
         param = Object.assign({
           title: this.title,
           description: this.description,
-          startDate: this.startDate,
-          endDate: this.endDate,
+          expectedStartDate: this.expectedStartDate,
+          expectedFinishDate: this.expectedFinishDate,
           managerId: this.managerId,
           businessPlan: {
             name: this.businessPlan.name,
@@ -956,12 +959,7 @@ export default {
             name: this.kajianResiko.name,
             url: this.kajianResiko.url
           },
-          addtionalDocuments: [
-            {
-              name: "adds.docx",
-              url: "http://localhost/file/adds"
-            }
-          ]
+          addtionalDocuments: this.addtionalDocuments
         })
       }
       const response = await eventService.clientSubmit(param)
@@ -1094,8 +1092,8 @@ export default {
       if (role === 'CLIENT') {
         this.isRequester = true
         this.getManager()
-      } else if (role === 'EMPLOYEE') {
-        this.isEmployee = true
+      } else if ( role === 'STAFF') {
+        this.isStaff = true
       } else if (role === 'MANAGER') {
         this.isManager = true
         this.getEmployee()

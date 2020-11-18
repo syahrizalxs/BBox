@@ -39,7 +39,7 @@ const actions = {
 
     const requestData = Object.assign({ email, password, fcm })
     const res = await authService.login(requestData)
-    if (res.status !== 200) {
+    if (res.currentStatus !== 200) {
       return res
     }
     if (res) {
@@ -56,7 +56,7 @@ const actions = {
 
     const requestData = Object.assign({ code })
     const res = await authService.loginSSO(requestData)
-    if (res.status !== 200) {
+    if (res.currentStatus !== 200) {
       return res
     }
     if (res) {

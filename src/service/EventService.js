@@ -29,7 +29,7 @@ export default class EventService extends HttpService {
   }
 
   acceptByDirectors (param) {
-    const api = this.api + '/directors/accept'
+    const api = this.api + '/director/accept'
     return this.get(param, api)
   }
 
@@ -44,12 +44,12 @@ export default class EventService extends HttpService {
   }
 
   rejectByDirectors (param) {
-    const api = this.api + '/directors/reject'
+    const api = this.api + '/director/reject'
     return this.post(param, api)
   }
 
   assignTeam (param) {
-    const api = this.api + '/manager/add'
+    const api = this.api + '/manager/assign'
     return this.post(param, api)
   }
 
@@ -74,7 +74,7 @@ export default class EventService extends HttpService {
   }
 
   approveByDirectors (param) {
-    const api = this.api + '/directors/approve'
+    const api = this.api + '/director/approve'
     return this.get(param, api)
   }
 
@@ -89,7 +89,7 @@ export default class EventService extends HttpService {
   }
 
   disapproveByDirectors (param) {
-    const api = this.api + '/directors/disapprove'
+    const api = this.api + '/director/disapprove'
     return this.post(param, api)
   }
 

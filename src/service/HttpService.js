@@ -163,7 +163,7 @@ export default class HttpService extends BaseService {
                     size: res.data.pages.size,
                     page: res.data.pages.number
                   },
-                  status: res.status,
+                  status: res.currentStatus,
                   message: res.message,
                   success: res.success
                 }
@@ -251,7 +251,7 @@ export default class HttpService extends BaseService {
       return {}
     }
 
-    if ((response.data.status !== 200 || response.data.status === 'DATA_EXISTS' || response.data.status === '5000' || response.data.status === null || response.data.status === '') && response.status !== 200) {
+    if ((response.data.currentStatus !== 200 || response.data.currentStatus === 'DATA_EXISTS' || response.data.currentStatus === '5000' || response.data.currentStatus === null || response.data.currentStatus === '') && response.currentStatus !== 200) {
       throw new ErrorService(response)
     }
 
