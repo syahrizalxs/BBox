@@ -571,12 +571,7 @@
 							name: '',
 							url: ''
 					},
-					addtionalDocuments: [
-							// {
-							//   name: "adds.docx",
-							//   url: "http://localhost/file/adds"
-							// }
-					],
+                    additionalDocuments: [],
 					businessPlanHolder: '',
 					financialModelHolder: '',
 					kajianLegalHolder: '',
@@ -690,7 +685,7 @@
 							this.kajianResiko.name = data.kajianResikoDoc.name
 							this.kajianResikoHolder = data.kajianResikoDoc.name
 							this.kajianResiko.url = data.kajianResikoDoc.url
-							this.addtionalDocuments = data.additionalDocs
+							this.additionalDocuments = data.additionalDocs
 					},
 					resetData() {
 							this.id = ''
@@ -712,7 +707,7 @@
 							this.kajianResiko.name = ''
 							this.kajianResikoHolder = ''
 							this.kajianResiko.url = ''
-							this.addtionalDocuments = []
+							this.additionalDocuments = []
 							this.notes = ''
 							this.selectEmp = ''
 							this.employee = []
@@ -735,7 +730,6 @@
 									response = await eventService.approveByDirectors(param)
 							}
 							if (response) {
-									console.log('accept', response)
 									this.resetData()
 									this.$parent.isLoading = false
 									this.getListEvent()
@@ -757,7 +751,6 @@
 									response = await eventService.disapproveByDirectors(param)
 							}
 							if (response) {
-									console.log('reject', response)
 									this.resetData()
 									this.$parent.isLoading = false
 									this.getListEvent()
@@ -768,7 +761,6 @@
 							const param = Object.assign({id: val})
 							const response = await eventService.completedByEmployee(param)
 							if (response) {
-									console.log('completed', response)
 									this.$parent.isLoading = false
 									this.getListEvent()
 							}
@@ -786,7 +778,6 @@
 									response = await eventService.acceptByDirectors(param)
 							}
 							if (response) {
-									console.log('accept', response)
 									this.resetData()
 									this.$parent.isLoading = false
 									this.getListEvent()
@@ -808,7 +799,6 @@
 									response = await eventService.rejectByDirectors(param)
 							}
 							if (response) {
-									console.log('reject', response)
 									this.resetData()
 									this.$parent.isLoading = false
 									this.getListEvent()
@@ -826,7 +816,6 @@
 							})
 							const response = await eventService.assignTeam(param)
 							if (response) {
-									console.log('assign', response)
 									this.resetData()
 									this.$parent.isLoading = false
 									this.getListEvent()
@@ -889,7 +878,7 @@
 													name: this.kajianResiko.name,
 													url: this.kajianResiko.url
 											},
-											addtionalDocuments: this.addtionalDocuments
+                                            additionalDocuments: this.additionalDocuments
 									})
 							} else {
 									param = Object.assign({
@@ -914,12 +903,11 @@
 													name: this.kajianResiko.name,
 													url: this.kajianResiko.url
 											},
-											addtionalDocuments: this.addtionalDocuments
+                                            additionalDocuments: this.attachmentHolder
 									})
 							}
 							const response = await eventService.clientCreate(param)
 							if (response) {
-									console.log('create', response)
 									this.resetData()
 									this.$refs.addEvent.visible = false
 									this.$parent.isLoading = false
@@ -954,7 +942,7 @@
 													name: this.kajianResiko.name,
 													url: this.kajianResiko.url
 											},
-											addtionalDocuments: this.addtionalDocuments
+                                            additionalDocuments: this.additionalDocuments
 									})
 							} else {
 									param = Object.assign({
@@ -979,12 +967,11 @@
 													name: this.kajianResiko.name,
 													url: this.kajianResiko.url
 											},
-											addtionalDocuments: this.addtionalDocuments
+                                            additionalDocuments: this.additionalDocuments
 									})
 							}
 							const response = await eventService.clientSubmit(param)
 							if (response) {
-									console.log('submit', response)
 									this.resetData()
 									this.$refs.addEvent.visible = false
 									this.$parent.isLoading = false

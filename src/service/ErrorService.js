@@ -3,7 +3,6 @@
 
 export default class ErrorService extends Error {
   constructor (error) {
-    // console.log(error.request)
     super(error)
     this.name = 'Error: '
     this.error = error.request.response === 'Invalid token' ? { status: 401, message: error.request.response } : error.request.response ? JSON.parse(error.request.response) : error
@@ -16,7 +15,6 @@ export default class ErrorService extends Error {
       // text: this.error.status === 500 ? this.error.message : this.error.status ? this.error.message : this.error.message.charAt(0).toUpperCase() + this.error.message.slice(1)
       // text: this.error.status === 500 ? 'System Exception' : this.error.status ? this.error.message : this.error.message.charAt(0).toUpperCase() + this.error.message.slice(1)
     // }
-    // console.log(message)
     // swall(message).then(() => {
     //   if (this.error.status === 401) {
     //     storage.clearSession()
@@ -31,7 +29,6 @@ export default class ErrorService extends Error {
     //   icon: 'warning',
     //   text: this.error.message
     // }
-    // console.log(message)
     // swall(message)
   }
 }

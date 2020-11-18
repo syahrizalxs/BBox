@@ -64,7 +64,6 @@ export default class AuthService extends HttpService {
     //     storage.clearSession()
     //   }
     // })
-    console.log('HAHAHA KETRIGGER')
     HttpService.removeHeader()
     storage.clearSession()
   }

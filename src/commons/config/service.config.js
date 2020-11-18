@@ -18,7 +18,6 @@ const service = axios.create({
 // logging response request on development environment
 if (process.env.NODE_ENV === 'development') {
   service.interceptors.request.use(function (config) {
-    // console.log('Request Interceptor', config)
     return config
   }, function (error) {
     return Promise.reject(error)
@@ -26,7 +25,6 @@ if (process.env.NODE_ENV === 'development') {
 
   // Add a response interceptor
   service.interceptors.response.use(function (response) {
-    // console.log('Response Interceptor', response)
     return response
   }, function (error) {
     return Promise.reject(error)

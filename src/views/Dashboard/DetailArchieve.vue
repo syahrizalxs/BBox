@@ -212,8 +212,7 @@ export default {
       this.$parent.isLoading = true
       this.uploadService()
       this.dataModal.eventId = this.$route.params.id
-      const res = processService.save()
-      console.log({ res })
+      processService.save()
       this.$parent.isLoading = false
     },
     async uploadFile () {
