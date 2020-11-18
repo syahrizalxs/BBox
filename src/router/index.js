@@ -12,6 +12,8 @@ import Archieve from '../views/Dashboard/Archieve.vue'
 import DetailArchieve from '../views/Dashboard/DetailArchieve'
 Vue.use(VueRouter)
 
+const TITLE = 'BBox - '
+
 const routes = [
   {
     path: '/',
@@ -22,19 +24,28 @@ const routes = [
         // when /user/:id/profile is matched
         path: '/',
         component: Insight,
-        name: 'Home'
+        name: 'Home',
+        meta: {
+          title: 'Dashboard'
+        }
       },
       {
         // UserProfile will be rendered inside User's <router-view>
         // when /user/:id/profile is matched
         path: '/archieve',
         component: Archieve,
-        name: 'Archieve'
+        name: 'Archieve',
+        meta: {
+          title: 'Archieve'
+        }
       },
       {
         path: '/archieve/:id',
         component: DetailArchieve,
-        name: 'Detail Archieve'
+        name: 'Detail Archieve',
+        meta: {
+          title: 'Detail Archieve'
+        }
       }
     ]
   },
@@ -44,7 +55,8 @@ const routes = [
     component: Login,
     meta: {
       public: true,
-      onlyWhenLoggedOut: true
+      onlyWhenLoggedOut: true,
+      title: 'Login'
     }
   },
   {
@@ -53,7 +65,8 @@ const routes = [
     component: RedirectGoogle,
     meta: {
       public: true,
-      onlyWhenLoggedOut: true
+      onlyWhenLoggedOut: true,
+      title: 'SSO'
     }
   }
 ]
@@ -68,7 +81,7 @@ router.beforeEach((to, from, next) => {
   const isPublic = to.matched.some(record => record.meta.public)
   const onlyWhenLoggedOut = to.matched.some(record => record.meta.onlyWhenLoggedOut)
   const loggedIn = !!storage.getToken()
-  
+  document.title = TITLE + to.meta.title || 'BBox'
   if (!isPublic && !loggedIn) {
     return next({
       path: '/login'

@@ -1,7 +1,7 @@
 <template>
   <div class="upload-btn-wrapper">
     <button class="btn"><img :src="require('../../assets/icons/button/plus.svg')"><span> Upload Here</span></button>
-    <input type="file" name="myfile" @change="handleChange($event)"/>
+    <input type="file" accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" name="myfile" @change="handleChange($event)"/>
   </div>
 </template>
 

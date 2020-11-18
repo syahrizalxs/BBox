@@ -564,6 +564,14 @@ export default {
   methods: {
     async uploadFile () {
       this.$parent.isLoading = true
+
+      this.attachmentHolder.forEach(async item => {
+        const formdataBP = new FormData()
+        formdataBP.append('file', item.url)
+        const tempRes = await uploadService.uploadFile(formdataBP)
+        this.item.url = tempRes.fileDownloadUri
+      })
+
       if (this.businessPlan.name !== this.businessPlanHolder) {
         this.businessPlan.name = this.businessPlanHolder
         const formdataBP = new FormData()
@@ -610,7 +618,7 @@ export default {
         // Method Upload
         this.attachmentHolder.push({
           name: e.name,
-          file: e // ganti jadi url: dari method
+          url: e // ganti jadi url: dari method
         })
       } else if (type === 'businessPlan') {
         this.businessPlanHolder = e.name
@@ -926,12 +934,7 @@ export default {
             name: this.kajianResiko.name,
             url: this.kajianResiko.url
           },
-          addtionalDocuments: [
-            {
-              name: "adds.docx",
-              url: "http://localhost/file/adds"
-            }
-          ]
+          addtionalDocuments: this.addtionalDocuments
         })
       } else {
         param = Object.assign({
@@ -956,12 +959,7 @@ export default {
             name: this.kajianResiko.name,
             url: this.kajianResiko.url
           },
-          addtionalDocuments: [
-            {
-              name: "adds.docx",
-              url: "http://localhost/file/adds"
-            }
-          ]
+          addtionalDocuments: this.addtionalDocuments
         })
       }
       const response = await eventService.clientSubmit(param)
