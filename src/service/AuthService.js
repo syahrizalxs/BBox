@@ -7,7 +7,7 @@ export default class AuthService extends HttpService {
   login (data) {
     const api = this.api + '/login'
     return this.post(data, api).then((response) => {
-      if (response.currentStatus === 200) {
+      if (response.status === 200) {
         storage.saveToken(response.data.token)
         HttpService.setHeader()
         return response
