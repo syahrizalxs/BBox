@@ -115,5 +115,6 @@ export default {
 	border-radius: 30%;
 	padding: 6px;
 	margin-left: -6px;
+	transition: .4s;
 }
 </style>

@@ -70,15 +70,17 @@ export default {
     padding: 9px 15px;
 
     &:hover {
-      border: 3px solid #0378b8;
+      border: 2px solid #0378b8;
       cursor: pointer;
+      transition: .1s;
     }
 
     &.active {
       border: 3px solid #0075b4;
       cursor: pointer;
       background-color: rgba(253, 253, 253, 0.644);
-      box-shadow: 2px 4px rgba(0,0,0,0.2);
+      box-shadow: 2px 4px rgba(0, 0, 0, 0.097);
+      transition: .3s;
     }
     ._left-side {
       display: flex;
