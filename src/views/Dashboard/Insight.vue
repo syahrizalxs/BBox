@@ -10,24 +10,10 @@
                     <span class="job">{{authenticatedUser.role}} - {{authenticatedUser.division}}</span>
                 </div>
             </div>
-            <div class="_events">
-                <div class="_event-tag">
-                    <span>Your Event</span>
-                    <a>See More</a>
-                </div>
-                <div class="_event-list">
-                    <div class="_event-item pointer" v-for="(item, index) in eventList" :key="index">
-                        <img class="_event-sign"
-                             :src="item.status === 'success' ? require('../../assets/icons/success-box.svg') : require('../../assets/icons/pending-box.svg')">
-                        <span>{{ item.title }}</span>
-                        <img class="_event-detail" src="../../assets/icons/chevron-right.svg">
-                    </div>
-                </div>
-            </div>
-            <div class="_charts">
-                <AreaChart v-if="dataChart && dataChart.length" :width="250" :height="230" :data="dataChart"
-                           :label="labelChart"/>
-            </div>
+<!--            <div class="_charts">-->
+<!--                <AreaChart v-if="dataChart && dataChart.length" :width="250" :height="230" :data="dataChart"-->
+<!--                           :label="labelChart"/>-->
+<!--            </div>-->
         </div>
         <div class="_main-home">
             <div class="_event-activity">
@@ -48,34 +34,8 @@
         </div>
         <div class="_right-activity">
             <div class="_event-information">
-                <span>Event Information</span>
-                <div class="_card-information">
-                    <div class="cleared">
-                        <img src="../../assets/icons/success-box.svg">
-                        <span class="desc">Event Cleared</span>
-                        <span class="total">10</span>
-                    </div>
-                    <div class="on-progress">
-                        <img src="../../assets/icons/pending-box.svg">
-                        <span class="desc">Event On Progress</span>
-                        <span class="total">121</span>
-                    </div>
-                    <div class="canceled">
-                        <img src="../../assets/icons/cancel-box.svg">
-                        <span class="desc">Event Canceled</span>
-                        <span class="total">1</span>
-                    </div>
-                </div>
-                <div class="_help-care">
-                    <span>About</span>
-                    <span>Help Center</span>
-                    <span>Privacy & Terms</span>
-                    <span>More</span>
-                </div>
             </div>
             <div class="_powered-by">
-                <img src="../../assets/iconplus-bbox.svg">
-                <span>PT Indonesia Comnets Plus © 2020</span>
             </div>
         </div>
     </div>
@@ -85,7 +45,6 @@
     import Avatar from '../../components/atoms/Avatar'
     import Heading from '../../components/Heading'
     import CardActivity from '../../components/CardActivity'
-    import AreaChart from '../../components/Chart'
 
     //Service
     import EventService from '../../service/EventService'
@@ -99,8 +58,7 @@
         components: {
             Avatar,
             Heading,
-            CardActivity,
-            AreaChart
+            CardActivity
         },
         data: () => ({
             eventList: [

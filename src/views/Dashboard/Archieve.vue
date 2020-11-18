@@ -373,7 +373,7 @@
                 <span><b>{{ kajianLegal.name }}</b></span><br>
                 <span><b>{{ kajianResiko.name }}</b></span><br><br>
                 <span>Sisa Hari</span><br>
-                <p><b>{{ dayLeft }}</b></p>
+                <p><b>{{ estimatedDaysLeft }}</b></p>
             </template>
 
             <template slot="footer">
@@ -441,7 +441,7 @@
                 <span><b>{{ kajianLegal.name }}</b></span><br>
                 <span><b>{{ kajianResiko.name }}</b></span><br><br>
                 <span>Sisa Hari</span><br>
-                <p><b>{{ dayLeft }}</b></p>
+                <p><b>{{ estimatedDaysLeft }}</b></p>
             </template>
 
             <template slot="footer">
@@ -553,7 +553,7 @@
             // expired: 30,
             expectedStartDate: '',
             expectedFinishDate: '',
-            dayLeft: '',
+            estimatedDaysLeft: '',
             managerId: '',
             businessPlan: {
                 name: '',
@@ -676,7 +676,7 @@
                 this.description = data.description
                 this.expectedStartDate = data.expectedStartDate
                 this.expectedFinishDate = data.expectedFinishDate
-                this.dayLeft = data.dayLeft
+                this.estimatedDaysLeft = data.estimatedDaysLeft
                 this.managerId = data.manager.id
                 this.businessPlan.name = data.businessPlanDoc.name
                 this.businessPlanHolder = data.businessPlanDoc.name
@@ -698,7 +698,7 @@
                 this.description = ''
                 this.expectedStartDate = ''
                 this.expectedFinishDate = ''
-                this.dayLeft = ''
+                this.estimatedDaysLeft = ''
                 this.managerId = ''
                 this.businessPlan.name = ''
                 this.businessPlanHolder = ''
