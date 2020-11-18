@@ -8,7 +8,7 @@
                 <div class="_left-heading-starred">
                     <!-- <span>Starred Event</span> -->
                     <span></span>
-                    <Button title="Add Event" @click="addData()" style="width: 115px; height: 39px;"
+                    <Button title="Tambah Event" @click="addData()" style="width: 115px; height: 39px;"
                             :type="'outline-primary'">
                         <template slot="icon">
                             <img src="../../assets/icons/button/plus.svg">
@@ -269,20 +269,20 @@
             <div class="_detail-event">
                 <h2 style="margin-bottom: 40px;">Detail Event</h2>
 
-                <span class="parent">Title</span>
+                <span class="parent">Judul</span>
                 <span class="child">{{ detailActivity.title || '-' }}</span>
 
-                <span class="parent">Created</span>
+                <span class="parent">Tanggal dibuat</span>
                 <span class="child">{{ detailActivity.createdDate | convertDate }}</span>
 
-                <span class="parent">Last Update</span>
+                <span class="parent">Terakhir diubah</span>
                 <span class="child">{{ detailActivity.modifiedDate | convertDate }}</span>
 
                 <span class="parent">Status</span>
                 <span v-if="detailActivity.currentStatus" class="child">{{ detailActivity.currentStatus | convertStatus }}</span>
             </div>
             <div class="_participans">
-                <b>Participants</b>
+                <b>Daftar Peserta</b>
                 <div class="_participants-ava">
                     <Avatar v-for="(item, index) in detailActivity.participants" :key="index" class="_ava"
                             :path="item.avatar"/>
@@ -291,15 +291,15 @@
                         <span class="_ava-number">+3</span>
                     </div>
                     <div v-if="detailActivity && detailActivity.participants && !detailActivity.participants.length">
-                        There is no participants yet.
+                        Belum ada peserta.
                     </div>
                 </div>
             </div>
         </div>
 
-        <Modal :title="'Add Event'" ref="addEvent">
+        <Modal :title="'Tambah Event'" ref="addEvent">
             <template slot="body">
-                <label class="custom-label" for="title">Event Title</label>
+                <label class="custom-label" for="title">Judul</label>
                 <input v-model="title" class="custom-input" type="text" id="title" name="title">
                 <label class="custom-label" for="manager">Manager</label>
                 <select class="custom-input" v-model="managerId" name="manager" id="manager">
@@ -307,7 +307,7 @@
                         <option v-bind:key="item.id" :value="item.id">{{item.name}}</option>
                     </template>
                 </select>
-                <label class="custom-label" for="description">Description</label>
+                <label class="custom-label" for="description">Deskripsi</label>
                 <textarea v-model="description" rows="100" class="custom-input" type="text-area" id="description"
                           name="description"></textarea>
                 <label class="custom-label" for="businessPlan">Business Plan</label>
@@ -343,20 +343,20 @@
                         @change="handleUpload"/>
                 <div class="_date">
                     <div>
-                        <label class="custom-label" for="start">Expected Start</label>
+                        <label class="custom-label" for="start">Perkiraan Mulai</label>
                         <input v-model="expectedStartDate" class="custom-input" type="date">
                     </div>
                     <div>
-                        <label class="custom-label" for="end">Expected Finish</label>
+                        <label class="custom-label" for="end">Perkiraan Selesai</label>
                         <input v-model="expectedFinishDate" class="custom-input" type="date">
                     </div>
                 </div>
             </template>
 
             <template slot="footer">
-                <Button @click="clientCreate()" title="Save as Draft" type="primary"
-                        style="padding: 15px 25px; margin-right:10px"></Button>
-                <Button @click="clientSubmit()" title="Submit" type="primary" style="padding: 15px 25px;"></Button>
+                <Button @click="clientCreate()" title="Simpan sebagai draft" type="success"
+                        style="padding: 15px 25px; margin-right:10px; color: white;"></Button>
+                <Button @click="clientSubmit()" title="Kirim" type="primary" style="padding: 15px 25px;"></Button>
             </template>
         </Modal>
 
