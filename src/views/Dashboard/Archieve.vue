@@ -280,6 +280,37 @@
 
                 <span class="parent">Status</span>
                 <span v-if="detailActivity.currentStatus" class="child">{{ detailActivity.currentStatus | convertStatus }}</span>
+				<span class="child" v-if="!detailActivity.currentStatus">-</span>
+
+				<span class="parent">File Business Plan</span>
+				<span class="child" v-if="detailActivity.businessPlanDoc">
+					<a v-text="detailActivity.businessPlanDoc.name" :href="detailActivity.businessPlanDoc.url"/>
+				</span>
+				<span class="child" v-if="!detailActivity.businessPlanDoc">-</span>
+
+				<span class="parent">File Financial Model</span>
+				<span class="child" v-if="detailActivity.financialModelDoc">
+					<a v-text="detailActivity.financialModelDoc.name" :href="detailActivity.financialModelDoc.url"/>
+				</span>
+				<span class="child" v-if="!detailActivity.financialModelDoc">-</span>
+
+				<span class="parent">File Kajian Legal</span>
+				<span class="child" v-if="detailActivity.kajianLegalDoc">
+					<a v-text="detailActivity.kajianLegalDoc.name" :href="detailActivity.kajianLegalDoc.url"/>
+				</span>
+				<span class="child" v-if="!detailActivity.kajianLegalDoc">-</span>
+
+				<span class="parent">File Kajian Resiko</span>
+				<span class="child" v-if="detailActivity.kajianResikoDoc">
+					<a v-text="detailActivity.kajianResikoDoc.name" :href="detailActivity.kajianResikoDoc.url"/>
+				</span>
+				<span class="child" v-if="!detailActivity.kajianResikoDoc">-</span>
+
+				<span class="parent">File Lampiran Dokumen</span>
+				<span class="child" v-for="(item, index) in detailActivity.additionalDocs" :key="index">
+					<a v-text="item.name" :href="item.url"/>
+				</span>
+				<span class="child" v-if="!detailActivity.additionalDocs || detailActivity.additionalDocs.length === 0">-</span>
             </div>
             <div class="_participans">
                 <b>Daftar Peserta</b>
@@ -1248,6 +1279,7 @@
 					flex-direction: column;
 					padding: 30px;
 					background-color: #F5F5F5;
+					overflow: auto;
 
 					._notification-slot {
 							width: 100%;
