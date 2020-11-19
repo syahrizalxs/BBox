@@ -12,17 +12,31 @@
           <button><img src="../../assets/icons/sort.svg"></button>
         </div>
         <div class="_btn-right">
-          <Button title="Set Status" style="width: 132px; height: 39px;" type="purple">
+          <Button
+            title="Set Status"
+            style="width: 132px; height: 39px;"
+            type="purple"
+          >
             <template slot="icon">
               <img src="../../assets/icons/button/edit.svg">
             </template>
           </Button>
-          <Button title="Timeline View" @click="$refs.timeline.visible = true" style="margin-left: 16px; width: 132px; height: 39px;" type="green">
+          <Button
+            title="Timeline View"
+            style="margin-left: 16px; width: 132px; height: 39px;"
+            type="green"
+            @click="$refs.timeline.visible = true"
+          >
             <template slot="icon">
               <img src="../../assets/icons/eye-white.svg">
             </template>
           </Button>
-          <Button title="Add Process" @click="$refs.addProcess.visible = true" style="margin-left: 16px; width: 132px; height: 39px;" type="primary">
+          <Button
+            title="Add Process"
+            style="margin-left: 16px; width: 132px; height: 39px;"
+            type="primary"
+            @click="$refs.addProcess.visible = true"
+          >
             <template slot="icon">
               <img src="../../assets/icons/button/plus-white.svg">
             </template>
@@ -33,10 +47,16 @@
         <table class="styled-table">
           <thead>
             <tr>
-              <th style="text-align:left">Process Name</th>
-              <th style="text-align:left">Type</th>
-              <th style="text-align:left">Last Update</th>
-              <th></th>
+              <th style="text-align:left">
+                Process Name
+              </th>
+              <th style="text-align:left">
+                Type
+              </th>
+              <th style="text-align:left">
+                Last Update
+              </th>
+              <th />
             </tr>
           </thead>
           <tbody>
@@ -73,27 +93,41 @@
         <Notification />
       </div>
       <div class="_detail-event">
-        <h2 style="margin-bottom: 40px;">Detail Event</h2>
+        <h2 style="margin-bottom: 40px;">
+          Detail Event
+        </h2>
 
         <span class="parent">Event Title</span>
         <span class="child">Partnership Dengan Brightspace</span>
-        
+
         <span class="parent">Created</span>
         <span class="child">Jan 01, 2020 at 8:00 AM</span>
-        
+
         <span class="parent">Last Update</span>
         <span class="child">Sep 27, 2020 at 1:29 PM</span>
-        
+
         <span class="parent">Status</span>
         <span class="child">Cleared</span>
       </div>
       <div class="_participans">
         <b>Participants</b>
         <div class="_participants-ava">
-          <Avatar class="_ava" path="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Natalie_Portman_Cannes_2015_5_%28cropped%29.jpg/230px-Natalie_Portman_Cannes_2015_5_%28cropped%29.jpg"/>
-          <Avatar class="_ava" path="https://1.bp.blogspot.com/-7osU1A9QpAE/Tcf0jD5KoDI/AAAAAAAAAIs/AFEsHouE14w/s1600/travis-barker-profile.png"/>
-          <Avatar class="_ava" path="https://media.suara.com/pictures/970x544/2019/08/18/23065-niki-zefanya.jpg"/>
-          <Avatar class="_ava" path="https://p01.lacasting.com.castingnetworks.io/photos/mm/4/0/e0e9cde28b3542dfab980f9ed9046d04.jpg "/>
+          <Avatar
+            class="_ava"
+            path="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Natalie_Portman_Cannes_2015_5_%28cropped%29.jpg/230px-Natalie_Portman_Cannes_2015_5_%28cropped%29.jpg"
+          />
+          <Avatar
+            class="_ava"
+            path="https://1.bp.blogspot.com/-7osU1A9QpAE/Tcf0jD5KoDI/AAAAAAAAAIs/AFEsHouE14w/s1600/travis-barker-profile.png"
+          />
+          <Avatar
+            class="_ava"
+            path="https://media.suara.com/pictures/970x544/2019/08/18/23065-niki-zefanya.jpg"
+          />
+          <Avatar
+            class="_ava"
+            path="https://p01.lacasting.com.castingnetworks.io/photos/mm/4/0/e0e9cde28b3542dfab980f9ed9046d04.jpg "
+          />
           <div class="_over-ava">
             <span class="_ava-number">+3</span>
           </div>
@@ -101,33 +135,103 @@
       </div>
     </div>
 
-    <Modal :title="'Add Process'" ref="addProcess">
+    <Modal
+      ref="addProcess"
+      :title="'Add Process'"
+    >
       <template slot="body">
-        <label class="custom-label" for="process">Process Name</label><br>
-        <input class="custom-input" v-model="dataModal.name" type="text" id="process" name="process"><br>
-        <label class="custom-label" for="tipe">Type</label><br>
+        <label
+          class="custom-label"
+          for="process"
+        >Process Name</label><br>
+        <input
+          id="process"
+          v-model="dataModal.name"
+          class="custom-input"
+          type="text"
+          name="process"
+        ><br>
+        <label
+          class="custom-label"
+          for="tipe"
+        >Type</label><br>
         <div style="margin-bottom:15px">
-          <input type="radio" id="main" v-model="dataModal.type" name="tipe" checked="MAIN" value="MAIN" style="margin-right:14px">
-          <label class="custom-label-radio" for="main" style="margin-right:30px">Main Process</label>
-          <input type="radio" id="sub" v-model="dataModal.type" checked="SUB" name="tipe" value="SUB" style="margin-right:14px">
-          <label class="custom-label-radio" for="sub">Sub Process</label>
+          <input
+            id="main"
+            v-model="dataModal.type"
+            type="radio"
+            name="tipe"
+            checked="MAIN"
+            value="MAIN"
+            style="margin-right:14px"
+          >
+          <label
+            class="custom-label-radio"
+            for="main"
+            style="margin-right:30px"
+          >Main Process</label>
+          <input
+            id="sub"
+            v-model="dataModal.type"
+            type="radio"
+            checked="SUB"
+            name="tipe"
+            value="SUB"
+            style="margin-right:14px"
+          >
+          <label
+            class="custom-label-radio"
+            for="sub"
+          >Sub Process</label>
         </div>
-        <label class="custom-label" for="description">Description</label><br>
-        <textarea rows="100" class="custom-input" v-model="dataModal.description" type="text-area" id="description" name="description"></textarea><br>
-        <div class="files-list-name" style="margin-bottom: 10px;">
-          <span class="files-tag-name" v-for="(item, index) in fileHolder" @click="fileHolder.splice(index, 1)" :key="index">{{ item.name }}</span>
+        <label
+          class="custom-label"
+          for="description"
+        >Description</label><br>
+        <textarea
+          id="description"
+          v-model="dataModal.description"
+          rows="100"
+          class="custom-input"
+          type="text-area"
+          name="description"
+        /><br>
+        <div
+          class="files-list-name"
+          style="margin-bottom: 10px;"
+        >
+          <span
+            v-for="(item, index) in fileHolder"
+            :key="index"
+            class="files-tag-name"
+            @click="fileHolder.splice(index, 1)"
+          >{{ item.name }}</span>
         </div>
-        <label class="custom-label" for="attachment">Attachment</label><br>
+        <label
+          class="custom-label"
+          for="attachment"
+        >Attachment</label><br>
         <Upload @change="handleUpload" />
       </template>
       <template slot="footer">
-        <Button title="Save" @click="saveProcess" type="primary" style="padding: 15px 25px;"></Button>
+        <Button
+          title="Save"
+          type="primary"
+          style="padding: 15px 25px;"
+          @click="saveProcess"
+        />
       </template>
     </Modal>
 
-    <Modal :title="'Partnership dengan Brightspace'" ref="timeline">
+    <Modal
+      ref="timeline"
+      :title="'Partnership dengan Brightspace'"
+    >
       <template slot="body">
-        <Tab :tabs="tabs" :initialTab="initialTab">
+        <Tab
+          :tabs="tabs"
+          :initial-tab="initialTab"
+        >
           <template slot="tab-head-activity">
             Activity
           </template>
@@ -178,7 +282,7 @@ export default {
     Avatar,
     Tab,
     Timeline,
-    Upload
+    Upload,
   },
   data: () => ({
     initialTab: 'activity',
@@ -189,41 +293,41 @@ export default {
       eventId: '',
       name: '',
       status: '',
-      type: 'MAIN'
+      type: 'MAIN',
     },
-    fileHolder: []
+    fileHolder: [],
   }),
   computed: {
-    starred () {
-      return this.eventList.filter(item => item.starred)
+    starred() {
+      return this.eventList.filter((item) => item.starred)
     },
-    notStarred () {
-      return this.eventList.filter(item => !item.starred)
-    }
+    notStarred() {
+      return this.eventList.filter((item) => !item.starred)
+    },
   },
   methods: {
-    handleUpload (e) {
+    handleUpload(e) {
       this.fileHolder.push({
         name: e.name,
-        url: e
+        url: e,
       })
     },
-    async saveProcess () {
+    async saveProcess() {
       this.$parent.isLoading = true
       this.uploadService()
       this.dataModal.eventId = this.$route.params.id
       processService.save()
       this.$parent.isLoading = false
     },
-    async uploadFile () {
-      this.fileHolder.forEach(async item => {
+    async uploadFile() {
+      this.fileHolder.forEach(async (item) => {
         const formData = new FormData()
         formData.append('file', item.file)
         const tempRes = await uploadService.uploadFile(formData)
         item.url = tempRes.fileDownloadUri
       })
-    }
-  }
+    },
+  },
 
 }
 </script>
@@ -379,7 +483,7 @@ export default {
     flex-direction: column;
     padding: 27px 32px;
     width: 66%;
-    
+
     ._left-heading {
       display: flex;
       flex-direction: row;

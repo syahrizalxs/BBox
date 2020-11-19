@@ -5,14 +5,14 @@ export default class BaseService {
   /**
    * @param {*} options
    */
-  constructor (options) {
+  constructor(options) {
     this.options = options
   }
 
   /**
    * @param {*} options
    */
-  static build (options) {
+  static build(options) {
     return new this(options)
   }
 }

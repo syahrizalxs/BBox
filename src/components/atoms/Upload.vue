@@ -1,7 +1,14 @@
 <template>
   <div class="upload-btn-wrapper">
-    <button class="btn"><img :src="require('../../assets/icons/button/plus.svg')"><span> Upload Here</span></button>
-    <input type="file" accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" name="myfile" @change="handleChange($event)"/>
+    <button class="btn">
+      <img :src="require('../../assets/icons/button/plus.svg')"><span> Upload Here</span>
+    </button>
+    <input
+      type="file"
+      accept=".pdf,.doc,.docx,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      name="myfile"
+      @change="handleChange($event)"
+    >
   </div>
 </template>
 
@@ -10,10 +17,10 @@ export default {
   name: 'Upload',
   props: ['type'],
   methods: {
-    handleChange (e) {
+    handleChange(e) {
       this.$emit('change', e.target.files[0], this.type)
-    }
-  }
+    },
+  },
 }
 </script>
 

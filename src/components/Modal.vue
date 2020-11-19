@@ -1,17 +1,27 @@
 <template>
-  <div id="myModal" class="modal" v-if="visible">
+  <div
+    v-if="visible"
+    id="myModal"
+    class="modal"
+  >
     <!-- Modal content -->
     <div class="modal-content">
       <div class="modal-header">
-        <span class="title">{{title}}</span>
-        <span class="close" @click="visible = false">&times;</span>
+        <span class="title">{{ title }}</span>
+        <span
+          class="close"
+          @click="visible = false"
+        >&times;</span>
       </div>
-      <div v-if="isLiner" class="line"></div>
+      <div
+        v-if="isLiner"
+        class="line"
+      />
       <div class="modal-body">
-        <slot name="body"></slot>
+        <slot name="body" />
       </div>
       <div class="modal-footer">
-        <slot name="footer"></slot>
+        <slot name="footer" />
       </div>
     </div>
   </div>
@@ -22,9 +32,9 @@ export default {
   name: 'Loading',
   props: ['title', 'isLiner'],
   data: () => ({
-    visible: false
+    visible: false,
   }),
-  methods: {}
+  methods: {},
 }
 </script>
 
@@ -42,7 +52,7 @@ export default {
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  
+
   /* Modal Content */
   .modal-content {
     background-color: #fefefe;

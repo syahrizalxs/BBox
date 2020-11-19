@@ -1,4 +1,4 @@
-export function errorparser (value) {
+export function errorparser(value) {
   let error = ''
   switch (value) {
     case '5851':

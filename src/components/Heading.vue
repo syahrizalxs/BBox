@@ -1,13 +1,19 @@
 <template>
   <div class="heading">
-    <img class="logo" src="../assets/logo.svg">
-    <img class="text" src="../assets/bbox-text.svg">
+    <img
+      class="logo"
+      src="../assets/logo.svg"
+    >
+    <img
+      class="text"
+      src="../assets/bbox-text.svg"
+    >
   </div>
 </template>
 
 <script>
 export default {
-  name: 'HeadingLogo'
+  name: 'HeadingLogo',
 }
 </script>
 

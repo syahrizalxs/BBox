@@ -11,24 +11,16 @@ const service = axios.create({
       }
 
       return data
-    }
-  ]
+    },
+  ],
 })
 
 // logging response request on development environment
 if (process.env.NODE_ENV === 'development') {
-  service.interceptors.request.use(function (config) {
-    return config
-  }, function (error) {
-    return Promise.reject(error)
-  })
+  service.interceptors.request.use((config) => config, (error) => Promise.reject(error))
 
   // Add a response interceptor
-  service.interceptors.response.use(function (response) {
-    return response
-  }, function (error) {
-    return Promise.reject(error)
-  })
+  service.interceptors.response.use((response) => response, (error) => Promise.reject(error))
 }
 
 export default service

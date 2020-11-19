@@ -3,30 +3,30 @@ const USER_KEY = 'user_detail'
 const USERNAME = 'username'
 
 const Storage = {
-  getToken () {
+  getToken() {
     return localStorage.getItem(TOKEN_KEY)
   },
 
-  saveToken (accessToken) {
+  saveToken(accessToken) {
     localStorage.setItem(TOKEN_KEY, accessToken)
   },
 
-  clearSession () {
+  clearSession() {
     localStorage.removeItem(TOKEN_KEY)
     localStorage.removeItem(USER_KEY)
   },
 
-  getUser () {
+  getUser() {
     return JSON.parse(localStorage.getItem(USER_KEY))
   },
 
-  saveUser (userDetail) {
+  saveUser(userDetail) {
     return localStorage.setItem(USER_KEY, JSON.stringify(userDetail))
   },
-  
-  saveUserName (username) {
+
+  saveUserName(username) {
     return localStorage.setItem(USERNAME, username)
-  }
+  },
 }
 
 export default Storage

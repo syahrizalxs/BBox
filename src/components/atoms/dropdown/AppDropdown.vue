@@ -1,32 +1,35 @@
 <template>
-  <div @click="toggle" class="relative">
+  <div
+    class="relative"
+    @click="toggle"
+  >
     <slot name="toggler">
       <button>Toggle</button>
     </slot>
-    <slot/>
+    <slot />
   </div>
 </template>
 
 <script>
 
 export default {
-  name: "AppDropdown",
+  name: 'AppDropdown',
   provide() {
     return {
-      sharedState: this.sharedState
-    };
+      sharedState: this.sharedState,
+    }
   },
   data() {
     return {
       sharedState: {
-        active: false
-      }
-    };
+        active: false,
+      },
+    }
   },
   methods: {
     toggle() {
-      this.sharedState.active = !this.sharedState.active;
-    }
-  }
-};
+      this.sharedState.active = !this.sharedState.active
+    },
+  },
+}
 </script>

@@ -1,17 +1,24 @@
 <template>
-  <div id="myModal" class="alert" v-if="visible">
+  <div
+    v-if="visible"
+    id="myModal"
+    class="alert"
+  >
     <!-- alert content -->
     <div class="alert-content">
       <div class="alert-header">
-        <span class="title">{{message}}</span>
-        <span class="close" @click="visible = false">&times;</span>
+        <span class="title">{{ message }}</span>
+        <span
+          class="close"
+          @click="visible = false"
+        >&times;</span>
       </div>
-      <div class="line"></div>
+      <div class="line" />
       <div class="alert-body">
-        <slot name="body"></slot>
+        <slot name="body" />
       </div>
       <div class="alert-footer">
-        <slot name="footer"></slot>
+        <slot name="footer" />
       </div>
     </div>
   </div>
@@ -22,14 +29,14 @@ export default {
   name: 'Loading',
   props: ['message'],
   data: () => ({
-    visible: false
+    visible: false,
   }),
   methods: {
-    show (message) {
+    show(message) {
       this.message = message
       this.visible = true
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -47,7 +54,7 @@ export default {
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  
+
   /* alert Content */
   .alert-content {
     background-color: #fefefe;

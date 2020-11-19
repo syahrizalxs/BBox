@@ -1,97 +1,96 @@
 <template>
-	<div class="insight">
-		<div class="_profile-highlight">
-			<Heading />
-			<div class="_bio">
-				<Avatar
-					class="avatar"
-					:path="
-						authenticatedUser.avatar ||
-							'https://freedesignfile.com/upload/2017/06/HD-picture-Female-face-photo.jpg'
-					"
-				/>
-				<div>
-					<span class="name">{{ authenticatedUser.fullName }}</span>
-					<span class="job"
-						>{{ authenticatedUser.role }} -
-						{{ authenticatedUser.division }}</span
-					>
-				</div>
-			</div>
-			<!--            <div class="_charts">-->
-			<!--                <AreaChart v-if="dataChart && dataChart.length" :width="250" :height="230" :data="dataChart"-->
-			<!--                           :label="labelChart"/>-->
-			<!--            </div>-->
-		</div>
-		<div class="_main-home">
-			<div class="_event-activity"></div>
-		</div>
-		<div class="_right-activity">
-			<div class="_event-information"></div>
-			<div class="_powered-by"></div>
-		</div>
-	</div>
+  <div class="insight">
+    <div class="_profile-highlight">
+      <Heading />
+      <div class="_bio">
+        <Avatar
+          class="avatar"
+          :path="
+            authenticatedUser.avatar ||
+              'https://freedesignfile.com/upload/2017/06/HD-picture-Female-face-photo.jpg'
+          "
+        />
+        <div>
+          <span class="name">{{ authenticatedUser.fullName }}</span>
+          <span
+            class="job"
+          >{{ authenticatedUser.role }} -
+            {{ authenticatedUser.division }}</span>
+        </div>
+      </div>
+      <!--            <div class="_charts">-->
+      <!--                <AreaChart v-if="dataChart && dataChart.length" :width="250" :height="230" :data="dataChart"-->
+      <!--                           :label="labelChart"/>-->
+      <!--            </div>-->
+    </div>
+    <div class="_main-home">
+      <div class="_event-activity" />
+    </div>
+    <div class="_right-activity">
+      <div class="_event-information" />
+      <div class="_powered-by" />
+    </div>
+  </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Avatar from '../../components/atoms/Avatar'
 import Heading from '../../components/Heading'
 
-//Service
+// Service
 import EventService from '../../service/EventService'
-
-import { mapGetters } from 'vuex'
 
 const eventService = EventService.build()
 
 export default {
-	name: 'insight',
-	components: {
-		Avatar,
-		Heading
-	},
-	data: () => ({
-		eventList: [
-			{ status: 'success', title: 'Partnership dengan Brightspace' },
-			{ status: 'pending', title: 'Partnership dengan Google' },
-			{ status: 'pending', title: 'Partnership dengan Facebook' },
-			{ status: 'pending', title: 'Partnership dengan Tesla' }
-		],
-		dataChart: [],
-		labelChart: [],
+  name: 'Insight',
+  components: {
+    Avatar,
+    Heading,
+  },
+  data: () => ({
+    eventList: [
+      { status: 'success', title: 'Partnership dengan Brightspace' },
+      { status: 'pending', title: 'Partnership dengan Google' },
+      { status: 'pending', title: 'Partnership dengan Facebook' },
+      { status: 'pending', title: 'Partnership dengan Tesla' },
+    ],
+    dataChart: [],
+    labelChart: [],
 
-		isRequester: false,
-		isManager: false,
-		isVP: false,
-		isDirectors: false
-	}),
-	computed: mapGetters('auth', ['authenticatedUser']),
-	methods: {
-		async getChart() {
-			const res = await eventService.getSummary()
-			res.data.forEach((item) => {
-				this.dataChart.push(item.value)
-				this.labelChart.push(item.label)
-			})
-		},
-		getRole() {
-			const dataUser = JSON.parse(localStorage.getItem('user_detail'))
-			const role = dataUser.role
-			if (role === 'CLIENT') {
-				this.isRequester = true
-			} else if (role === 'MANAGER') {
-				this.isManager = true
-			} else if (role === 'VP') {
-				this.isVP = true
-			} else if (role === 'DIREKSI') {
-				this.isDirectors = true
-			}
-		}
-	},
-	created() {
-		this.getRole()
-		this.getChart()
-	}
+    isRequester: false,
+    isManager: false,
+    isVP: false,
+    isDirectors: false,
+  }),
+  computed: mapGetters('auth', ['authenticatedUser']),
+  created() {
+    this.getRole()
+    this.getChart()
+  },
+  methods: {
+    async getChart() {
+      const res = await eventService.getSummary()
+      res.data.forEach((item) => {
+        this.dataChart.push(item.value)
+        this.labelChart.push(item.label)
+      })
+    },
+    getRole() {
+      const dataUser = JSON.parse(localStorage.getItem('user_detail'))
+      const { role } = dataUser
+      if (role === 'CLIENT') {
+        this.isRequester = true
+      } else if (role === 'MANAGER') {
+        this.isManager = true
+      } else if (role === 'VP') {
+        this.isVP = true
+      } else if (role === 'DIREKSI') {
+        this.isDirectors = true
+      }
+    },
+  },
 }
 </script>
 
@@ -229,11 +228,6 @@ export default {
 	height: 100%;
 	min-width: 55%;
 	padding: 32px;
-
-	._search-container {
-		// position: fixed;
-		// min-width: 50% !important;
-	}
 
 	._event-activity {
 		margin-top: 40px;

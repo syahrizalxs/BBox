@@ -2,12 +2,18 @@
   <div class="_card">
     <div class="_head">
       <!-- <Avatar class="avatar" style="width:32px; heigh:32px" :path="'https://freedesignfile.com/upload/2017/06/HD-picture-Female-face-photo.jpg'" /> -->
-      <img class="avatar" src="https://freedesignfile.com/upload/2017/06/HD-picture-Female-face-photo.jpg">
+      <img
+        class="avatar"
+        src="https://freedesignfile.com/upload/2017/06/HD-picture-Female-face-photo.jpg"
+      >
       <div>
         <span class="activity"><span class="name">Jane Doe </span><span class="doing">uploaded document in </span><span class="partner">Partnership dengan Brightspace</span></span>
         <span class="date">Sep 27, 2020 at 1:29PM</span>
       </div>
-      <img class="more" src="../assets/icons/more.svg">
+      <img
+        class="more"
+        src="../assets/icons/more.svg"
+      >
     </div>
     <div class="_main-card">
       <span class="tittle">Minutes of Meeting dengan Brightspace</span>
@@ -15,9 +21,15 @@
     </div>
     <div class="_box-doc">
       <div>
-        <img class="icon-file" src="../assets/icons/word.svg">
+        <img
+          class="icon-file"
+          src="../assets/icons/word.svg"
+        >
         <span class="nama-file">MoM_Brightspace_200927_ver01_WB.docx</span>
-        <img class="more" src="../assets/icons/more.svg">
+        <img
+          class="more"
+          src="../assets/icons/more.svg"
+        >
       </div>
     </div>
     <div class="_keterangan">
@@ -35,7 +47,7 @@
 
 <script>
 export default {
-  name: 'CardActivity'
+  name: 'CardActivity',
 }
 </script>
 
@@ -106,7 +118,7 @@ export default {
         color: #828282;
       }
     }
-    
+
     .more {
       margin-left: auto;
     }
@@ -116,7 +128,7 @@ export default {
     display: flex;
     flex-direction: column;
     margin-top: 16px;
-    
+
     .tittle {
       font-family: Helvetica;
       font-style: normal;

@@ -1,15 +1,25 @@
 <template>
-  <div class="card-event" @click="handleClick($event)">
+  <div
+    class="card-event"
+    @click="handleClick($event)"
+  >
     <div class="_left-side">
-      <img v-if="starred" src="../assets/icons/star.svg" alt="">
-      <span>{{title}}</span>
+      <img
+        v-if="starred"
+        src="../assets/icons/star.svg"
+        alt=""
+      >
+      <span>{{ title }}</span>
     </div>
     <div class="_right-side">
       <span :class="statusStyle">{{ status | convertStatus }}</span>
       <div class="_dropdown">
-        <img class="pointer" src="../assets/icons/more.svg">
+        <img
+          class="pointer"
+          src="../assets/icons/more.svg"
+        >
         <div class="_dropdown-content">
-          <slot name="dropdown"></slot>
+          <slot name="dropdown" />
         </div>
       </div>
     </div>
@@ -18,14 +28,15 @@
 
 <script>
 import { convertStatus } from '../commons/utils/filter'
+
 export default {
   name: 'CardEvent',
   filters: {
-    convertStatus
+    convertStatus,
   },
   props: ['title', 'status', 'starred', 'data'],
   computed: {
-    statusStyle () {
+    statusStyle() {
       let status = ''
       if (this.status === 'DRAFT') {
         status = 'draft'
@@ -47,13 +58,13 @@ export default {
         status = 'finished'
       }
       return status
-    }
+    },
   },
   methods: {
-    handleClick () {
+    handleClick() {
       this.$emit('click', this.data)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -150,10 +161,10 @@ export default {
 
   ._dropdown {
     position: relative;
-    display: flex; 
+    display: flex;
     &:hover ._dropdown-content {
       display: flex;
-    }  
+    }
     ._dropdown-content {
       display: none;
       flex-direction: column;

@@ -1,19 +1,19 @@
 <template>
-<div class="wrapper">
-  <section class="loading">
-		<div class="circle-wrapper">
-      <div class="circle"></div>
-      <div class="circle"></div>
-      <div class="circle"></div>
-      <div class="circle"></div>
-		</div>
+  <div class="wrapper">
+    <section class="loading">
+      <div class="circle-wrapper">
+        <div class="circle" />
+        <div class="circle" />
+        <div class="circle" />
+        <div class="circle" />
+      </div>
     </section>
-</div>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'Loading'
+  name: 'Loading',
 }
 </script>
 

@@ -9,6 +9,7 @@ import ErrorService from './ErrorService'
  */
 export default class HttpService extends BaseService {
   static api = ''
+
   static entity = ''
 
   /**
@@ -16,7 +17,7 @@ export default class HttpService extends BaseService {
    * @param {Object} options
    * @param {Object} http
    */
-  constructor (api, entity, options = {}, http = null) {
+  constructor(api, entity, options = {}, http = null) {
     super(options)
     this.api = api
     this.entity = entity
@@ -27,16 +28,17 @@ export default class HttpService extends BaseService {
    * @param {String} path
    * @param {Object} options
    */
-  static build (options) {
+  static build(options) {
     this.setHeader()
     return new this(this.api, this.entity, options)
   }
-  static setHeader () {
-    service.defaults.headers.common['Authorization'] = `Bearer ${storage.getToken()}`
+
+  static setHeader() {
+    service.defaults.headers.common.Authorization = `Bearer ${storage.getToken()}`
     service.defaults.headers.common['Content-Type'] = 'application/json'
   }
 
-  static removeHeader () {
+  static removeHeader() {
     service.defaults.headers.common = {}
   }
 
@@ -44,7 +46,7 @@ export default class HttpService extends BaseService {
    * @param {String} url
    * @returns {*|Promise<any>}
    */
-  get (param = {}, url = '') {
+  get(param = {}, url = '') {
     const api = url === '' ? this.api : url
     return this.http
       .get(api, { params: param })
@@ -64,7 +66,7 @@ export default class HttpService extends BaseService {
    * @param {Object} data
    * @returns {*|Promise<any>}
    */
-  post (data, url = '', param = {}) {
+  post(data, url = '', param = {}) {
     const api = url === '' ? this.api : url
     const deserializeData = Deserialize(data, this.entity)
     return this.http
@@ -85,7 +87,7 @@ export default class HttpService extends BaseService {
    * @param {Object} data
    * @returns {*|Promise<any>}
    */
-  put (data, url = '') {
+  put(data, url = '') {
     const api = url === '' ? this.api : url
     const deserializeData = Deserialize(data, this.entity)
     return this.http
@@ -106,7 +108,7 @@ export default class HttpService extends BaseService {
    * @param {Object} data
    * @returns {*|Promise<any>}
    */
-  patch (data, url = '') {
+  patch(data, url = '') {
     const api = url === '' ? this.api : url
     const deserializeData = Deserialize(data, this.entity)
     return this.http
@@ -126,9 +128,9 @@ export default class HttpService extends BaseService {
    * @param {String} url
    * @returns {*|Promise<any>}
    */
-  delete (id, isPath = true) {
+  delete(id, isPath = true) {
     return this.http
-      .delete(isPath ? this.api + `/${id}` : this.api, { params: (isPath ? {} : { id: id }) })
+      .delete(isPath ? `${this.api}/${id}` : this.api, { params: (isPath ? {} : { id }) })
       .then(this.constructor.then)
       .catch((e) => {
         if (e instanceof ErrorService) {
@@ -144,7 +146,7 @@ export default class HttpService extends BaseService {
    * @param {Object} response
    * @returns {Object}
    */
-  generateTable (param = {}, path = '') {
+  generateTable(param = {}, path = '') {
     const api = (path === '') ? this.api : this.api + path
     return this.http
       .get(api, {
@@ -153,26 +155,24 @@ export default class HttpService extends BaseService {
           (data) => {
             if (data === 'Invalid token') {
               return data
-            } else {
-              const res = JSON.parse(data)
-              if (res.data) {
-                return {
-                  data: {
-                    data: Deserialize(res.data.contents, this.entity),
-                    total: res.data.pages.totalElements,
-                    size: res.data.pages.size,
-                    page: res.data.pages.number
-                  },
-                  status: res.status,
-                  message: res.message,
-                  success: res.success
-                }
-              } else {
-                return res
+            }
+            const res = JSON.parse(data)
+            if (res.data) {
+              return {
+                data: {
+                  data: Deserialize(res.data.contents, this.entity),
+                  total: res.data.pages.totalElements,
+                  size: res.data.pages.size,
+                  page: res.data.pages.number,
+                },
+                status: res.status,
+                message: res.message,
+                success: res.success,
               }
             }
-          }
-        ]
+            return res
+          },
+        ],
       })
       .then(this.constructor.then)
       .catch((e) => {
@@ -185,8 +185,8 @@ export default class HttpService extends BaseService {
       })
   }
 
-  upload (data, url = '') {
-    const api = url === '' ? this.api + '/upload' : url
+  upload(data, url = '') {
+    const api = url === '' ? `${this.api}/upload` : url
     return this.http
       .post(api, data)
       .then(this.constructor.then)
@@ -200,13 +200,13 @@ export default class HttpService extends BaseService {
       })
   }
 
-  uploadVer2 (data, url = '') {
-    const api = url === '' ? this.api + '/upload' : url
+  uploadVer2(data, url = '') {
+    const api = url === '' ? `${this.api}/upload` : url
     return this.http
       .post(api, data, {
         headers: {
-          'appsource': 'EMS_WEB',
-        }
+          appsource: 'EMS_WEB',
+        },
       })
       .then(this.constructor.then)
       .catch((e) => {
@@ -219,12 +219,12 @@ export default class HttpService extends BaseService {
       })
   }
 
-  export (param = {}, filename) {
-    const api = this.api + '/export'
+  export(param = {}, filename) {
+    const api = `${this.api}/export`
     return this.http
       .get(api, {
         params: param,
-        responseType: 'blob'
+        responseType: 'blob',
       }).then((response) => {
         const url = window.URL.createObjectURL(new Blob([response.data]))
         const link = document.createElement('a')
@@ -246,7 +246,7 @@ export default class HttpService extends BaseService {
    * @param {Object} response
    * @returns {Object}
    */
-  static then (response) {
+  static then(response) {
     if (!response.data) {
       return {}
     }

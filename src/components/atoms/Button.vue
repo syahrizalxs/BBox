@@ -1,7 +1,11 @@
 <template>
-  <button @click="callback($event)" class="button" :class="type">
-    <slot name="icon"></slot>
-    <span>{{title}}</span>
+  <button
+    class="button"
+    :class="type"
+    @click="callback($event)"
+  >
+    <slot name="icon" />
+    <span>{{ title }}</span>
   </button>
 </template>
 
@@ -11,19 +15,19 @@ export default {
   props: {
     title: {
       type: String,
-      default: 'Save'
+      default: 'Save',
     },
     type: {
       type: String,
-      default: 'primary'
-    }
+      default: 'primary',
+    },
   },
   data: () => ({}),
   methods: {
-    callback (e) {
+    callback(e) {
       this.$emit('click', e)
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -45,7 +49,7 @@ export default {
       font-size: 12px;
       line-height: 16px;
       /* identical to box height */
-      
+
       letter-spacing: 0.01em;
     }
 

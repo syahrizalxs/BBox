@@ -1,42 +1,61 @@
 <template>
-<div class="wrapper-timeline">
-  <section class="_timeline-container" v-for="(item, index) in 2" :key="index">
-    <div class="_timeline-activity-time">Today</div>
-    <div class="_timeline-content" style="margin-top: 20px;" v-for="(item, index) in 3" :key="index">
-      <div class="_timeline-content-left">
-        <img class="_timeline-content-left-symbol" :src="index % 2 !== 0 ? require('../assets/icons/timeline/blue.svg') : require('../assets/icons/timeline/orange-circle.svg')" alt="" >
-        <div v-if="(index + 1) - 3 !== 0" class="_timeline-content-left-vertical-line">
-  
-        </div>
+  <div class="wrapper-timeline">
+    <section
+      v-for="(item, index) in 2"
+      :key="index"
+      class="_timeline-container"
+    >
+      <div class="_timeline-activity-time">
+        Today
       </div>
-      <div class="_timeline-content-right">
-        <div class="_timeline-content-right-user-activity">
-          <span class="user-name">William Byers </span>
-          <span class="activity">uploaded document </span>
-          <span class="process-type">Minutes Of Meeting </span>
+      <div
+        v-for="(item, index) in 3"
+        :key="index"
+        class="_timeline-content"
+        style="margin-top: 20px;"
+      >
+        <div class="_timeline-content-left">
+          <img
+            class="_timeline-content-left-symbol"
+            :src="index % 2 !== 0 ? require('../assets/icons/timeline/blue.svg') : require('../assets/icons/timeline/orange-circle.svg')"
+            alt=""
+          >
+          <div
+            v-if="(index + 1) - 3 !== 0"
+            class="_timeline-content-left-vertical-line"
+          />
         </div>
-        <div class="_timeline-content-right-document-activity">
-          <span class="document-type">Sub Process</span>
-          <span class="small-circle">&nbsp;</span>
-          <span class="document-time">Sep 27, 2020 at 1:29 PM</span>
-        </div>
-        <div class="_timeline-content-right-document-section">
-          <div class="_box-doc">
-            <div>
-              <img class="icon-file" :src="require('../assets/icons/word.svg')">
-              <span class="nama-file">MoM_Brightspace_200927_ver01_WB.docx</span>
+        <div class="_timeline-content-right">
+          <div class="_timeline-content-right-user-activity">
+            <span class="user-name">William Byers </span>
+            <span class="activity">uploaded document </span>
+            <span class="process-type">Minutes Of Meeting </span>
+          </div>
+          <div class="_timeline-content-right-document-activity">
+            <span class="document-type">Sub Process</span>
+            <span class="small-circle">&nbsp;</span>
+            <span class="document-time">Sep 27, 2020 at 1:29 PM</span>
+          </div>
+          <div class="_timeline-content-right-document-section">
+            <div class="_box-doc">
+              <div>
+                <img
+                  class="icon-file"
+                  :src="require('../assets/icons/word.svg')"
+                >
+                <span class="nama-file">MoM_Brightspace_200927_ver01_WB.docx</span>
               </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-</section>
-</div>
+    </section>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'Timeline'
+  name: 'Timeline',
 }
 </script>
 
@@ -56,7 +75,7 @@ export default {
 
     color: #333333;
   }
-  
+
   ._timeline-content {
     min-height: 100%;
     margin-left: 18px;
@@ -80,7 +99,7 @@ export default {
       ._timeline-content-right-user-activity {
         margin-bottom: 5px;
       }
-    } 
+    }
   }
 
   .user-name {
@@ -105,7 +124,7 @@ export default {
 
     color: #828282;
     margin-right: 4px;
-  } 
+  }
   .process-type {
     font-style: normal;
     font-weight: 500;

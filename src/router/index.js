@@ -1,7 +1,6 @@
-import storage from '../commons/config/storage.config'
-
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import storage from '../commons/config/storage.config'
 import Home from '../views/Home.vue'
 
 import Login from '../views/Login.vue'
@@ -10,6 +9,7 @@ import RedirectGoogle from '../views/RedirectGoogle.vue'
 import Insight from '../views/Dashboard/Insight.vue'
 import Archieve from '../views/Dashboard/Archieve.vue'
 import DetailArchieve from '../views/Dashboard/DetailArchieve'
+
 Vue.use(VueRouter)
 
 const TITLE = 'BBox - '
@@ -18,7 +18,7 @@ const routes = [
   {
     path: '/',
     component: Home,
-    children:[
+    children: [
       {
         // UserProfile will be rendered inside User's <router-view>
         // when /user/:id/profile is matched
@@ -26,8 +26,8 @@ const routes = [
         component: Insight,
         name: 'Home',
         meta: {
-          title: 'Dashboard'
-        }
+          title: 'Dashboard',
+        },
       },
       {
         // UserProfile will be rendered inside User's <router-view>
@@ -36,18 +36,18 @@ const routes = [
         component: Archieve,
         name: 'Archieve',
         meta: {
-          title: 'Archieve'
-        }
+          title: 'Archieve',
+        },
       },
       {
         path: '/archieve/:id',
         component: DetailArchieve,
         name: 'Detail Archieve',
         meta: {
-          title: 'Detail Archieve'
-        }
-      }
-    ]
+          title: 'Detail Archieve',
+        },
+      },
+    ],
   },
   {
     path: '/login',
@@ -56,8 +56,8 @@ const routes = [
     meta: {
       public: true,
       onlyWhenLoggedOut: true,
-      title: 'Login'
-    }
+      title: 'Login',
+    },
   },
   {
     path: '/login/callback',
@@ -66,32 +66,31 @@ const routes = [
     meta: {
       public: true,
       onlyWhenLoggedOut: true,
-      title: 'SSO'
-    }
-  }
+      title: 'SSO',
+    },
+  },
 ]
 
 const router = new VueRouter({
   mode: 'history',
-  routes
+  routes,
 })
 
-
 router.beforeEach((to, from, next) => {
-  const isPublic = to.matched.some(record => record.meta.public)
-  const onlyWhenLoggedOut = to.matched.some(record => record.meta.onlyWhenLoggedOut)
+  const isPublic = to.matched.some((record) => record.meta.public)
+  const onlyWhenLoggedOut = to.matched.some((record) => record.meta.onlyWhenLoggedOut)
   const loggedIn = !!storage.getToken()
   document.title = TITLE + to.meta.title || 'BBox'
   if (!isPublic && !loggedIn) {
     return next({
-      path: '/login'
+      path: '/login',
     })
   }
-  
+
   if (loggedIn && onlyWhenLoggedOut) {
     return next('/')
   }
-  
+
   next()
 })
 

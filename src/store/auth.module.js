@@ -8,36 +8,26 @@ const state = {
   accessToken: '',
   authenticationErrorCode: 0,
   authenticationError: '',
-  authenticatedUser: storage.getUser()
+  authenticatedUser: storage.getUser(),
 }
 
 const getters = {
-  loggedIn: (state) => {
-    return !!state.accessToken
-  },
+  loggedIn: (state) => !!state.accessToken,
 
-  authenticationErrorCode: (state) => {
-    return state.authenticationErrorCode
-  },
+  authenticationErrorCode: (state) => state.authenticationErrorCode,
 
-  authenticationError: (state) => {
-    return state.authenticationError
-  },
+  authenticationError: (state) => state.authenticationError,
 
-  authenticating: (state) => {
-    return state.authenticating
-  },
+  authenticating: (state) => state.authenticating,
 
-  authenticatedUser: (state) => {
-    return state.authenticatedUser
-  }
+  authenticatedUser: (state) => state.authenticatedUser,
 }
 
 const actions = {
-  async login ({ commit }, { email, password, fcm }) {
+  async login({ commit }, { email, password, fcm }) {
     commit('loginRequest')
 
-    const requestData = Object.assign({ email, password, fcm })
+    const requestData = { email, password, fcm }
     const res = await authService.login(requestData)
     if (res.status !== 200) {
       return res
@@ -45,16 +35,16 @@ const actions = {
     if (res) {
       const user = res.data
       storage.saveUser(user)
-      commit('loginSuccess', { accessToken: res.data.token, user: user })
+      commit('loginSuccess', { accessToken: res.data.token, user })
       router.push(router.history.current.query.redirect || '/')
       return true
     }
   },
 
-  async loginSSO ({ commit }, { code }) {
+  async loginSSO({ commit }, { code }) {
     commit('loginRequest')
 
-    const requestData = Object.assign({ code })
+    const requestData = { code }
     const res = await authService.loginSSO(requestData)
     if (res.status !== 200) {
       return res
@@ -62,45 +52,44 @@ const actions = {
     if (res) {
       const user = res.data
       storage.saveUser(user)
-      commit('loginSuccess', { accessToken: res.data.token, user: user })
+      commit('loginSuccess', { accessToken: res.data.token, user })
       router.push(router.history.current.query.redirect || '/')
       return true
     }
   },
 
-  
-  async logout ({ commit }) {
+  async logout({ commit }) {
     await authService.logout()
     commit('logoutSuccess')
     router.push('/login')
-  }
+  },
 }
 
 const mutations = {
-  loginRequest (state) {
+  loginRequest(state) {
     state.authenticating = true
     state.authenticationError = ''
     state.authenticationErrorCode = 0
     state.authenticatedUser = {}
   },
 
-  loginSuccess (state, { accessToken, user }) {
+  loginSuccess(state, { accessToken, user }) {
     state.accessToken = accessToken
     state.authenticatedUser = user
     state.authenticating = false
   },
 
-  loginError (state, { errorCode, errorMessage }) {
+  loginError(state, { errorCode, errorMessage }) {
     state.authenticating = false
     state.authenticationErrorCode = errorCode
     state.authenticationError = errorMessage
     state.authenticatedUser = {}
   },
 
-  logoutSuccess (state) {
+  logoutSuccess(state) {
     state.accessToken = ''
     state.authenticatedUser = {}
-  }
+  },
 }
 
 export const auth = {
@@ -108,5 +97,5 @@ export const auth = {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 }

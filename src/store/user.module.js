@@ -1,12 +1,12 @@
 const state = {
   user: {
     name: 'Syahrizal Setiawan',
-    kelas: '12'
-  }
+    kelas: '12',
+  },
 }
 
 const getters = {
-  getUserInfo: (state) => state.user
+  getUserInfo: (state) => state.user,
 }
 
 const actions = {}
@@ -17,5 +17,5 @@ export default {
   state,
   getters,
   actions,
-  mutations
+  mutations,
 }

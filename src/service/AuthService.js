@@ -4,8 +4,8 @@ import HttpService from './HttpService'
 export default class AuthService extends HttpService {
   static api = process.env.VUE_APP_AUTH
 
-  login (data) {
-    const api = this.api + '/login'
+  login(data) {
+    const api = `${this.api}/login`
     return this.post(data, api).then((response) => {
       if (response.status === 200) {
         storage.saveToken(response.data.token)
@@ -24,8 +24,8 @@ export default class AuthService extends HttpService {
     })
   }
 
-  loginSSO (data) {
-    const api = process.env.VUE_APP_BASE_API + '/oauth2/google/exchange'
+  loginSSO(data) {
+    const api = `${process.env.VUE_APP_BASE_API}/oauth2/google/exchange`
     return this.post(data, api).then((response) => {
       if (response.status === 200) {
         storage.saveToken(response.data.token)
@@ -44,17 +44,17 @@ export default class AuthService extends HttpService {
     })
   }
 
-  getListManager (param) {
-    const api = this.api + '/list/manager/combobox'
+  getListManager(param) {
+    const api = `${this.api}/list/manager/combobox`
     return this.get(param, api)
   }
 
-  getListEmployee (param) {
-    const api = this.api + '/list/staff/combobox'
+  getListEmployee(param) {
+    const api = `${this.api}/list/staff/combobox`
     return this.get(param, api)
   }
-  
-  logout () {
+
+  logout() {
     // const api = this.api + '/logout'
     // return this.post({}, api).then((response) => {
     //   HttpService.removeHeader()

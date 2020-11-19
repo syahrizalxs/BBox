@@ -1,8 +1,15 @@
 <template>
   <div class="_dropdown">
-    <img @click="showDropdown()" class="pointer" src="../../assets/icons/more.svg">
+    <img
+      class="pointer"
+      src="../../assets/icons/more.svg"
+      @click="showDropdown()"
+    >
     <div class="_dropdown-content">
-      <div v-for="(item, index) in options" :key="index">
+      <div
+        v-for="(item, index) in options"
+        :key="index"
+      >
         <span @click="callback(item.function)">{{ item.title }}</span>
       </div>
     </div>
@@ -14,20 +21,20 @@ export default {
   name: 'More',
   props: ['options'],
   methods: {
-    callback (e) {
+    callback(e) {
       this.$emit('click', e)
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 ._dropdown {
     position: relative;
-    display: flex; 
+    display: flex;
     &:hover ._dropdown-content {
       display: flex;
-    }  
+    }
     ._dropdown-content {
       display: none;
       flex-direction: column;
