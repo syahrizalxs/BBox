@@ -59,7 +59,7 @@ export default class EventService extends HttpService {
   }
 
   completedByEmployee (param) {
-    const api = this.api + '/employee/complete'
+    const api = this.api + '/staff/complete'
     return this.get(param, api)
   }
 
