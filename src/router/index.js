@@ -3,12 +3,12 @@ import VueRouter from 'vue-router'
 import storage from '../commons/config/storage.config'
 import Home from '../views/Home.vue'
 
-import Login from '../views/Login.vue'
-import RedirectGoogle from '../views/RedirectGoogle.vue'
+const Login = () => import('../views/Login.vue')
+const RedirectGoogle = () => import('../views/RedirectGoogle.vue')
 
-import Insight from '../views/Dashboard/Insight.vue'
-import Archieve from '../views/Dashboard/Archieve.vue'
-import DetailArchieve from '../views/Dashboard/DetailArchieve'
+const Insight = () => import('../views/Dashboard/Insight.vue')
+const Archieve = () => import('../views/Dashboard/Archieve.vue')
+const DetailArchieve = () => import('../views/Dashboard/DetailArchieve.vue')
 
 Vue.use(VueRouter)
 
