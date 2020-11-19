@@ -1110,7 +1110,7 @@
 									this.getEmployee()
 							} else if (role === 'VP') {
 									this.isVP = true
-							} else if (role === 'DIREKSI') {
+							} else if (role === 'DIRECTOR') {
 									this.isDirectors = true
 							}
 					}
