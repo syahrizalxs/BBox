@@ -33,7 +33,7 @@ export default {
           display: false,
         },
         scales: {
-          xAxes: [{
+          yAxes: [{
             ticks: {
               beginAtZero: true,
             },
