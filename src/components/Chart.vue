@@ -36,7 +36,8 @@ export default {
 					yAxes: [{
 						ticks: {
 							precision: 0,
-							suggestedMax: 15,
+							suggestedMax: 10,
+							stepSize: 1,
 							beginAtZero: true,
 						},
 					}],
