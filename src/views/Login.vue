@@ -82,31 +82,31 @@
 import { mapActions } from 'vuex'
 
 export default {
-  name: 'SignIn',
-  data: () => ({
-    email: '',
-    password: '',
-    isShownPassword: false,
-    loginError: false,
-    loginErrorMessage: '',
-  }),
-  methods: {
-    ...mapActions('auth', [
-      'login',
-    ]),
-    redirectGoogle() {
-      window.location.replace(process.env.VUE_APP_GOOGLE_AUTH)
-    },
-    onLogin() {
-      this.login({ email: this.email, password: this.password, fcm: '' })
-        .then((res) => {
-          if (!res.success) {
-            this.loginError = true
-            this.loginErrorMessage = res.message
-          }
-        })
-    },
-  },
+	name: 'SignIn',
+	data: () => ({
+		email: '',
+		password: '',
+		isShownPassword: false,
+		loginError: false,
+		loginErrorMessage: '',
+	}),
+	methods: {
+		...mapActions('auth', [
+			'login',
+		]),
+		redirectGoogle() {
+			window.location.replace(process.env.VUE_APP_GOOGLE_AUTH)
+		},
+		onLogin() {
+			this.login({ email: this.email, password: this.password, fcm: '' })
+				.then((res) => {
+					if (!res.success) {
+						this.loginError = true
+						this.loginErrorMessage = res.message
+					}
+				})
+		},
+	},
 }
 </script>
 

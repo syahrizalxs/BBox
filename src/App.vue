@@ -12,15 +12,15 @@
 import Loading from './components/Loading'
 
 export default {
-  name: 'App',
+	name: 'App',
 
-  components: {
-    Loading,
-  },
+	components: {
+		Loading,
+	},
 
-  data: () => ({
-    isLoading: false,
-  }),
+	data: () => ({
+		isLoading: false,
+	}),
 }
 </script>
 

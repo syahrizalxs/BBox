@@ -1,25 +1,28 @@
 <template>
-	<div class="archieve">
-		<div class="_left">
-			<div class="_left-heading">
-				<Heading style="margin-right: 200px" />
-			</div>
-			<div v-if="isRequester" class="_left-starred">
-				<div class="_left-heading-starred">
-					<!-- <span>Starred Event</span> -->
-					<span />
-					<Button
-						title="Tambah Event"
-						style="width: 115px; height: 39px"
-						:type="'outline-primary'"
-						@click="addData()"
-					>
-						<template slot="icon">
-							<img src="../../assets/icons/button/plus.svg" />
-						</template>
-					</Button>
-				</div>
-				<!-- <div class="_left-heading-starred-card">
+  <div class="archieve">
+    <div class="_left">
+      <div class="_left-heading">
+        <Heading style="margin-right: 200px" />
+      </div>
+      <div
+        v-if="isRequester"
+        class="_left-starred"
+      >
+        <div class="_left-heading-starred">
+          <!-- <span>Starred Event</span> -->
+          <span />
+          <Button
+            title="Tambah Event"
+            style="width: 115px; height: 39px"
+            :type="'outline-primary'"
+            @click="addData()"
+          >
+            <template slot="icon">
+              <img src="../../assets/icons/button/plus.svg">
+            </template>
+          </Button>
+        </div>
+        <!-- <div class="_left-heading-starred-card">
                   <div v-for="(item, index) in starred" :key="index">
                     <CardEvent :starred="item.starred" style="margin-bottom: 10px;" :title="item.title" :status="item.status">
                       <template slot="dropdown">
@@ -32,8 +35,8 @@
                     There is no starred event.
                   </span>
                 </div> -->
-			</div>
-			<!-- <div class="_left-event-cards">
+      </div>
+      <!-- <div class="_left-event-cards">
               <div class="_left-event-cards-heading">
                 <span>Event Cards</span>
               </div>
@@ -48,924 +51,1062 @@
                 </div>
               </div>
             </div> -->
-			<div v-if="listDraft.length > 0" class="_left-event-cards">
-				<div class="_left-event-cards-heading">
-					<span>Event Draft</span>
-				</div>
-				<div class="_left-event-cards-content">
-					<div
-						v-for="(item, index) in listDraft"
-						:key="index"
-						style="margin-top: 10px"
-					>
-						<CardEvent
-							:class="item.id === detailActivity.id ? 'active' : ''"
-							:data="item"
-							:title="item.title"
-							:status="item.currentStatus"
-							@click="handleCardClicked"
-						>
-							<template slot="dropdown">
-								<span v-if="isRequester" @click="editData(item)"
-									>Ubah Event</span
-								>
-								<span @click="viewHistory(item)">Lihat Riwayat Event</span>
-							</template>
-						</CardEvent>
-					</div>
-				</div>
-			</div>
-			<div v-if="listRequested.length > 0" class="_left-event-cards">
-				<div class="_left-event-cards-heading">
-					<span>Event Requested</span>
-				</div>
-				<div class="_left-event-cards-content">
-					<div
-						v-for="(item, index) in listRequested"
-						:key="index"
-						style="margin-top: 10px"
-					>
-						<CardEvent
-							:class="item.id === detailActivity.id ? 'active' : ''"
-							:data="item"
-							:title="item.title"
-							:status="item.currentStatus"
-							@click="handleCardClicked"
-						>
-							<template slot="dropdown">
-								<span v-if="isManager" @click="openRequest(item)"
-									>Open Request</span
-								>
-								<span @click="viewHistory(item)">Lihat Riwayat Event</span>
-							</template>
-						</CardEvent>
-					</div>
-				</div>
-			</div>
-			<div v-if="listAcceptedManager.length > 0" class="_left-event-cards">
-				<div class="_left-event-cards-heading">
-					<span>Event Accepted Manager</span>
-				</div>
-				<div class="_left-event-cards-content">
-					<div
-						v-for="(item, index) in listAcceptedManager"
-						:key="index"
-						style="margin-top: 10px"
-					>
-						<CardEvent
-							:class="item.id === detailActivity.id ? 'active' : ''"
-							:data="item"
-							:title="item.title"
-							:status="item.currentStatus"
-							@click="handleCardClicked"
-						>
-							<template slot="dropdown">
-								<span v-if="isVP" @click="openRequest(item)">Open Request</span>
-								<span @click="viewHistory(item)">Lihat Riwayat Event</span>
-							</template>
-						</CardEvent>
-					</div>
-				</div>
-			</div>
-			<div v-if="listAcceptedVP.length > 0" class="_left-event-cards">
-				<div class="_left-event-cards-heading">
-					<span>Event Accepted VP</span>
-				</div>
-				<div class="_left-event-cards-content">
-					<div
-						v-for="(item, index) in listAcceptedVP"
-						:key="index"
-						style="margin-top: 10px"
-					>
-						<CardEvent
-							:class="item.id === detailActivity.id ? 'active' : ''"
-							:data="item"
-							:title="item.title"
-							:status="item.currentStatus"
-							@click="handleCardClicked"
-						>
-							<template slot="dropdown">
-								<span v-if="isDirectors" @click="openRequest(item)"
-									>Open Request</span
-								>
-								<span @click="viewHistory(item)">Lihat Riwayat Event</span>
-							</template>
-						</CardEvent>
-					</div>
-				</div>
-			</div>
-			<div v-if="listAcceptedDirectors.length > 0" class="_left-event-cards">
-				<div class="_left-event-cards-heading">
-					<span>Event Accepted Directors</span>
-				</div>
-				<div class="_left-event-cards-content">
-					<div
-						v-for="(item, index) in listAcceptedDirectors"
-						:key="index"
-						style="margin-top: 10px"
-					>
-						<CardEvent
-							:class="item.id === detailActivity.id ? 'active' : ''"
-							:data="item"
-							:title="item.title"
-							:status="item.currentStatus"
-							@click="handleCardClicked"
-						>
-							<template slot="dropdown">
-								<span v-if="isManager" @click="openAssign(item)"
-									>Assign Team</span
-								>
-								<span @click="viewHistory(item)">Lihat Riwayat Event</span>
-							</template>
-						</CardEvent>
-					</div>
-				</div>
-			</div>
-			<div v-if="listRejectedManager.length > 0" class="_left-event-cards">
-				<div class="_left-event-cards-heading">
-					<span>Event Rejected Manager</span>
-				</div>
-				<div class="_left-event-cards-content">
-					<div
-						v-for="(item, index) in listRejectedManager"
-						:key="index"
-						style="margin-top: 10px"
-					>
-						<CardEvent
-							:class="item.id === detailActivity.id ? 'active' : ''"
-							:data="item"
-							:title="item.title"
-							:status="item.currentStatus"
-							@click="handleCardClicked"
-						>
-							<template slot="dropdown">
-								<span @click="viewHistory(item)">Lihat Riwayat Event</span>
-							</template>
-						</CardEvent>
-					</div>
-				</div>
-			</div>
-			<div v-if="listRejectedVP.length > 0" class="_left-event-cards">
-				<div class="_left-event-cards-heading">
-					<span>Event Rejected VP</span>
-				</div>
-				<div class="_left-event-cards-content">
-					<div
-						v-for="(item, index) in listRejectedVP"
-						:key="index"
-						style="margin-top: 10px"
-					>
-						<CardEvent
-							:class="item.id === detailActivity.id ? 'active' : ''"
-							:data="item"
-							:title="item.title"
-							:status="item.currentStatus"
-							@click="handleCardClicked"
-						>
-							<template slot="dropdown">
-								<span @click="viewHistory(item)">Lihat Riwayat Event</span>
-							</template>
-						</CardEvent>
-					</div>
-				</div>
-			</div>
-			<div v-if="listRejectedDirectors.length > 0" class="_left-event-cards">
-				<div class="_left-event-cards-heading">
-					<span>Event Rejected Directors</span>
-				</div>
-				<div class="_left-event-cards-content">
-					<div
-						v-for="(item, index) in listRejectedDirectors"
-						:key="index"
-						style="margin-top: 10px"
-					>
-						<CardEvent
-							:class="item.id === detailActivity.id ? 'active' : ''"
-							:data="item"
-							:title="item.title"
-							:status="item.currentStatus"
-							@click="handleCardClicked"
-						>
-							<template slot="dropdown">
-								<span @click="viewHistory(item)">Lihat Riwayat Event</span>
-							</template>
-						</CardEvent>
-					</div>
-				</div>
-			</div>
-			<div v-if="listOnProgress.length > 0" class="_left-event-cards">
-				<div class="_left-event-cards-heading">
-					<span>Event On Progress</span>
-				</div>
-				<div class="_left-event-cards-content">
-					<div
-						v-for="(item, index) in listOnProgress"
-						:key="index"
-						style="margin-top: 10px"
-					>
-						<CardEvent
-							:class="item.id === detailActivity.id ? 'active' : ''"
-							:data="item"
-							:title="item.title"
-							:status="item.currentStatus"
-							@click="handleCardClicked"
-						>
-							<template slot="dropdown">
-								<span @click="toDetail(item.id)">Detail</span>
-								<span v-if="isStaff" @click="completedEvent(item.id)"
-									>Completed The Event</span
-								>
-								<span @click="viewHistory(item)">Lihat Riwayat Event</span>
-							</template>
-						</CardEvent>
-					</div>
-				</div>
-			</div>
-			<div v-if="listCompleted.length > 0" class="_left-event-cards">
-				<div class="_left-event-cards-heading">
-					<span>Event Completed</span>
-				</div>
-				<div class="_left-event-cards-content">
-					<div
-						v-for="(item, index) in listCompleted"
-						:key="index"
-						style="margin-top: 10px"
-					>
-						<CardEvent
-							:class="item.id === detailActivity.id ? 'active' : ''"
-							:data="item"
-							:title="item.title"
-							:status="item.currentStatus"
-							@click="handleCardClicked"
-						>
-							<template slot="dropdown">
-								<span v-if="isManager" @click="openApproval(item)"
-									>Open Approval</span
-								>
-								<span @click="viewHistory(item)">Lihat Riwayat Event</span>
-							</template>
-						</CardEvent>
-					</div>
-				</div>
-			</div>
-			<div v-if="listApprovedManager.length > 0" class="_left-event-cards">
-				<div class="_left-event-cards-heading">
-					<span>Event Approved Manager</span>
-				</div>
-				<div class="_left-event-cards-content">
-					<div
-						v-for="(item, index) in listApprovedManager"
-						:key="index"
-						style="margin-top: 10px"
-					>
-						<CardEvent
-							:class="item.id === detailActivity.id ? 'active' : ''"
-							:data="item"
-							:title="item.title"
-							:status="item.currentStatus"
-							@click="handleCardClicked"
-						>
-							<template slot="dropdown">
-								<span v-if="isVP" @click="openApproval(item)"
-									>Open Approval</span
-								>
-								<span @click="viewHistory(item)">Lihat Riwayat Event</span>
-							</template>
-						</CardEvent>
-					</div>
-				</div>
-			</div>
-			<div v-if="listApprovedVP.length > 0" class="_left-event-cards">
-				<div class="_left-event-cards-heading">
-					<span>Event Approved VP</span>
-				</div>
-				<div class="_left-event-cards-content">
-					<div
-						v-for="(item, index) in listApprovedVP"
-						:key="index"
-						style="margin-top: 10px"
-					>
-						<CardEvent
-							:class="item.id === detailActivity.id ? 'active' : ''"
-							:data="item"
-							:title="item.title"
-							:status="item.currentStatus"
-							@click="handleCardClicked"
-						>
-							<template slot="dropdown">
-								<span v-if="isDirectors" @click="openApproval(item)"
-									>Open Approval</span
-								>
-								<span @click="viewHistory(item)">Lihat Riwayat Event</span>
-							</template>
-						</CardEvent>
-					</div>
-				</div>
-			</div>
-			<div v-if="listFinished.length > 0" class="_left-event-cards">
-				<div class="_left-event-cards-heading">
-					<span>Event Finished</span>
-				</div>
-				<div class="_left-event-cards-content">
-					<div
-						v-for="(item, index) in listFinished"
-						:key="index"
-						style="margin-top: 10px"
-					>
-						<CardEvent
-							:class="item.id === detailActivity.id ? 'active' : ''"
-							:data="item"
-							:title="item.title"
-							:status="item.currentStatus"
-							@click="handleCardClicked"
-						>
-							<template slot="dropdown">
-								<span @click="viewHistory(item)">Lihat Riwayat Event</span>
-							</template>
-						</CardEvent>
-					</div>
-				</div>
-			</div>
-			<div v-if="listDisapprovedManager.length > 0" class="_left-event-cards">
-				<div class="_left-event-cards-heading">
-					<span>Event Disapproved Manager</span>
-				</div>
-				<div class="_left-event-cards-content">
-					<div
-						v-for="(item, index) in listDisapprovedManager"
-						:key="index"
-						style="margin-top: 10px"
-					>
-						<CardEvent
-							:class="item.id === detailActivity.id ? 'active' : ''"
-							:data="item"
-							:title="item.title"
-							:status="item.currentStatus"
-							@click="handleCardClicked"
-						>
-							<template slot="dropdown">
-								<span @click="viewHistory(item)">Lihat Riwayat Event</span>
-							</template>
-						</CardEvent>
-					</div>
-				</div>
-			</div>
-			<div v-if="listDisapprovedVP.length > 0" class="_left-event-cards">
-				<div class="_left-event-cards-heading">
-					<span>Event Disapproved VP</span>
-				</div>
-				<div class="_left-event-cards-content">
-					<div
-						v-for="(item, index) in listDisapprovedVP"
-						:key="index"
-						style="margin-top: 10px"
-					>
-						<CardEvent
-							:class="item.id === detailActivity.id ? 'active' : ''"
-							:data="item"
-							:title="item.title"
-							:status="item.currentStatus"
-							@click="handleCardClicked"
-						>
-							<template slot="dropdown">
-								<span @click="viewHistory(item)">Lihat Riwayat Event</span>
-							</template>
-						</CardEvent>
-					</div>
-				</div>
-			</div>
-			<div v-if="listDisapprovedDirectors.length > 0" class="_left-event-cards">
-				<div class="_left-event-cards-heading">
-					<span>Event Disapproved Directors</span>
-				</div>
-				<div class="_left-event-cards-content">
-					<div
-						v-for="(item, index) in listDisapprovedDirectors"
-						:key="index"
-						style="margin-top: 10px"
-					>
-						<CardEvent
-							:class="item.id === detailActivity.id ? 'active' : ''"
-							:data="item"
-							:title="item.title"
-							:status="item.currentStatus"
-							@click="handleCardClicked"
-						>
-							<template slot="dropdown">
-								<span @click="viewHistory(item)">Lihat Riwayat Event</span>
-							</template>
-						</CardEvent>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="_right">
-			<div class="_detail-event">
-				<h2 style="margin-bottom: 40px">Detail Event</h2>
+      <div
+        v-if="listDraft.length > 0"
+        class="_left-event-cards"
+      >
+        <div class="_left-event-cards-heading">
+          <span>Event Draft</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div
+            v-for="(item, index) in listDraft"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <CardEvent
+              :class="item.id === detailActivity.id ? 'active' : ''"
+              :data="item"
+              :title="item.title"
+              :status="item.currentStatus"
+              @click="handleCardClicked"
+            >
+              <template slot="dropdown">
+                <span
+                  v-if="isRequester"
+                  @click="editData(item)"
+                >Ubah Event</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="listRequested.length > 0"
+        class="_left-event-cards"
+      >
+        <div class="_left-event-cards-heading">
+          <span>Event Requested</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div
+            v-for="(item, index) in listRequested"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <CardEvent
+              :class="item.id === detailActivity.id ? 'active' : ''"
+              :data="item"
+              :title="item.title"
+              :status="item.currentStatus"
+              @click="handleCardClicked"
+            >
+              <template slot="dropdown">
+                <span
+                  v-if="isManager"
+                  @click="openRequest(item)"
+                >Open Request</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="listAcceptedManager.length > 0"
+        class="_left-event-cards"
+      >
+        <div class="_left-event-cards-heading">
+          <span>Event Accepted Manager</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div
+            v-for="(item, index) in listAcceptedManager"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <CardEvent
+              :class="item.id === detailActivity.id ? 'active' : ''"
+              :data="item"
+              :title="item.title"
+              :status="item.currentStatus"
+              @click="handleCardClicked"
+            >
+              <template slot="dropdown">
+                <span
+                  v-if="isVP"
+                  @click="openRequest(item)"
+                >Open Request</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="listAcceptedVP.length > 0"
+        class="_left-event-cards"
+      >
+        <div class="_left-event-cards-heading">
+          <span>Event Accepted VP</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div
+            v-for="(item, index) in listAcceptedVP"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <CardEvent
+              :class="item.id === detailActivity.id ? 'active' : ''"
+              :data="item"
+              :title="item.title"
+              :status="item.currentStatus"
+              @click="handleCardClicked"
+            >
+              <template slot="dropdown">
+                <span
+                  v-if="isDirectors"
+                  @click="openRequest(item)"
+                >Open Request</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="listAcceptedDirectors.length > 0"
+        class="_left-event-cards"
+      >
+        <div class="_left-event-cards-heading">
+          <span>Event Accepted Directors</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div
+            v-for="(item, index) in listAcceptedDirectors"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <CardEvent
+              :class="item.id === detailActivity.id ? 'active' : ''"
+              :data="item"
+              :title="item.title"
+              :status="item.currentStatus"
+              @click="handleCardClicked"
+            >
+              <template slot="dropdown">
+                <span
+                  v-if="isManager"
+                  @click="openAssign(item)"
+                >Assign Team</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="listRejectedManager.length > 0"
+        class="_left-event-cards"
+      >
+        <div class="_left-event-cards-heading">
+          <span>Event Rejected Manager</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div
+            v-for="(item, index) in listRejectedManager"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <CardEvent
+              :class="item.id === detailActivity.id ? 'active' : ''"
+              :data="item"
+              :title="item.title"
+              :status="item.currentStatus"
+              @click="handleCardClicked"
+            >
+              <template slot="dropdown">
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="listRejectedVP.length > 0"
+        class="_left-event-cards"
+      >
+        <div class="_left-event-cards-heading">
+          <span>Event Rejected VP</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div
+            v-for="(item, index) in listRejectedVP"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <CardEvent
+              :class="item.id === detailActivity.id ? 'active' : ''"
+              :data="item"
+              :title="item.title"
+              :status="item.currentStatus"
+              @click="handleCardClicked"
+            >
+              <template slot="dropdown">
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="listRejectedDirectors.length > 0"
+        class="_left-event-cards"
+      >
+        <div class="_left-event-cards-heading">
+          <span>Event Rejected Directors</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div
+            v-for="(item, index) in listRejectedDirectors"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <CardEvent
+              :class="item.id === detailActivity.id ? 'active' : ''"
+              :data="item"
+              :title="item.title"
+              :status="item.currentStatus"
+              @click="handleCardClicked"
+            >
+              <template slot="dropdown">
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="listOnProgress.length > 0"
+        class="_left-event-cards"
+      >
+        <div class="_left-event-cards-heading">
+          <span>Event On Progress</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div
+            v-for="(item, index) in listOnProgress"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <CardEvent
+              :class="item.id === detailActivity.id ? 'active' : ''"
+              :data="item"
+              :title="item.title"
+              :status="item.currentStatus"
+              @click="handleCardClicked"
+            >
+              <template slot="dropdown">
+                <span @click="toDetail(item.id)">Detail</span>
+                <span
+                  v-if="isStaff"
+                  @click="completedEvent(item.id)"
+                >Completed The Event</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="listCompleted.length > 0"
+        class="_left-event-cards"
+      >
+        <div class="_left-event-cards-heading">
+          <span>Event Completed</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div
+            v-for="(item, index) in listCompleted"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <CardEvent
+              :class="item.id === detailActivity.id ? 'active' : ''"
+              :data="item"
+              :title="item.title"
+              :status="item.currentStatus"
+              @click="handleCardClicked"
+            >
+              <template slot="dropdown">
+                <span
+                  v-if="isManager"
+                  @click="openApproval(item)"
+                >Open Approval</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="listApprovedManager.length > 0"
+        class="_left-event-cards"
+      >
+        <div class="_left-event-cards-heading">
+          <span>Event Approved Manager</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div
+            v-for="(item, index) in listApprovedManager"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <CardEvent
+              :class="item.id === detailActivity.id ? 'active' : ''"
+              :data="item"
+              :title="item.title"
+              :status="item.currentStatus"
+              @click="handleCardClicked"
+            >
+              <template slot="dropdown">
+                <span
+                  v-if="isVP"
+                  @click="openApproval(item)"
+                >Open Approval</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="listApprovedVP.length > 0"
+        class="_left-event-cards"
+      >
+        <div class="_left-event-cards-heading">
+          <span>Event Approved VP</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div
+            v-for="(item, index) in listApprovedVP"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <CardEvent
+              :class="item.id === detailActivity.id ? 'active' : ''"
+              :data="item"
+              :title="item.title"
+              :status="item.currentStatus"
+              @click="handleCardClicked"
+            >
+              <template slot="dropdown">
+                <span
+                  v-if="isDirectors"
+                  @click="openApproval(item)"
+                >Open Approval</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="listFinished.length > 0"
+        class="_left-event-cards"
+      >
+        <div class="_left-event-cards-heading">
+          <span>Event Finished</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div
+            v-for="(item, index) in listFinished"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <CardEvent
+              :class="item.id === detailActivity.id ? 'active' : ''"
+              :data="item"
+              :title="item.title"
+              :status="item.currentStatus"
+              @click="handleCardClicked"
+            >
+              <template slot="dropdown">
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="listDisapprovedManager.length > 0"
+        class="_left-event-cards"
+      >
+        <div class="_left-event-cards-heading">
+          <span>Event Disapproved Manager</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div
+            v-for="(item, index) in listDisapprovedManager"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <CardEvent
+              :class="item.id === detailActivity.id ? 'active' : ''"
+              :data="item"
+              :title="item.title"
+              :status="item.currentStatus"
+              @click="handleCardClicked"
+            >
+              <template slot="dropdown">
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="listDisapprovedVP.length > 0"
+        class="_left-event-cards"
+      >
+        <div class="_left-event-cards-heading">
+          <span>Event Disapproved VP</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div
+            v-for="(item, index) in listDisapprovedVP"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <CardEvent
+              :class="item.id === detailActivity.id ? 'active' : ''"
+              :data="item"
+              :title="item.title"
+              :status="item.currentStatus"
+              @click="handleCardClicked"
+            >
+              <template slot="dropdown">
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+      <div
+        v-if="listDisapprovedDirectors.length > 0"
+        class="_left-event-cards"
+      >
+        <div class="_left-event-cards-heading">
+          <span>Event Disapproved Directors</span>
+        </div>
+        <div class="_left-event-cards-content">
+          <div
+            v-for="(item, index) in listDisapprovedDirectors"
+            :key="index"
+            style="margin-top: 10px"
+          >
+            <CardEvent
+              :class="item.id === detailActivity.id ? 'active' : ''"
+              :data="item"
+              :title="item.title"
+              :status="item.currentStatus"
+              @click="handleCardClicked"
+            >
+              <template slot="dropdown">
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="_right">
+      <div class="_detail-event">
+        <h2 style="margin-bottom: 40px">
+          Detail Event
+        </h2>
 
-				<span class="parent">Judul</span>
-				<span class="child">{{ detailActivity.title || '-' }}</span>
+        <span class="parent">Judul</span>
+        <span class="child">{{ detailActivity.title || '-' }}</span>
 
-				<span class="parent">Tanggal dibuat</span>
-				<span class="child">{{
-					detailActivity.createdDate | convertDate
-				}}</span>
+        <span class="parent">Tanggal dibuat</span>
+        <span class="child">{{
+          detailActivity.createdDate | convertDate
+        }}</span>
 
-				<span class="parent">Terakhir diubah</span>
-				<span class="child">{{
-					detailActivity.modifiedDate | convertDate
-				}}</span>
+        <span class="parent">Terakhir diubah</span>
+        <span class="child">{{
+          detailActivity.modifiedDate | convertDate
+        }}</span>
 
-				<span class="parent">Status</span>
-				<span v-if="detailActivity.currentStatus" class="child">{{
-					detailActivity.currentStatus | convertStatus
-				}}</span>
-				<span v-if="!detailActivity.currentStatus" class="child">-</span>
+        <span class="parent">Status</span>
+        <span
+          v-if="detailActivity.currentStatus"
+          class="child"
+        >{{
+          detailActivity.currentStatus | convertStatus
+        }}</span>
+        <span
+          v-if="!detailActivity.currentStatus"
+          class="child"
+        >-</span>
 
-				<span class="parent">File Business Plan</span>
-				<span v-if="detailActivity.businessPlanDoc" class="child">
-					<a
-						:href="detailActivity.businessPlanDoc.url"
-						v-text="detailActivity.businessPlanDoc.name"
-					/>
-				</span>
-				<span v-if="!detailActivity.businessPlanDoc" class="child">-</span>
+        <span class="parent">File Business Plan</span>
+        <span
+          v-if="detailActivity.businessPlanDoc"
+          class="child"
+        >
+          <a
+            :href="detailActivity.businessPlanDoc.url"
+            v-text="detailActivity.businessPlanDoc.name"
+          />
+        </span>
+        <span
+          v-if="!detailActivity.businessPlanDoc"
+          class="child"
+        >-</span>
 
-				<span class="parent">File Financial Model</span>
-				<span v-if="detailActivity.financialModelDoc" class="child">
-					<a
-						:href="detailActivity.financialModelDoc.url"
-						v-text="detailActivity.financialModelDoc.name"
-					/>
-				</span>
-				<span v-if="!detailActivity.financialModelDoc" class="child">-</span>
+        <span class="parent">File Financial Model</span>
+        <span
+          v-if="detailActivity.financialModelDoc"
+          class="child"
+        >
+          <a
+            :href="detailActivity.financialModelDoc.url"
+            v-text="detailActivity.financialModelDoc.name"
+          />
+        </span>
+        <span
+          v-if="!detailActivity.financialModelDoc"
+          class="child"
+        >-</span>
 
-				<span class="parent">File Kajian Legal</span>
-				<span v-if="detailActivity.kajianLegalDoc" class="child">
-					<a
-						:href="detailActivity.kajianLegalDoc.url"
-						v-text="detailActivity.kajianLegalDoc.name"
-					/>
-				</span>
-				<span v-if="!detailActivity.kajianLegalDoc" class="child">-</span>
+        <span class="parent">File Kajian Legal</span>
+        <span
+          v-if="detailActivity.kajianLegalDoc"
+          class="child"
+        >
+          <a
+            :href="detailActivity.kajianLegalDoc.url"
+            v-text="detailActivity.kajianLegalDoc.name"
+          />
+        </span>
+        <span
+          v-if="!detailActivity.kajianLegalDoc"
+          class="child"
+        >-</span>
 
-				<span class="parent">File Kajian Resiko</span>
-				<span v-if="detailActivity.kajianResikoDoc" class="child">
-					<a
-						:href="detailActivity.kajianResikoDoc.url"
-						v-text="detailActivity.kajianResikoDoc.name"
-					/>
-				</span>
-				<span v-if="!detailActivity.kajianResikoDoc" class="child">-</span>
+        <span class="parent">File Kajian Resiko</span>
+        <span
+          v-if="detailActivity.kajianResikoDoc"
+          class="child"
+        >
+          <a
+            :href="detailActivity.kajianResikoDoc.url"
+            v-text="detailActivity.kajianResikoDoc.name"
+          />
+        </span>
+        <span
+          v-if="!detailActivity.kajianResikoDoc"
+          class="child"
+        >-</span>
 
-				<span class="parent">File Lampiran Dokumen</span>
-				<span
-					v-for="(item, index) in detailActivity.additionalDocs"
-					:key="index"
-					class="child"
-				>
-					<a :href="item.url" v-text="item.name" />
-				</span>
-				<span
-					v-if="
-						!detailActivity.additionalDocs ||
-						detailActivity.additionalDocs.length === 0
-					"
-					class="child"
-					>-</span
-				>
-			</div>
-			<div class="_participans">
-				<b>Daftar Peserta</b>
-				<div class="_participants-ava">
-					<Avatar
-						v-for="(item, index) in detailActivity.participants"
-						:key="index"
-						class="_ava"
-						:path="item.avatar"
-					/>
-					<div
-						v-if="
-							detailActivity &&
-							detailActivity.participants &&
-							detailActivity.participants.length > 5
-						"
-						class="_over-ava"
-					>
-						<span class="_ava-number">+3</span>
-					</div>
-					<div
-						v-if="
-							detailActivity &&
-							detailActivity.participants &&
-							!detailActivity.participants.length
-						"
-					>
-						Belum ada peserta.
-					</div>
-				</div>
-			</div>
-		</div>
+        <span class="parent">File Lampiran Dokumen</span>
+        <span
+          v-for="(item, index) in detailActivity.additionalDocs"
+          :key="index"
+          class="child"
+        >
+          <a
+            :href="item.url"
+            v-text="item.name"
+          />
+        </span>
+        <span
+          v-if="
+            !detailActivity.additionalDocs ||
+              detailActivity.additionalDocs.length === 0
+          "
+          class="child"
+        >-</span>
+      </div>
+      <div class="_participans">
+        <b>Daftar Peserta</b>
+        <div class="_participants-ava">
+          <Avatar
+            v-for="(item, index) in detailActivity.participants"
+            :key="index"
+            class="_ava"
+            :path="item.avatar"
+          />
+          <div
+            v-if="
+              detailActivity &&
+                detailActivity.participants &&
+                detailActivity.participants.length > 5
+            "
+            class="_over-ava"
+          >
+            <span class="_ava-number">+3</span>
+          </div>
+          <div
+            v-if="
+              detailActivity &&
+                detailActivity.participants &&
+                !detailActivity.participants.length
+            "
+          >
+            Belum ada peserta.
+          </div>
+        </div>
+      </div>
+    </div>
 
-		<Modal ref="addEvent" :title="'Tambah Event'">
-			<template slot="body">
-				<label class="custom-label" for="title">Judul</label>
-				<input
-					id="title"
-					v-model="title"
-					class="custom-input"
-					type="text"
-					name="title"
-				/>
-				<label class="custom-label" for="manager">Manager</label>
-				<select
-					id="manager"
-					v-model="managerId"
-					class="custom-input"
-					name="manager"
-				>
-					<template v-for="item in listManager">
-						<option :key="item.id" :value="item.id">
-							{{ item.name }}
-						</option>
-					</template>
-				</select>
-				<label class="custom-label" for="description">Deskripsi</label>
-				<textarea
-					id="description"
-					v-model="description"
-					rows="100"
-					class="custom-input"
-					type="text-area"
-					name="description"
-				/>
-				<label class="custom-label" for="businessPlan">Business Plan</label>
-				<div v-if="businessPlanHolder" class="files-list-name">
-					<span class="files-tag-name2">{{ businessPlanHolder }}</span>
-				</div>
-				<Upload
-					type="businessPlan"
-					style="margin-top: 10px !important; margin-bottom: 10px"
-					@change="handleUpload"
-				/>
-				<label class="custom-label" for="financialModel">Financial Model</label>
-				<div v-if="financialModelHolder" class="files-list-name">
-					<span class="files-tag-name2">{{ financialModelHolder }}</span>
-				</div>
-				<Upload
-					type="financialModel"
-					style="margin-top: 10px !important; margin-bottom: 10px"
-					@change="handleUpload"
-				/>
-				<label class="custom-label" for="kajianLegal">Kajian Legal</label>
-				<div v-if="kajianLegalHolder" class="files-list-name">
-					<span class="files-tag-name2">{{ kajianLegalHolder }}</span>
-				</div>
-				<Upload
-					type="kajianLegal"
-					style="margin-top: 10px !important; margin-bottom: 10px"
-					@change="handleUpload"
-				/>
-				<label class="custom-label" for="kajianResiko">Kajian Resiko</label>
-				<div v-if="kajianResikoHolder" class="files-list-name">
-					<span class="files-tag-name2">{{ kajianResikoHolder }}</span>
-				</div>
-				<Upload
-					type="kajianResiko"
-					style="margin-top: 10px !important; margin-bottom: 10px"
-					@change="handleUpload"
-				/>
-				<label
-					class="custom-label"
-					style="margin-bottom: 10px"
-					for="description"
-					>Lampiran Dokumen</label
-				>
-				<div class="files-list-name">
-					<span
-						v-for="(item, index) in attachmentHolder"
-						:key="index"
-						class="files-tag-name"
-						@click="attachmentHolder.splice(index, 1)"
-						>{{ item.name }}</span
-					>
-				</div>
-				<Upload
-					style="margin-top: 10px !important; margin-bottom: 10px"
-					type="attachment"
-					@change="handleUpload"
-				/>
-				<div class="_date">
-					<div>
-						<label class="custom-label" for="start">Perkiraan Mulai</label>
-						<input
-							v-model="expectedStartDate"
-							class="custom-input"
-							type="date"
-						/>
-					</div>
-					<div>
-						<label class="custom-label" for="end">Perkiraan Selesai</label>
-						<input
-							v-model="expectedFinishDate"
-							class="custom-input"
-							type="date"
-						/>
-					</div>
-				</div>
-			</template>
+    <Modal
+      ref="addEvent"
+      :title="'Tambah Event'"
+    >
+      <template slot="body">
+        <label
+          class="custom-label"
+          for="title"
+        >Judul</label>
+        <input
+          id="title"
+          v-model="title"
+          class="custom-input"
+          type="text"
+          name="title"
+        >
+        <label
+          class="custom-label"
+          for="manager"
+        >Manager</label>
+        <select
+          id="manager"
+          v-model="managerId"
+          class="custom-input"
+          name="manager"
+        >
+          <template v-for="item in listManager">
+            <option
+              :key="item.id"
+              :value="item.id"
+            >
+              {{ item.name }}
+            </option>
+          </template>
+        </select>
+        <label
+          class="custom-label"
+          for="description"
+        >Deskripsi</label>
+        <textarea
+          id="description"
+          v-model="description"
+          rows="100"
+          class="custom-input"
+          type="text-area"
+          name="description"
+        />
+        <label
+          class="custom-label"
+          for="businessPlan"
+        >Business Plan</label>
+        <div
+          v-if="businessPlanHolder"
+          class="files-list-name"
+        >
+          <span class="files-tag-name2">{{ businessPlanHolder }}</span>
+        </div>
+        <Upload
+          type="businessPlan"
+          style="margin-top: 10px !important; margin-bottom: 10px"
+          @change="handleUpload"
+        />
+        <label
+          class="custom-label"
+          for="financialModel"
+        >Financial Model</label>
+        <div
+          v-if="financialModelHolder"
+          class="files-list-name"
+        >
+          <span class="files-tag-name2">{{ financialModelHolder }}</span>
+        </div>
+        <Upload
+          type="financialModel"
+          style="margin-top: 10px !important; margin-bottom: 10px"
+          @change="handleUpload"
+        />
+        <label
+          class="custom-label"
+          for="kajianLegal"
+        >Kajian Legal</label>
+        <div
+          v-if="kajianLegalHolder"
+          class="files-list-name"
+        >
+          <span class="files-tag-name2">{{ kajianLegalHolder }}</span>
+        </div>
+        <Upload
+          type="kajianLegal"
+          style="margin-top: 10px !important; margin-bottom: 10px"
+          @change="handleUpload"
+        />
+        <label
+          class="custom-label"
+          for="kajianResiko"
+        >Kajian Resiko</label>
+        <div
+          v-if="kajianResikoHolder"
+          class="files-list-name"
+        >
+          <span class="files-tag-name2">{{ kajianResikoHolder }}</span>
+        </div>
+        <Upload
+          type="kajianResiko"
+          style="margin-top: 10px !important; margin-bottom: 10px"
+          @change="handleUpload"
+        />
+        <label
+          class="custom-label"
+          style="margin-bottom: 10px"
+          for="description"
+        >Lampiran Dokumen</label>
+        <div class="files-list-name">
+          <span
+            v-for="(item, index) in attachmentHolder"
+            :key="index"
+            class="files-tag-name"
+            @click="attachmentHolder.splice(index, 1)"
+          >{{ item.name }}</span>
+        </div>
+        <Upload
+          style="margin-top: 10px !important; margin-bottom: 10px"
+          type="attachment"
+          @change="handleUpload"
+        />
+        <div class="_date">
+          <div>
+            <label
+              class="custom-label"
+              for="start"
+            >Perkiraan Mulai</label>
+            <input
+              v-model="expectedStartDate"
+              class="custom-input"
+              type="date"
+            >
+          </div>
+          <div>
+            <label
+              class="custom-label"
+              for="end"
+            >Perkiraan Selesai</label>
+            <input
+              v-model="expectedFinishDate"
+              class="custom-input"
+              type="date"
+            >
+          </div>
+        </div>
+      </template>
 
-			<template slot="footer">
-				<Button
-					title="Simpan sebagai draft"
-					type="success"
-					style="padding: 15px 25px; margin-right: 10px; color: white"
-					@click="clientCreate()"
-				/>
-				<Button
-					title="Kirim"
-					type="primary"
-					style="padding: 15px 25px"
-					@click="clientSubmit()"
-				/>
-			</template>
-		</Modal>
+      <template slot="footer">
+        <Button
+          title="Simpan sebagai draft"
+          type="success"
+          style="padding: 15px 25px; margin-right: 10px; color: white"
+          @click="clientCreate()"
+        />
+        <Button
+          title="Kirim"
+          type="primary"
+          style="padding: 15px 25px"
+          @click="clientSubmit()"
+        />
+      </template>
+    </Modal>
 
-		<Modal
-			ref="viewHistory"
-			:title="'Detail Riwayat Event [' + title + ']'"
-			size="sm"
-      :isLiner="true"
-		>
-			<template slot="body" style="overflow: auto">
-				<TimelineHistoryEvent :data="histories" />
-			</template>
-		</Modal>
+    <Modal
+      ref="viewHistory"
+      :title="'Detail Riwayat Event [' + title + ']'"
+      size="sm"
+      :is-liner="true"
+    >
+      <template
+        slot="body"
+        style="overflow: auto"
+      >
+        <TimelineHistoryEvent :data="histories" />
+      </template>
+    </Modal>
 
-		<Modal
-			ref="acceptanceRequest"
-			:title="
-				isManager
-					? 'Event Acceptance Manager'
-					: isVP
-					? 'Event Acceptance VP'
-					: 'Event Acceptance Directors'
-			"
-		>
-			<template slot="body">
-				<span>Event Tittle</span><br />
-				<p>
-					<b>{{ title }}</b>
-				</p>
-				<span>Description</span><br />
-				<p>
-					<b>{{ description }}</b>
-				</p>
-				<span>Documents</span><br />
-				<span
-					><b>{{ businessPlan.name }}</b></span
-				><br />
-				<span
-					><b>{{ financialModel.name }}</b></span
-				><br />
-				<span
-					><b>{{ kajianLegal.name }}</b></span
-				><br />
-				<span
-					><b>{{ kajianResiko.name }}</b></span
-				><br /><br />
-				<span>Sisa Hari</span><br />
-				<p>
-					<b>{{ estimatedDaysLeft }}</b>
-				</p>
-			</template>
+    <Modal
+      ref="acceptanceRequest"
+      :title="
+        isManager
+          ? 'Event Acceptance Manager'
+          : isVP
+            ? 'Event Acceptance VP'
+            : 'Event Acceptance Directors'
+      "
+    >
+      <template slot="body">
+        <span>Event Tittle</span><br>
+        <p>
+          <b>{{ title }}</b>
+        </p>
+        <span>Description</span><br>
+        <p>
+          <b>{{ description }}</b>
+        </p>
+        <span>Documents</span><br>
+        <span><b>{{ businessPlan.name }}</b></span><br>
+        <span><b>{{ financialModel.name }}</b></span><br>
+        <span><b>{{ kajianLegal.name }}</b></span><br>
+        <span><b>{{ kajianResiko.name }}</b></span><br><br>
+        <span>Sisa Hari</span><br>
+        <p>
+          <b>{{ estimatedDaysLeft }}</b>
+        </p>
+      </template>
 
-			<template slot="footer">
-				<Button
-					title="Reject"
-					type="primary"
-					style="padding: 15px 25px; margin-right: 10px"
-					@click="
-						$refs.rejection.visible = true
-						$refs.acceptanceRequest.visible = false
-					"
-				/>
-				<Button
-					title="Accept"
-					type="primary"
-					style="padding: 15px 25px"
-					@click="acceptEvent()"
-				/>
-			</template>
-		</Modal>
+      <template slot="footer">
+        <Button
+          title="Reject"
+          type="primary"
+          style="padding: 15px 25px; margin-right: 10px"
+          @click="
+            $refs.rejection.visible = true
+            $refs.acceptanceRequest.visible = false
+          "
+        />
+        <Button
+          title="Accept"
+          type="primary"
+          style="padding: 15px 25px"
+          @click="acceptEvent()"
+        />
+      </template>
+    </Modal>
 
-		<Modal ref="assignTeam" :title="'Assign Team Member'">
-			<template slot="body">
-				<span>Event Tittle</span><br />
-				<p>
-					<b>{{ this.title }}</b>
-				</p>
-				<span>Description</span><br />
-				<p>
-					<b>{{ this.description }}</b>
-				</p>
-				<label class="custom-label" for="employee">Assign</label><br />
-				<div class="files-list-name">
-					<span
-						v-for="(item, index) in employee"
-						:key="item.id"
-						class="files-tag-name"
-						@click="delEmp(index)"
-						>{{ item.name }}</span
-					>
-				</div>
-				<span v-if="duplicateEmp" style="color: red"
-					>Team sudah ditambahkan</span
-				>
-				<select
-					id="employee"
-					v-model="selectEmp"
-					class="custom-input"
-					name="employee"
-					@change="addEmp($event)"
-				>
-					<template v-for="item in listEmployee">
-						<option :key="item.id" :value="item.id">
-							{{ item.name }}
-						</option>
-					</template></select
-				><br />
-			</template>
+    <Modal
+      ref="assignTeam"
+      :title="'Assign Team Member'"
+    >
+      <template slot="body">
+        <span>Event Tittle</span><br>
+        <p>
+          <b>{{ this.title }}</b>
+        </p>
+        <span>Description</span><br>
+        <p>
+          <b>{{ this.description }}</b>
+        </p>
+        <label
+          class="custom-label"
+          for="employee"
+        >Assign</label><br>
+        <div class="files-list-name">
+          <span
+            v-for="(item, index) in employee"
+            :key="item.id"
+            class="files-tag-name"
+            @click="delEmp(index)"
+          >{{ item.name }}</span>
+        </div>
+        <span
+          v-if="duplicateEmp"
+          style="color: red"
+        >Team sudah ditambahkan</span>
+        <select
+          id="employee"
+          v-model="selectEmp"
+          class="custom-input"
+          name="employee"
+          @change="addEmp($event)"
+        >
+          <template v-for="item in listEmployee">
+            <option
+              :key="item.id"
+              :value="item.id"
+            >
+              {{ item.name }}
+            </option>
+          </template>
+        </select><br>
+      </template>
 
-			<template slot="footer">
-				<Button
-					title="Cancel"
-					type="primary"
-					style="padding: 15px 25px; margin-right: 10px"
-					@click="$refs.assignTeam.visible = false"
-				/>
-				<Button
-					title="Assign Team Member"
-					type="primary"
-					style="padding: 15px 25px"
-					@click="assignTeam()"
-				/>
-			</template>
-		</Modal>
+      <template slot="footer">
+        <Button
+          title="Cancel"
+          type="primary"
+          style="padding: 15px 25px; margin-right: 10px"
+          @click="$refs.assignTeam.visible = false"
+        />
+        <Button
+          title="Assign Team Member"
+          type="primary"
+          style="padding: 15px 25px"
+          @click="assignTeam()"
+        />
+      </template>
+    </Modal>
 
-		<Modal
-			ref="rejection"
-			:title="
-				isManager
-					? 'Rejection Manager'
-					: isVP
-					? 'Rejection VP'
-					: 'Rejection Directors'
-			"
-		>
-			<template slot="body">
-				<span>Event Tittle</span><br />
-				<p>
-					<b>{{ title }}</b>
-				</p>
-				<span>Description</span><br />
-				<p>
-					<b>{{ description }}</b>
-				</p>
-				<label class="custom-label" for="notes">Notes</label><br />
-				<input
-					id="notes"
-					v-model="notes"
-					class="custom-input"
-					type="text"
-					name="notes"
-				/><br />
-			</template>
+    <Modal
+      ref="rejection"
+      :title="
+        isManager
+          ? 'Rejection Manager'
+          : isVP
+            ? 'Rejection VP'
+            : 'Rejection Directors'
+      "
+    >
+      <template slot="body">
+        <span>Event Tittle</span><br>
+        <p>
+          <b>{{ title }}</b>
+        </p>
+        <span>Description</span><br>
+        <p>
+          <b>{{ description }}</b>
+        </p>
+        <label
+          class="custom-label"
+          for="notes"
+        >Notes</label><br>
+        <input
+          id="notes"
+          v-model="notes"
+          class="custom-input"
+          type="text"
+          name="notes"
+        ><br>
+      </template>
 
-			<template slot="footer">
-				<Button
-					title="Cancel"
-					type="primary"
-					style="padding: 15px 25px; margin-right: 10px"
-					@click="
-						$refs.rejection.visible = false
-						$refs.acceptanceRequest.visible = true
-					"
-				/>
-				<Button
-					title="Send Rejection"
-					type="primary"
-					style="padding: 15px 25px"
-					@click="RejectEvent()"
-				/>
-			</template>
-		</Modal>
+      <template slot="footer">
+        <Button
+          title="Cancel"
+          type="primary"
+          style="padding: 15px 25px; margin-right: 10px"
+          @click="
+            $refs.rejection.visible = false
+            $refs.acceptanceRequest.visible = true
+          "
+        />
+        <Button
+          title="Send Rejection"
+          type="primary"
+          style="padding: 15px 25px"
+          @click="RejectEvent()"
+        />
+      </template>
+    </Modal>
 
-		<Modal
-			ref="approvalRequest"
-			:title="
-				isManager
-					? 'Event Approval Manager'
-					: isVP
-					? 'Event Approval VP'
-					: 'Event Approval Directors'
-			"
-		>
-			<template slot="body">
-				<span>Event Tittle</span><br />
-				<p>
-					<b>{{ title }}</b>
-				</p>
-				<span>Description</span><br />
-				<p>
-					<b>{{ description }}</b>
-				</p>
-				<span>Documents</span><br />
-				<span
-					><b>{{ businessPlan.name }}</b></span
-				><br />
-				<span
-					><b>{{ financialModel.name }}</b></span
-				><br />
-				<span
-					><b>{{ kajianLegal.name }}</b></span
-				><br />
-				<span
-					><b>{{ kajianResiko.name }}</b></span
-				><br /><br />
-				<span>Sisa Hari</span><br />
-				<p>
-					<b>{{ estimatedDaysLeft }}</b>
-				</p>
-			</template>
+    <Modal
+      ref="approvalRequest"
+      :title="
+        isManager
+          ? 'Event Approval Manager'
+          : isVP
+            ? 'Event Approval VP'
+            : 'Event Approval Directors'
+      "
+    >
+      <template slot="body">
+        <span>Event Tittle</span><br>
+        <p>
+          <b>{{ title }}</b>
+        </p>
+        <span>Description</span><br>
+        <p>
+          <b>{{ description }}</b>
+        </p>
+        <span>Documents</span><br>
+        <span><b>{{ businessPlan.name }}</b></span><br>
+        <span><b>{{ financialModel.name }}</b></span><br>
+        <span><b>{{ kajianLegal.name }}</b></span><br>
+        <span><b>{{ kajianResiko.name }}</b></span><br><br>
+        <span>Sisa Hari</span><br>
+        <p>
+          <b>{{ estimatedDaysLeft }}</b>
+        </p>
+      </template>
 
-			<template slot="footer">
-				<Button
-					title="Disapprove"
-					type="primary"
-					style="padding: 15px 25px; margin-right: 10px"
-					@click="
-						$refs.disapprove.visible = true
-						$refs.approvalRequest.visible = false
-					"
-				/>
-				<Button
-					title="Approve"
-					type="primary"
-					style="padding: 15px 25px"
-					@click="approveEvent()"
-				/>
-			</template>
-		</Modal>
+      <template slot="footer">
+        <Button
+          title="Disapprove"
+          type="primary"
+          style="padding: 15px 25px; margin-right: 10px"
+          @click="
+            $refs.disapprove.visible = true
+            $refs.approvalRequest.visible = false
+          "
+        />
+        <Button
+          title="Approve"
+          type="primary"
+          style="padding: 15px 25px"
+          @click="approveEvent()"
+        />
+      </template>
+    </Modal>
 
-		<Modal
-			ref="disapprove"
-			:title="
-				isManager
-					? 'Disapprove Manager'
-					: isVP
-					? 'Disapprove VP'
-					: 'Disapprove Directors'
-			"
-		>
-			<template slot="body">
-				<span>Event Tittle</span><br />
-				<p>
-					<b>{{ title }}</b>
-				</p>
-				<span>Description</span><br />
-				<p>
-					<b>{{ description }}</b>
-				</p>
-				<label class="custom-label" for="notes">Notes</label><br />
-				<input
-					id="notes"
-					v-model="notes"
-					class="custom-input"
-					type="text"
-					name="notes"
-				/><br />
-			</template>
+    <Modal
+      ref="disapprove"
+      :title="
+        isManager
+          ? 'Disapprove Manager'
+          : isVP
+            ? 'Disapprove VP'
+            : 'Disapprove Directors'
+      "
+    >
+      <template slot="body">
+        <span>Event Tittle</span><br>
+        <p>
+          <b>{{ title }}</b>
+        </p>
+        <span>Description</span><br>
+        <p>
+          <b>{{ description }}</b>
+        </p>
+        <label
+          class="custom-label"
+          for="notes"
+        >Notes</label><br>
+        <input
+          id="notes"
+          v-model="notes"
+          class="custom-input"
+          type="text"
+          name="notes"
+        ><br>
+      </template>
 
-			<template slot="footer">
-				<Button
-					title="Cancel"
-					type="primary"
-					style="padding: 15px 25px; margin-right: 10px"
-					@click="
-						$refs.disapprove.visible = false
-						$refs.approvalRequest.visible = true
-					"
-				/>
-				<Button
-					title="Disapprove Event"
-					type="primary"
-					style="padding: 15px 25px"
-					@click="disApproveEvent()"
-				/>
-			</template>
-		</Modal>
-	</div>
+      <template slot="footer">
+        <Button
+          title="Cancel"
+          type="primary"
+          style="padding: 15px 25px; margin-right: 10px"
+          @click="
+            $refs.disapprove.visible = false
+            $refs.approvalRequest.visible = true
+          "
+        />
+        <Button
+          title="Disapprove Event"
+          type="primary"
+          style="padding: 15px 25px"
+          @click="disApproveEvent()"
+        />
+      </template>
+    </Modal>
+  </div>
 </template>
 
 <script>
@@ -995,7 +1136,7 @@ export default {
 	name: 'Archieve',
 	filters: {
 		convertDate,
-		convertStatus
+		convertStatus,
 	},
 	components: {
 		Heading,
@@ -1004,7 +1145,7 @@ export default {
 		TimelineHistoryEvent,
 		Modal,
 		Avatar,
-		Upload
+		Upload,
 	},
 	data: () => ({
 		eventList: [
@@ -1012,14 +1153,14 @@ export default {
 			{
 				status: 'on progress',
 				title: 'Partnership dengan Tesla',
-				starred: true
+				starred: true,
 			},
 			{ status: 'cleared', title: 'Partnership dengan Icon', starred: false },
 			{
 				status: 'canceled',
 				title: 'Partnership dengan Facebook',
-				starred: false
-			}
+				starred: false,
+			},
 		],
 
 		detailActivity: {},
@@ -1064,19 +1205,19 @@ export default {
 		managerId: '',
 		businessPlan: {
 			name: '',
-			url: ''
+			url: '',
 		},
 		financialModel: {
 			name: '',
-			url: ''
+			url: '',
 		},
 		kajianLegal: {
 			name: '',
-			url: ''
+			url: '',
 		},
 		kajianResiko: {
 			name: '',
-			url: ''
+			url: '',
 		},
 		additionalDocuments: [],
 		businessPlanHolder: '',
@@ -1084,7 +1225,7 @@ export default {
 		kajianLegalHolder: '',
 		kajianResikoHolder: '',
 		attachmentHolder: [],
-		histories: []
+		histories: [],
 	}),
 	computed: {
 		starred() {
@@ -1092,7 +1233,7 @@ export default {
 		},
 		notStarred() {
 			return this.eventList.filter((item) => !item.starred)
-		}
+		},
 	},
 	async created() {
 		await this.getRole()
@@ -1155,7 +1296,7 @@ export default {
 				// Method Upload
 				this.attachmentHolder.push({
 					name: e.name,
-					url: e // ganti jadi url: dari method
+					url: e, // ganti jadi url: dari method
 				})
 			} else if (type === 'businessPlan') {
 				this.businessPlanHolder = e.name
@@ -1254,7 +1395,7 @@ export default {
 			this.$parent.isLoading = true
 			const param = {
 				id: this.id,
-				reason: this.notes
+				reason: this.notes,
 			}
 			let response
 			if (this.isManager) {
@@ -1302,7 +1443,7 @@ export default {
 			this.$parent.isLoading = true
 			const param = {
 				id: this.id,
-				reason: this.notes
+				reason: this.notes,
 			}
 			let response
 			if (this.isManager) {
@@ -1324,7 +1465,7 @@ export default {
 			const emp = this.employee.map((item) => item.id)
 			const param = {
 				eventId: this.id,
-				participants: emp
+				participants: emp,
 			}
 			const response = await eventService.assignTeam(param)
 			if (response) {
@@ -1335,11 +1476,11 @@ export default {
 		},
 		addEmp(event) {
 			const checkEmp = this.employee.find(
-				(item) => item.id === event.target.value
+				(item) => item.id === event.target.value,
 			)
 			if (!checkEmp) {
 				const emp = this.listEmployee.find(
-					(item) => item.id === event.target.value
+					(item) => item.id === event.target.value,
 				)
 				this.employee.push(emp)
 				this.duplicateEmp = false
@@ -1389,21 +1530,21 @@ export default {
 					managerId: this.managerId,
 					businessPlan: {
 						name: this.businessPlan.name,
-						url: this.businessPlan.url
+						url: this.businessPlan.url,
 					},
 					financialModel: {
 						name: this.financialModel.name,
-						url: this.financialModel.url
+						url: this.financialModel.url,
 					},
 					kajianLegal: {
 						name: this.kajianLegal.name,
-						url: this.kajianLegal.url
+						url: this.kajianLegal.url,
 					},
 					kajianResiko: {
 						name: this.kajianResiko.name,
-						url: this.kajianResiko.url
+						url: this.kajianResiko.url,
 					},
-					additionalDocuments: this.additionalDocuments
+					additionalDocuments: this.additionalDocuments,
 				}
 			} else {
 				param = {
@@ -1414,21 +1555,21 @@ export default {
 					managerId: this.managerId,
 					businessPlan: {
 						name: this.businessPlan.name,
-						url: this.businessPlan.url
+						url: this.businessPlan.url,
 					},
 					financialModel: {
 						name: this.financialModel.name,
-						url: this.financialModel.url
+						url: this.financialModel.url,
 					},
 					kajianLegal: {
 						name: this.kajianLegal.name,
-						url: this.kajianLegal.url
+						url: this.kajianLegal.url,
 					},
 					kajianResiko: {
 						name: this.kajianResiko.name,
-						url: this.kajianResiko.url
+						url: this.kajianResiko.url,
 					},
-					additionalDocuments: this.attachmentHolder
+					additionalDocuments: this.attachmentHolder,
 				}
 			}
 			const response = await eventService.clientCreate(param)
@@ -1454,21 +1595,21 @@ export default {
 					managerId: this.managerId,
 					businessPlan: {
 						name: this.businessPlan.name,
-						url: this.businessPlan.url
+						url: this.businessPlan.url,
 					},
 					financialModel: {
 						name: this.financialModel.name,
-						url: this.financialModel.url
+						url: this.financialModel.url,
 					},
 					kajianLegal: {
 						name: this.kajianLegal.name,
-						url: this.kajianLegal.url
+						url: this.kajianLegal.url,
 					},
 					kajianResiko: {
 						name: this.kajianResiko.name,
-						url: this.kajianResiko.url
+						url: this.kajianResiko.url,
 					},
-					additionalDocuments: this.additionalDocuments
+					additionalDocuments: this.additionalDocuments,
 				}
 			} else {
 				param = {
@@ -1479,21 +1620,21 @@ export default {
 					managerId: this.managerId,
 					businessPlan: {
 						name: this.businessPlan.name,
-						url: this.businessPlan.url
+						url: this.businessPlan.url,
 					},
 					financialModel: {
 						name: this.financialModel.name,
-						url: this.financialModel.url
+						url: this.financialModel.url,
 					},
 					kajianLegal: {
 						name: this.kajianLegal.name,
-						url: this.kajianLegal.url
+						url: this.kajianLegal.url,
 					},
 					kajianResiko: {
 						name: this.kajianResiko.name,
-						url: this.kajianResiko.url
+						url: this.kajianResiko.url,
 					},
-					additionalDocuments: this.attachmentHolder
+					additionalDocuments: this.attachmentHolder,
 				}
 			}
 			const response = await eventService.clientSubmit(param)
@@ -1536,7 +1677,7 @@ export default {
 
 			const paramAcceptedManager = { status: 'accepted_manager' }
 			const resAcceptedManager = await eventService.getEvent(
-				paramAcceptedManager
+				paramAcceptedManager,
 			)
 			if (resAcceptedManager) {
 				this.listAcceptedManager = resAcceptedManager.data.content
@@ -1550,7 +1691,7 @@ export default {
 
 			const paramAcceptedDirectors = { status: 'accepted_direksi' }
 			const resAcceptedDirectors = await eventService.getEvent(
-				paramAcceptedDirectors
+				paramAcceptedDirectors,
 			)
 			if (resAcceptedDirectors) {
 				this.listAcceptedDirectors = resAcceptedDirectors.data.content
@@ -1558,7 +1699,7 @@ export default {
 
 			const paramRejectedManager = { status: 'rejected_manager' }
 			const resRejectedManager = await eventService.getEvent(
-				paramRejectedManager
+				paramRejectedManager,
 			)
 			if (resRejectedManager) {
 				this.listRejectedManager = resRejectedManager.data.content
@@ -1572,7 +1713,7 @@ export default {
 
 			const paramRejectedDirectors = { status: 'rejected_direksi' }
 			const resRejectedDirectors = await eventService.getEvent(
-				paramRejectedDirectors
+				paramRejectedDirectors,
 			)
 			if (resRejectedDirectors) {
 				this.listRejectedDirectors = resRejectedDirectors.data.content
@@ -1592,7 +1733,7 @@ export default {
 
 			const paramApprovedManager = { status: 'approved_manager' }
 			const resApprovedManager = await eventService.getEvent(
-				paramApprovedManager
+				paramApprovedManager,
 			)
 			if (resApprovedManager) {
 				this.listApprovedManager = resApprovedManager.data.content
@@ -1612,7 +1753,7 @@ export default {
 
 			const paramDisapprovedManager = { status: 'disapproved_manager' }
 			const resDisapprovedManager = await eventService.getEvent(
-				paramDisapprovedManager
+				paramDisapprovedManager,
 			)
 			if (resDisapprovedManager) {
 				this.listDisapprovedManager = resDisapprovedManager.data.content
@@ -1626,7 +1767,7 @@ export default {
 
 			const paramDisapprovedDirectors = { status: 'disapproved_direksi' }
 			const resDisapprovedDirectors = await eventService.getEvent(
-				paramDisapprovedDirectors
+				paramDisapprovedDirectors,
 			)
 			if (resDisapprovedDirectors) {
 				this.listDisapprovedDirectors = resDisapprovedDirectors.data.content
@@ -1649,8 +1790,8 @@ export default {
 			} else if (role === 'DIRECTOR') {
 				this.isDirectors = true
 			}
-		}
-	}
+		},
+	},
 }
 </script>
 

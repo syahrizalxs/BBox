@@ -26,17 +26,17 @@
 
 <script>
 export default {
-  name: 'Loading',
-  props: ['message'],
-  data: () => ({
-    visible: false,
-  }),
-  methods: {
-    show(message) {
-      this.message = message
-      this.visible = true
-    },
-  },
+	name: 'Loading',
+	props: ['message'],
+	data: () => ({
+		visible: false,
+	}),
+	methods: {
+		show(message) {
+			this.message = message
+			this.visible = true
+		},
+	},
 }
 </script>
 

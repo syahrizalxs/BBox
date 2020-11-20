@@ -18,13 +18,13 @@
 
 <script>
 export default {
-  name: 'More',
-  props: ['options'],
-  methods: {
-    callback(e) {
-      this.$emit('click', e)
-    },
-  },
+	name: 'More',
+	props: ['options'],
+	methods: {
+		callback(e) {
+			this.$emit('click', e)
+		},
+	},
 }
 </script>
 

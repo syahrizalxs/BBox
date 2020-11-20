@@ -13,15 +13,15 @@ import Sidebar from '@/components/Sidebar'
 import Loading from '@/components/Loading'
 
 export default {
-  name: 'Home',
-  components: {
-    Sidebar,
-    Loading,
-  },
-  data: () => ({
-    drawer: null,
-    isLoading: false,
-  }),
+	name: 'Home',
+	components: {
+		Sidebar,
+		Loading,
+	},
+	data: () => ({
+		drawer: null,
+		isLoading: false,
+	}),
 }
 </script>
 

@@ -28,29 +28,29 @@
 <script>
 
 export default {
-  props: {
-    initialTab: String,
-    tabs: Array,
-  },
-  data() {
-    return {
-      activeTab: this.initialTab,
-    }
-  },
-  computed: {
-    tabPanelSlotName() {
-      return `tab-panel-${this.activeTab}`
-    },
-  },
-  methods: {
-    tabHeadSlotName(tabName) {
-      return `tab-head-${tabName}`
-    },
+	props: {
+		initialTab: String,
+		tabs: Array,
+	},
+	data() {
+		return {
+			activeTab: this.initialTab,
+		}
+	},
+	computed: {
+		tabPanelSlotName() {
+			return `tab-panel-${this.activeTab}`
+		},
+	},
+	methods: {
+		tabHeadSlotName(tabName) {
+			return `tab-head-${tabName}`
+		},
 
-    switchTab(tabName) {
-      this.activeTab = tabName
-    },
-  },
+		switchTab(tabName) {
+			this.activeTab = tabName
+		},
+	},
 }
 </script>
 

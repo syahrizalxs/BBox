@@ -11,23 +11,23 @@
 
 <script>
 export default {
-  name: 'Button',
-  props: {
-    title: {
-      type: String,
-      default: 'Save',
-    },
-    type: {
-      type: String,
-      default: 'primary',
-    },
-  },
-  data: () => ({}),
-  methods: {
-    callback(e) {
-      this.$emit('click', e)
-    },
-  },
+	name: 'Button',
+	props: {
+		title: {
+			type: String,
+			default: 'Save',
+		},
+		type: {
+			type: String,
+			default: 'primary',
+		},
+	},
+	data: () => ({}),
+	methods: {
+		callback(e) {
+			this.$emit('click', e)
+		},
+	},
 }
 </script>
 

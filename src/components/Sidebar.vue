@@ -40,22 +40,22 @@
 import { mapActions } from 'vuex'
 
 export default {
-  name: 'Sidebar',
-  data: () => ({
-    isCollapsible: false,
-  }),
-  methods: {
-    ...mapActions('auth', [
-      'logout',
-    ]),
-    onLogout() {
-      this.logout()
-    },
-    collapsible() {
-      this.isCollapsible = !this.isCollapsible
-      document.querySelector('.sideNav').style.width = this.isCollapsible ? '300px' : '72px'
-    },
-  },
+	name: 'Sidebar',
+	data: () => ({
+		isCollapsible: false,
+	}),
+	methods: {
+		...mapActions('auth', [
+			'logout',
+		]),
+		onLogout() {
+			this.logout()
+		},
+		collapsible() {
+			this.isCollapsible = !this.isCollapsible
+			document.querySelector('.sideNav').style.width = this.isCollapsible ? '300px' : '72px'
+		},
+	},
 }
 </script>
 

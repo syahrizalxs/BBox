@@ -271,63 +271,63 @@ const processService = ProcessService.build()
 const uploadService = UploadService.build()
 
 export default {
-  name: 'Archieve',
-  components: {
-    Heading,
-    // Search,
-    Button,
-    // CardEvent,
-    Modal,
-    Notification,
-    Avatar,
-    Tab,
-    Timeline,
-    Upload,
-  },
-  data: () => ({
-    initialTab: 'activity',
-    tabs: ['activity', 'contact', 'file'],
-    dataModal: {
-      description: '',
-      docs: [],
-      eventId: '',
-      name: '',
-      status: '',
-      type: 'MAIN',
-    },
-    fileHolder: [],
-  }),
-  computed: {
-    starred() {
-      return this.eventList.filter((item) => item.starred)
-    },
-    notStarred() {
-      return this.eventList.filter((item) => !item.starred)
-    },
-  },
-  methods: {
-    handleUpload(e) {
-      this.fileHolder.push({
-        name: e.name,
-        url: e,
-      })
-    },
-    async saveProcess() {
-      this.$parent.isLoading = true
-      this.uploadService()
-      this.dataModal.eventId = this.$route.params.id
-      processService.save()
-      this.$parent.isLoading = false
-    },
-    async uploadFile() {
-      this.fileHolder.forEach(async (item) => {
-        const formData = new FormData()
-        formData.append('file', item.file)
-        const tempRes = await uploadService.uploadFile(formData)
-        item.url = tempRes.fileDownloadUri
-      })
-    },
-  },
+	name: 'Archieve',
+	components: {
+		Heading,
+		// Search,
+		Button,
+		// CardEvent,
+		Modal,
+		Notification,
+		Avatar,
+		Tab,
+		Timeline,
+		Upload,
+	},
+	data: () => ({
+		initialTab: 'activity',
+		tabs: ['activity', 'contact', 'file'],
+		dataModal: {
+			description: '',
+			docs: [],
+			eventId: '',
+			name: '',
+			status: '',
+			type: 'MAIN',
+		},
+		fileHolder: [],
+	}),
+	computed: {
+		starred() {
+			return this.eventList.filter((item) => item.starred)
+		},
+		notStarred() {
+			return this.eventList.filter((item) => !item.starred)
+		},
+	},
+	methods: {
+		handleUpload(e) {
+			this.fileHolder.push({
+				name: e.name,
+				url: e,
+			})
+		},
+		async saveProcess() {
+			this.$parent.isLoading = true
+			this.uploadService()
+			this.dataModal.eventId = this.$route.params.id
+			processService.save()
+			this.$parent.isLoading = false
+		},
+		async uploadFile() {
+			this.fileHolder.forEach(async (item) => {
+				const formData = new FormData()
+				formData.append('file', item.file)
+				const tempRes = await uploadService.uploadFile(formData)
+				item.url = tempRes.fileDownloadUri
+			})
+		},
+	},
 
 }
 </script>

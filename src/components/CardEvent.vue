@@ -30,41 +30,41 @@
 import { convertStatus } from '../commons/utils/filter'
 
 export default {
-  name: 'CardEvent',
-  filters: {
-    convertStatus,
-  },
-  props: ['title', 'status', 'starred', 'data'],
-  computed: {
-    statusStyle() {
-      let status = ''
-      if (this.status === 'DRAFT') {
-        status = 'draft'
-      } else if (this.status === 'REQUESTED') {
-        status = 'requested'
-      } else if (this.status === 'ACCEPTED_MANAGER' || this.status === 'ACCEPTED_VP' || this.status === 'ACCEPTED_DIREKSI') {
-        status = 'accepted'
-      } else if (this.status === 'REJECTED_MANAGER' || this.status === 'REJECTED_VP' || this.status === 'REJECTED_DIREKSI') {
-        status = 'rejected'
-      } else if (this.status === 'ON_PROGRESS') {
-        status = 'on-progress'
-      } else if (this.status === 'COMPLETED') {
-        status = 'completed'
-      } else if (this.status === 'APPROVED_MANAGER' || this.status === 'APPROVED_VP') {
-        status = 'approved'
-      } else if (this.status === 'DISAPPROVED_MANAGER' || this.status === 'DISAPPROVED_VP' || this.status === 'DISAPPROVED_DIREKSI') {
-        status = 'disapproved'
-      } else if (this.status === 'FINISHED') {
-        status = 'finished'
-      }
-      return status
-    },
-  },
-  methods: {
-    handleClick() {
-      this.$emit('click', this.data)
-    },
-  },
+	name: 'CardEvent',
+	filters: {
+		convertStatus,
+	},
+	props: ['title', 'status', 'starred', 'data'],
+	computed: {
+		statusStyle() {
+			let status = ''
+			if (this.status === 'DRAFT') {
+				status = 'draft'
+			} else if (this.status === 'REQUESTED') {
+				status = 'requested'
+			} else if (this.status === 'ACCEPTED_MANAGER' || this.status === 'ACCEPTED_VP' || this.status === 'ACCEPTED_DIREKSI') {
+				status = 'accepted'
+			} else if (this.status === 'REJECTED_MANAGER' || this.status === 'REJECTED_VP' || this.status === 'REJECTED_DIREKSI') {
+				status = 'rejected'
+			} else if (this.status === 'ON_PROGRESS') {
+				status = 'on-progress'
+			} else if (this.status === 'COMPLETED') {
+				status = 'completed'
+			} else if (this.status === 'APPROVED_MANAGER' || this.status === 'APPROVED_VP') {
+				status = 'approved'
+			} else if (this.status === 'DISAPPROVED_MANAGER' || this.status === 'DISAPPROVED_VP' || this.status === 'DISAPPROVED_DIREKSI') {
+				status = 'disapproved'
+			} else if (this.status === 'FINISHED') {
+				status = 'finished'
+			}
+			return status
+		},
+	},
+	methods: {
+		handleClick() {
+			this.$emit('click', this.data)
+		},
+	},
 }
 </script>
 

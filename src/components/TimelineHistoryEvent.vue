@@ -1,59 +1,62 @@
 <template>
-	<div class="wrapper-timeline">
-		<section class="_timeline-history-container">
-			<div
-				v-for="(item, index) in data"
-				:key="index"
-				class="_timeline-history-content"
-			>
-				<div class="_timeline-history-content-left">
-					<img
-						class="_timeline-history-content-left-symbol"
-						:src="
-							index % 2 !== 0
-								? require('../assets/icons/timeline/blue.svg')
-								: require('../assets/icons/timeline/orange-circle.svg')
-						"
-						alt=""
-					/>
-					<div
-						v-if="index + 1 - data.length !== 0"
-						class="_timeline-history-content-left-vertical-line"
-						style="margin-top: 10px"
-					/>
-				</div>
-				<div class="_timeline-history-content-right">
-					<div class="_timeline-history-content-right-user-activity">
-						<span class="user-name">Status </span>
-						<span class="activity">event </span>
-						<span class="process-type">{{ item.status }} </span>
-					</div>
-					<div class="_timeline-history-content-right-document-activity">
-						<span class="document-type">Tanggal</span>
-						<span class="small-circle">&nbsp;</span>
-						<span class="document-time">{{
-							item.createdDate | convertDate
-						}}</span>
-					</div>
-					<div
-						class="_timeline-history-content-right-document-activity"
-						v-if="
-							item.status === 'REJECTED_MANAGER' ||
-							item.status === 'REJECTED_VP' ||
-							item.status === 'REJECTED_DIREKSI' ||
-							item.status === 'DISAPPROVED_MANAGER' ||
-							item.status === 'DISAPPROVED_VP' ||
-							item.status === 'DISAPPROVED_DIREKSI'
-						"
-					>
-						<span class="document-type" style="color: red">Alasan</span>
-						<span class="small-circle">&nbsp;</span>
-						<span class="document-time">{{ item.description }}</span>
-					</div>
-				</div>
-			</div>
-		</section>
-	</div>
+  <div class="wrapper-timeline">
+    <section class="_timeline-history-container">
+      <div
+        v-for="(item, index) in data"
+        :key="index"
+        class="_timeline-history-content"
+      >
+        <div class="_timeline-history-content-left">
+          <img
+            class="_timeline-history-content-left-symbol"
+            :src="
+              index % 2 !== 0
+                ? require('../assets/icons/timeline/blue.svg')
+                : require('../assets/icons/timeline/orange-circle.svg')
+            "
+            alt=""
+          >
+          <div
+            v-if="index + 1 - data.length !== 0"
+            class="_timeline-history-content-left-vertical-line"
+            style="margin-top: 10px"
+          />
+        </div>
+        <div class="_timeline-history-content-right">
+          <div class="_timeline-history-content-right-user-activity">
+            <span class="user-name">Status </span>
+            <span class="activity">event </span>
+            <span class="process-type">{{ item.status }} </span>
+          </div>
+          <div class="_timeline-history-content-right-document-activity">
+            <span class="document-type">Tanggal</span>
+            <span class="small-circle">&nbsp;</span>
+            <span class="document-time">{{
+              item.createdDate | convertDate
+            }}</span>
+          </div>
+          <div
+            v-if="
+              item.status === 'REJECTED_MANAGER' ||
+                item.status === 'REJECTED_VP' ||
+                item.status === 'REJECTED_DIREKSI' ||
+                item.status === 'DISAPPROVED_MANAGER' ||
+                item.status === 'DISAPPROVED_VP' ||
+                item.status === 'DISAPPROVED_DIREKSI'
+            "
+            class="_timeline-history-content-right-document-activity"
+          >
+            <span
+              class="document-type"
+              style="color: red"
+            >Alasan</span>
+            <span class="small-circle">&nbsp;</span>
+            <span class="document-time">{{ item.description }}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -62,9 +65,9 @@ import { convertDate } from '../commons/utils/filter'
 export default {
 	name: 'TimelIneHistory',
 	filters: {
-		convertDate
+		convertDate,
 	},
-	props: ['data']
+	props: ['data'],
 }
 </script>
 

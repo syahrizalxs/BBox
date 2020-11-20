@@ -8,8 +8,8 @@
 
 <script>
 export default {
-  name: 'InputText',
-  props: ['value'],
+	name: 'InputText',
+	props: ['value'],
 }
 </script>
 

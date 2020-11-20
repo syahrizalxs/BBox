@@ -20,10 +20,15 @@
       </div>
     </div>
     <div class="_main-home">
-		<div class="_charts">
-			<AreaChart v-if="dataChart && dataChart.length" :width="250" :height="230" :data="dataChart"
-					:label="labelChart"/>
-		</div>
+      <div class="_charts">
+        <AreaChart
+          v-if="dataChart && dataChart.length"
+          :width="250"
+          :height="230"
+          :data="dataChart"
+          :label="labelChart"
+        />
+      </div>
     </div>
     <!-- <div class="_right-activity">
     </div> -->
@@ -42,54 +47,54 @@ import EventService from '../../service/EventService'
 const eventService = EventService.build()
 
 export default {
-  name: 'Insight',
-  components: {
-    Avatar,
-    Heading,
-	AreaChart
-  },
-  data: () => ({
-    eventList: [
-      { status: 'success', title: 'Partnership dengan Brightspace' },
-      { status: 'pending', title: 'Partnership dengan Google' },
-      { status: 'pending', title: 'Partnership dengan Facebook' },
-      { status: 'pending', title: 'Partnership dengan Tesla' },
-    ],
-    dataChart: [],
-    labelChart: [],
+	name: 'Insight',
+	components: {
+		Avatar,
+		Heading,
+		AreaChart,
+	},
+	data: () => ({
+		eventList: [
+			{ status: 'success', title: 'Partnership dengan Brightspace' },
+			{ status: 'pending', title: 'Partnership dengan Google' },
+			{ status: 'pending', title: 'Partnership dengan Facebook' },
+			{ status: 'pending', title: 'Partnership dengan Tesla' },
+		],
+		dataChart: [],
+		labelChart: [],
 
-    isRequester: false,
-    isManager: false,
-    isVP: false,
-    isDirectors: false,
-  }),
-  computed: mapGetters('auth', ['authenticatedUser']),
-  created() {
-    this.getRole()
-    this.getChart()
-  },
-  methods: {
-    async getChart() {
-      const res = await eventService.getSummary()
-      res.data.forEach((item) => {
-        this.dataChart.push(item.value)
-        this.labelChart.push(item.label)
-      })
-    },
-    getRole() {
-      const dataUser = JSON.parse(localStorage.getItem('user_detail'))
-      const { role } = dataUser
-      if (role === 'CLIENT') {
-        this.isRequester = true
-      } else if (role === 'MANAGER') {
-        this.isManager = true
-      } else if (role === 'VP') {
-        this.isVP = true
-      } else if (role === 'DIREKSI') {
-        this.isDirectors = true
-      }
-    },
-  },
+		isRequester: false,
+		isManager: false,
+		isVP: false,
+		isDirectors: false,
+	}),
+	computed: mapGetters('auth', ['authenticatedUser']),
+	created() {
+		this.getRole()
+		this.getChart()
+	},
+	methods: {
+		async getChart() {
+			const res = await eventService.getSummary()
+			res.data.forEach((item) => {
+				this.dataChart.push(item.value)
+				this.labelChart.push(item.label)
+			})
+		},
+		getRole() {
+			const dataUser = JSON.parse(localStorage.getItem('user_detail'))
+			const { role } = dataUser
+			if (role === 'CLIENT') {
+				this.isRequester = true
+			} else if (role === 'MANAGER') {
+				this.isManager = true
+			} else if (role === 'VP') {
+				this.isVP = true
+			} else if (role === 'DIREKSI') {
+				this.isDirectors = true
+			}
+		},
+	},
 }
 </script>
 

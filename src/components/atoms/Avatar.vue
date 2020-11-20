@@ -6,8 +6,8 @@
 
 <script>
 export default {
-  name: 'Avatar',
-  props: ['path'],
+	name: 'Avatar',
+	props: ['path'],
 }
 </script>
 

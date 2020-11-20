@@ -14,13 +14,13 @@
 
 <script>
 export default {
-  name: 'Upload',
-  props: ['type'],
-  methods: {
-    handleChange(e) {
-      this.$emit('change', e.target.files[0], this.type)
-    },
-  },
+	name: 'Upload',
+	props: ['type'],
+	methods: {
+		handleChange(e) {
+			this.$emit('change', e.target.files[0], this.type)
+		},
+	},
 }
 </script>
 

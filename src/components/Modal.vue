@@ -1,23 +1,33 @@
 <template>
-	<div v-if="visible" id="myModal" class="modal">
-		<!-- Modal content -->
-		<div
-			class="modal-content"
-			:style="[width ? { width: width + 'px' } : { width: '400px' }]"
-		>
-			<div class="modal-header">
-				<span class="title">{{ title }}</span>
-				<span class="close" @click="visible = false">&times;</span>
-			</div>
-			<div v-if="isLiner" class="line" />
-			<div class="modal-body">
-				<slot name="body" />
-			</div>
-			<div class="modal-footer">
-				<slot name="footer" />
-			</div>
-		</div>
-	</div>
+  <div
+    v-if="visible"
+    id="myModal"
+    class="modal"
+  >
+    <!-- Modal content -->
+    <div
+      class="modal-content"
+      :style="[width ? { width: width + 'px' } : { width: '400px' }]"
+    >
+      <div class="modal-header">
+        <span class="title">{{ title }}</span>
+        <span
+          class="close"
+          @click="visible = false"
+        >&times;</span>
+      </div>
+      <div
+        v-if="isLiner"
+        class="line"
+      />
+      <div class="modal-body">
+        <slot name="body" />
+      </div>
+      <div class="modal-footer">
+        <slot name="footer" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -25,18 +35,18 @@ export default {
 	name: 'Modal',
 	props: ['title', 'isLiner', 'size'],
 	data: () => ({
-		visible: false
+		visible: false,
 	}),
 	computed: {
 		width() {
 			if (this.size === 'sm') return 500
-			else if (this.size === 'md') return 600
-			else if (this.size === 'lg') return 850
+			if (this.size === 'md') return 600
+			if (this.size === 'lg') return 850
 			if (!this.size) {
 				return 600
 			}
-		}
-	}
+		},
+	},
 }
 </script>
 
