@@ -32,6 +32,13 @@ export default {
         legend: {
           display: false,
         },
+        scales: {
+          xAxes: [{
+            ticks: {
+              beginAtZero: true,
+            },
+          }],
+        },
         responsive: true
       },
     )
