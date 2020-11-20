@@ -1,8 +1,8 @@
 <script>
-import { Pie } from 'vue-chartjs'
+import { Bar } from 'vue-chartjs'
 
 export default {
-  extends: Pie,
+  extends: Bar,
   props: ['data', 'label'],
   data() {
     return {
@@ -25,11 +25,14 @@ export default {
         ],
       },
       {
+        title: {
+          fontSize: 24,
+          fontFamily: "'Helvetica Neue'",
+        },
         legend: {
           display: false,
         },
-        responsive: true,
-        maintainAspectRatio: false,
+        responsive: true
       },
     )
   },

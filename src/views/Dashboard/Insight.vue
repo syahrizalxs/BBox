@@ -18,18 +18,15 @@
             {{ authenticatedUser.division }}</span>
         </div>
       </div>
-      <!--            <div class="_charts">-->
-      <!--                <AreaChart v-if="dataChart && dataChart.length" :width="250" :height="230" :data="dataChart"-->
-      <!--                           :label="labelChart"/>-->
-      <!--            </div>-->
     </div>
     <div class="_main-home">
-      <div class="_event-activity" />
+		<div class="_charts">
+			<AreaChart v-if="dataChart && dataChart.length" :width="250" :height="230" :data="dataChart"
+					:label="labelChart"/>
+		</div>
     </div>
-    <div class="_right-activity">
-      <div class="_event-information" />
-      <div class="_powered-by" />
-    </div>
+    <!-- <div class="_right-activity">
+    </div> -->
   </div>
 </template>
 
@@ -37,6 +34,7 @@
 import { mapGetters } from 'vuex'
 import Avatar from '../../components/atoms/Avatar'
 import Heading from '../../components/Heading'
+import AreaChart from '../../components/Chart'
 
 // Service
 import EventService from '../../service/EventService'
@@ -48,6 +46,7 @@ export default {
   components: {
     Avatar,
     Heading,
+	AreaChart
   },
   data: () => ({
     eventList: [
