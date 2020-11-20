@@ -38,8 +38,13 @@
 </template>
 
 <script>
+import {convertDate} from '../commons/utils/filter'
+
 export default {
   name: 'Timeline',
+  filters: {
+    convertDate
+  },
   props: ['data'],
 }
 </script>
