@@ -4,7 +4,7 @@ export function convertDate(data) {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hours: 'numeric', seconds: 'numeric',
   }
   const event = new Date(data)
-  const date = event.toLocaleDateString('en-EN', options)
+  const date = event.toLocaleDateString('id-ID', options)
   const time = `${event.getHours()}:${event.getMinutes()}`
   return `${date} at ${time}`
 }
