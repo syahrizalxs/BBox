@@ -870,23 +870,9 @@
         slot="body"
         style="overflow: auto;"
       >
-        <div
-          v-for="(item, index) in histories"
-          :key="index"
-          style="margin-bottom: 10px;"
-        >
-          <span>Status : {{ item.status }}</span>
-          <br>
-          <span>Tanggal : {{ item.createdDate | convertDate }}</span>
-          <br>
-          <span
-            v-if="item.status === 'REJECTED_MANAGER' || item.status === 'REJECTED_VP' ||
-              item.status === 'REJECTED_DIREKSI' || item.status === 'DISAPPROVED_MANAGER' ||
-              item.status === 'DISAPPROVED_VP' || item.status === 'DISAPPROVED_DIREKSI'"
-          >
-            Alasan : {{ item.description }}
-          </span>
-        </div>
+        <TimelineHistoryEvent 
+          :data="histories"
+        />
       </template>
     </Modal>
 
@@ -1166,6 +1152,7 @@ import Button from '../../components/atoms/Button'
 import CardEvent from '../../components/CardEvent'
 import Avatar from '../../components/atoms/Avatar'
 import Upload from '../../components/atoms/Upload'
+import TimelineHistoryEvent from '../../components/TimelineHistoryEvent'
 
 import EventService from '../../service/EventService'
 import AuthService from '../../service/AuthService'
@@ -1189,6 +1176,7 @@ export default {
     Heading,
     Button,
     CardEvent,
+    TimelineHistoryEvent,
     Modal,
     Avatar,
     Upload,
