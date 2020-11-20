@@ -72,10 +72,10 @@
               @click="handleCardClicked"
             >
               <template
-                v-if="isRequester"
                 slot="dropdown"
               >
-                <span @click="editData(item)">Edit</span>
+                <span v-if="isRequester" @click="editData(item)">Ubah Event</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
               </template>
             </CardEvent>
           </div>
@@ -102,10 +102,10 @@
               @click="handleCardClicked"
             >
               <template
-                v-if="isManager"
                 slot="dropdown"
               >
-                <span @click="openRequest(item)">Open Request</span>
+                <span v-if="isManager" @click="openRequest(item)">Open Request</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
               </template>
             </CardEvent>
           </div>
@@ -132,10 +132,10 @@
               @click="handleCardClicked"
             >
               <template
-                v-if="isVP"
                 slot="dropdown"
               >
-                <span @click="openRequest(item)">Open Request</span>
+                <span v-if="isVP" @click="openRequest(item)">Open Request</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
               </template>
             </CardEvent>
           </div>
@@ -162,10 +162,10 @@
               @click="handleCardClicked"
             >
               <template
-                v-if="isDirectors"
                 slot="dropdown"
               >
-                <span @click="openRequest(item)">Open Request</span>
+                <span v-if="isDirectors" @click="openRequest(item)">Open Request</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
               </template>
             </CardEvent>
           </div>
@@ -192,10 +192,10 @@
               @click="handleCardClicked"
             >
               <template
-                v-if="isManager"
                 slot="dropdown"
               >
-                <span @click="openAssign(item)">Assign Team</span>
+                <span v-if="isManager" @click="openAssign(item)">Assign Team</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
               </template>
             </CardEvent>
           </div>
@@ -220,7 +220,13 @@
               :title="item.title"
               :status="item.currentStatus"
               @click="handleCardClicked"
-            />
+            >
+              <template
+                slot="dropdown"
+              >
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
           </div>
         </div>
       </div>
@@ -243,7 +249,13 @@
               :title="item.title"
               :status="item.currentStatus"
               @click="handleCardClicked"
-            />
+            >
+              <template
+                slot="dropdown"
+              >
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
           </div>
         </div>
       </div>
@@ -266,7 +278,13 @@
               :title="item.title"
               :status="item.currentStatus"
               @click="handleCardClicked"
-            />
+            >
+              <template
+                slot="dropdown"
+              >
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
           </div>
         </div>
       </div>
@@ -296,6 +314,7 @@
                   v-if="isStaff"
                   @click="completedEvent(item.id)"
                 >Completed The Event</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
               </template>
             </CardEvent>
           </div>
@@ -322,10 +341,10 @@
               @click="handleCardClicked"
             >
               <template
-                v-if="isManager"
                 slot="dropdown"
               >
-                <span @click="openApproval(item)">Open Approval</span>
+                <span v-if="isManager" @click="openApproval(item)">Open Approval</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
               </template>
             </CardEvent>
           </div>
@@ -352,10 +371,10 @@
               @click="handleCardClicked"
             >
               <template
-                v-if="isVP"
                 slot="dropdown"
               >
-                <span @click="openApproval(item)">Open Approval</span>
+                <span v-if="isVP" @click="openApproval(item)">Open Approval</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
               </template>
             </CardEvent>
           </div>
@@ -382,10 +401,10 @@
               @click="handleCardClicked"
             >
               <template
-                v-if="isDirectors"
                 slot="dropdown"
               >
-                <span @click="openApproval(item)">Open Approval</span>
+                <span v-if="isDirectors" @click="openApproval(item)">Open Approval</span>
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
               </template>
             </CardEvent>
           </div>
@@ -410,7 +429,13 @@
               :title="item.title"
               :status="item.currentStatus"
               @click="handleCardClicked"
-            />
+            >
+              <template
+                slot="dropdown"
+              >
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
           </div>
         </div>
       </div>
@@ -433,7 +458,13 @@
               :title="item.title"
               :status="item.currentStatus"
               @click="handleCardClicked"
-            />
+            >
+              <template
+                slot="dropdown"
+              >
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
           </div>
         </div>
       </div>
@@ -456,7 +487,13 @@
               :title="item.title"
               :status="item.currentStatus"
               @click="handleCardClicked"
-            />
+            >
+              <template
+                slot="dropdown"
+              >
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
           </div>
         </div>
       </div>
@@ -479,7 +516,13 @@
               :title="item.title"
               :status="item.currentStatus"
               @click="handleCardClicked"
-            />
+            >
+              <template
+                slot="dropdown"
+              >
+                <span @click="viewHistory(item)">Lihat Riwayat Event</span>
+              </template>
+            </CardEvent>
           </div>
         </div>
       </div>
@@ -792,6 +835,26 @@
           style="padding: 15px 25px;"
           @click="clientSubmit()"
         />
+      </template>
+    </Modal>
+
+    <Modal
+      ref="viewHistory"
+      :title="'Detail Riwayat Event'"
+    >
+      <template slot="body" style="overflow: auto;">
+        <div style="margin-bottom: 10px;" v-for="(item, index) in histories"
+            :key="index">
+          <span>Status : {{ item.status }}</span>
+          <br/>
+          <span>Tanggal : {{ item.createdDate | convertDate }}</span>
+          <br/>
+          <span v-if="item.status === 'REJECTED_MANAGER' || item.status === 'REJECTED_VP' || 
+            item.status === 'REJECTED_DIREKSI' || item.status === 'DISAPPROVED_MANAGER' || 
+            item.status === 'DISAPPROVED_VP' || item.status === 'DISAPPROVED_DIREKSI'">
+            Alasan : {{ item.description }}
+          </span>
+        </div>
       </template>
     </Modal>
 
@@ -1176,6 +1239,7 @@ export default {
     kajianLegalHolder: '',
     kajianResikoHolder: '',
     attachmentHolder: [],
+    histories: []
   }),
   computed: {
     starred() {
@@ -1289,6 +1353,7 @@ export default {
       this.kajianResikoHolder = data.kajianResikoDoc.name
       this.kajianResiko.url = data.kajianResikoDoc.url
       this.additionalDocuments = data.additionalDocs
+      this.histories = data.histories
     },
     resetData() {
       this.id = ''
@@ -1319,6 +1384,7 @@ export default {
       this.kajianLegalHolder = ''
       this.kajianResikoHolder = ''
       this.attachmentHolder = []
+      this.histories = []
     },
     async approveEvent() {
       this.$refs.approvalRequest.visible = false
@@ -1454,6 +1520,10 @@ export default {
     editData(data) {
       this.assignData(data)
       this.$refs.addEvent.visible = true
+    },
+    viewHistory(data) {
+      this.assignData(data)
+      this.$refs.viewHistory.visible = true
     },
     addData() {
       this.resetData()
