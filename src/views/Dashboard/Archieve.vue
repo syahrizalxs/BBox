@@ -864,7 +864,7 @@
 
     <Modal
       ref="viewHistory"
-      :title="'Detail Riwayat Event'"
+      :title="'Detail Riwayat Event [' + title + ']'"
     >
       <template
         slot="body"
@@ -1680,7 +1680,7 @@ export default {
             name: this.kajianResiko.name,
             url: this.kajianResiko.url,
           },
-          additionalDocuments: this.additionalDocuments,
+          additionalDocuments: this.attachmentHolder,
         }
       }
       const response = await eventService.clientSubmit(param)
