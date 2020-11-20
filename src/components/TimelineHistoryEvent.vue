@@ -31,6 +31,13 @@
             <span class="small-circle">&nbsp;</span>
             <span class="document-time">{{ item.createdDate | convertDate }}</span>
           </div>
+          <div class="_timeline-content-right-document-activity" v-if="item.status === 'REJECTED_MANAGER' || item.status === 'REJECTED_VP' ||
+              item.status === 'REJECTED_DIREKSI' || item.status === 'DISAPPROVED_MANAGER' ||
+              item.status === 'DISAPPROVED_VP' || item.status === 'DISAPPROVED_DIREKSI'">
+            <span class="document-type" style="color: red;">Alasan</span>
+            <span class="small-circle">&nbsp;</span>
+            <span class="document-time">{{ item.description }}</span>
+          </div>
         </div>
       </div>
     </section>
