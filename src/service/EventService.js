@@ -8,6 +8,11 @@ export default class EventService extends HttpService {
   	return this.get(param, api)
   }
 
+  findById(param) {
+    const api = `${this.api}/find-by-id`
+    return this.get(param, api)
+  }
+
   clientCreate(param) {
   	const api = `${this.api}/client/create`
   	return this.post(param, api)

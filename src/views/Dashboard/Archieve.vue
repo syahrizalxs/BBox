@@ -521,7 +521,7 @@
         </div>
       </div>
     </div>
-    <div class="_right">
+    <div class="_right" style="overflow-y:auto;">
       <div class="_detail-event">
         <h2 style="margin-bottom: 40px">
           Detail Event
@@ -1689,7 +1689,7 @@ export default {
 				this.listAcceptedVP = resAcceptedVP.data.content
 			}
 
-			const paramAcceptedDirectors = { status: 'accepted_direksi' }
+			const paramAcceptedDirectors = { status: 'accepted_director' }
 			const resAcceptedDirectors = await eventService.getEvent(
 				paramAcceptedDirectors,
 			)
@@ -1711,7 +1711,7 @@ export default {
 				this.listRejectedVP = resRejectedVP.data.content
 			}
 
-			const paramRejectedDirectors = { status: 'rejected_direksi' }
+			const paramRejectedDirectors = { status: 'rejected_director' }
 			const resRejectedDirectors = await eventService.getEvent(
 				paramRejectedDirectors,
 			)
@@ -1765,7 +1765,7 @@ export default {
 				this.listDisapprovedVP = resDisapprovedVP.data.content
 			}
 
-			const paramDisapprovedDirectors = { status: 'disapproved_direksi' }
+			const paramDisapprovedDirectors = { status: 'disapproved_director' }
 			const resDisapprovedDirectors = await eventService.getEvent(
 				paramDisapprovedDirectors,
 			)

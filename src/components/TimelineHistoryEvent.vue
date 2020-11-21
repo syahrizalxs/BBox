@@ -39,10 +39,10 @@
             v-if="
               item.status === 'REJECTED_MANAGER' ||
                 item.status === 'REJECTED_VP' ||
-                item.status === 'REJECTED_DIREKSI' ||
+                item.status === 'REJECTED_DIRECTOR' ||
                 item.status === 'DISAPPROVED_MANAGER' ||
                 item.status === 'DISAPPROVED_VP' ||
-                item.status === 'DISAPPROVED_DIREKSI'
+                item.status === 'DISAPPROVED_DIRECTOR'
             "
             class="_timeline-history-content-right-document-activity"
           >

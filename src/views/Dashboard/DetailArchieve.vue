@@ -5,12 +5,10 @@
         <Heading style="margin-right: 200px" />
       </div>
       <div class="_tittle">
-        <span>Partnership dengan Brightspace</span>
+        <span>Event : {{ event.title }}</span>
       </div>
       <div class="_button">
-        <div class="_btn-left">
-          <button><img src="../../assets/icons/sort.svg"></button>
-        </div>
+        <div></div>
         <div class="_btn-right">
           <Button
             title="Set Status"
@@ -88,48 +86,143 @@
         </table>
       </div>
     </div>
-    <div class="_right">
-      <div class="_notification-slot">
-        <Notification />
-      </div>
+    <div class="_right" style="overflow-y:auto;">
       <div class="_detail-event">
-        <h2 style="margin-bottom: 40px;">
+        <h2 style="margin-bottom: 40px">
           Detail Event
         </h2>
 
-        <span class="parent">Event Title</span>
-        <span class="child">Partnership Dengan Brightspace</span>
+        <span class="parent">Judul</span>
+        <span class="child">{{ event.title || '-' }}</span>
 
-        <span class="parent">Created</span>
-        <span class="child">Jan 01, 2020 at 8:00 AM</span>
+        <span class="parent">Tanggal dibuat</span>
+        <span class="child">{{
+          event.createdDate | convertDate
+        }}</span>
 
-        <span class="parent">Last Update</span>
-        <span class="child">Sep 27, 2020 at 1:29 PM</span>
+        <span class="parent">Terakhir diubah</span>
+        <span class="child">{{
+          event.modifiedDate | convertDate
+        }}</span>
 
         <span class="parent">Status</span>
-        <span class="child">Cleared</span>
+        <span
+          v-if="event.currentStatus"
+          class="child"
+        >{{
+          event.currentStatus | convertStatus
+        }}</span>
+        <span
+          v-if="!event.currentStatus"
+          class="child"
+        >-</span>
+
+        <span class="parent">File Business Plan</span>
+        <span
+          v-if="event.businessPlanDoc"
+          class="child"
+        >
+          <a
+            :href="event.businessPlanDoc.url"
+            v-text="event.businessPlanDoc.name"
+          />
+        </span>
+        <span
+          v-if="!event.businessPlanDoc"
+          class="child"
+        >-</span>
+
+        <span class="parent">File Financial Model</span>
+        <span
+          v-if="event.financialModelDoc"
+          class="child"
+        >
+          <a
+            :href="event.financialModelDoc.url"
+            v-text="event.financialModelDoc.name"
+          />
+        </span>
+        <span
+          v-if="!event.financialModelDoc"
+          class="child"
+        >-</span>
+
+        <span class="parent">File Kajian Legal</span>
+        <span
+          v-if="event.kajianLegalDoc"
+          class="child"
+        >
+          <a
+            :href="event.kajianLegalDoc.url"
+            v-text="event.kajianLegalDoc.name"
+          />
+        </span>
+        <span
+          v-if="!event.kajianLegalDoc"
+          class="child"
+        >-</span>
+
+        <span class="parent">File Kajian Resiko</span>
+        <span
+          v-if="event.kajianResikoDoc"
+          class="child"
+        >
+          <a
+            :href="event.kajianResikoDoc.url"
+            v-text="event.kajianResikoDoc.name"
+          />
+        </span>
+        <span
+          v-if="!event.kajianResikoDoc"
+          class="child"
+        >-</span>
+
+        <span class="parent">File Lampiran Dokumen</span>
+        <span
+          v-for="(item, index) in event.additionalDocs"
+          :key="index"
+          class="child"
+        >
+          <a
+            :href="item.url"
+            v-text="item.name"
+          />
+        </span>
+        <span
+          v-if="
+            !event.additionalDocs ||
+              event.additionalDocs.length === 0
+          "
+          class="child"
+        >-</span>
       </div>
       <div class="_participans">
-        <b>Participants</b>
+        <b>Daftar Peserta</b>
         <div class="_participants-ava">
           <Avatar
+            v-for="(item, index) in event.participants"
+            :key="index"
             class="_ava"
-            path="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Natalie_Portman_Cannes_2015_5_%28cropped%29.jpg/230px-Natalie_Portman_Cannes_2015_5_%28cropped%29.jpg"
+            :path="item.avatar"
           />
-          <Avatar
-            class="_ava"
-            path="https://1.bp.blogspot.com/-7osU1A9QpAE/Tcf0jD5KoDI/AAAAAAAAAIs/AFEsHouE14w/s1600/travis-barker-profile.png"
-          />
-          <Avatar
-            class="_ava"
-            path="https://media.suara.com/pictures/970x544/2019/08/18/23065-niki-zefanya.jpg"
-          />
-          <Avatar
-            class="_ava"
-            path="https://p01.lacasting.com.castingnetworks.io/photos/mm/4/0/e0e9cde28b3542dfab980f9ed9046d04.jpg "
-          />
-          <div class="_over-ava">
+          <div
+            v-if="
+              event &&
+                event.participants &&
+                event.participants.length > 5
+            "
+            class="_over-ava"
+          >
             <span class="_ava-number">+3</span>
+          </div>
+          <div
+            v-if="
+              event &&
+                event.participants &&
+                !event.participants.length
+            "
+          >
+            Belum ada peserta.
           </div>
         </div>
       </div>
@@ -266,12 +359,20 @@ import Upload from '../../components/atoms/Upload'
 
 import ProcessService from '../../service/ProcessService'
 import UploadService from '../../service/UploadService'
+import EventService from "../../service/EventService";
+
+import { convertDate, convertStatus } from '../../commons/utils/filter'
 
 const processService = ProcessService.build()
 const uploadService = UploadService.build()
+const eventService = EventService.build()
 
 export default {
-	name: 'Archieve',
+  name: 'Archieve',
+  filters: {
+		convertDate,
+		convertStatus,
+	},
 	components: {
 		Heading,
 		// Search,
@@ -295,7 +396,8 @@ export default {
 			status: '',
 			type: 'MAIN',
 		},
-		fileHolder: [],
+    fileHolder: [],
+    event: {}
 	}),
 	computed: {
 		starred() {
@@ -314,7 +416,7 @@ export default {
 		},
 		async saveProcess() {
 			this.$parent.isLoading = true
-			this.uploadService()
+			this.uploadFile()
 			this.dataModal.eventId = this.$route.params.id
 			processService.save()
 			this.$parent.isLoading = false
@@ -326,8 +428,16 @@ export default {
 				const tempRes = await uploadService.uploadFile(formData)
 				item.url = tempRes.fileDownloadUri
 			})
-		},
-	},
+    },
+    async findEventById(idEvent) {
+      const param = { id: idEvent }
+      const response = await eventService.findById(param)
+      this.event = response.data;
+    }
+  },
+  created() {
+    this.findEventById(this.$route.params.id);
+  }
 
 }
 </script>
