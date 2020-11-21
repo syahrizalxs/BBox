@@ -11,26 +11,7 @@
         <div></div>
         <div class="_btn-right">
           <Button
-            title="Set Status"
-            style="width: 132px; height: 39px;"
-            type="purple"
-          >
-            <template slot="icon">
-              <img src="../../assets/icons/button/edit.svg">
-            </template>
-          </Button>
-          <Button
-            title="Timeline View"
-            style="margin-left: 16px; width: 132px; height: 39px;"
-            type="green"
-            @click="$refs.timeline.visible = true"
-          >
-            <template slot="icon">
-              <img src="../../assets/icons/eye-white.svg">
-            </template>
-          </Button>
-          <Button
-            title="Add Process"
+            title="Tambah Proses"
             style="margin-left: 16px; width: 132px; height: 39px;"
             type="primary"
             @click="$refs.addProcess.visible = true"
@@ -230,13 +211,13 @@
 
     <Modal
       ref="addProcess"
-      :title="'Add Process'"
+      :title="'Tambah Proses'"
     >
       <template slot="body">
         <label
           class="custom-label"
           for="process"
-        >Process Name</label><br>
+        >Nama</label><br>
         <input
           id="process"
           v-model="dataModal.name"
@@ -247,7 +228,7 @@
         <label
           class="custom-label"
           for="tipe"
-        >Type</label><br>
+        >Tipe</label><br>
         <div style="margin-bottom:15px">
           <input
             id="main"
@@ -280,7 +261,7 @@
         <label
           class="custom-label"
           for="description"
-        >Description</label><br>
+        >Deskripsi</label><br>
         <textarea
           id="description"
           v-model="dataModal.description"
@@ -289,10 +270,59 @@
           type="text-area"
           name="description"
         /><br>
-        <div
-          class="files-list-name"
-          style="margin-bottom: 10px;"
-        >
+        <label
+          class="custom-label"
+          for="tipe"
+        >Status</label><br>
+        <div style="margin-bottom:15px">
+          <input
+            id="pending"
+            v-model="dataModal.status"
+            type="radio"
+            name="status"
+            checked="PENDING"
+            value="PENDING"
+            style="margin-right:14px"
+          >
+          <label
+            class="custom-label-radio"
+            for="pending"
+            style="margin-right:30px"
+          >Tertunda</label>
+          <input
+            id="onprogress"
+            v-model="dataModal.status"
+            type="radio"
+            name="status"
+            checked="ON_PROGRESS"
+            value="ON_PROGRESS"
+            style="margin-right:14px"
+          >
+          <label
+            class="custom-label-radio"
+            for="onprogress"
+            style="margin-right:30px"
+          >Dalam Proses</label>
+          <input
+            id="completed"
+            v-model="dataModal.status"
+            type="radio"
+            checked="COMPLETED"
+            name="status"
+            value="COMPLETED"
+            style="margin-right:14px"
+          >
+          <label
+            class="custom-label-radio"
+            for="completed"
+          >Selesai</label>
+        </div><br/>
+        <label
+          class="custom-label"
+          style="margin-bottom: 10px"
+          for="lampiranDokumen"
+        >Lampiran Dokumen</label>
+        <div class="files-list-name">
           <span
             v-for="(item, index) in fileHolder"
             :key="index"
@@ -300,11 +330,10 @@
             @click="fileHolder.splice(index, 1)"
           >{{ item.name }}</span>
         </div>
-        <label
-          class="custom-label"
-          for="attachment"
-        >Attachment</label><br>
-        <Upload @change="handleUpload" />
+        <Upload
+          style="margin-top: 10px !important; margin-bottom: 10px"
+          @change="handleUpload"
+        />
       </template>
       <template slot="footer">
         <Button
@@ -393,7 +422,7 @@ export default {
 			docs: [],
 			eventId: '',
 			name: '',
-			status: '',
+			status: 'PENDING',
 			type: 'MAIN',
 		},
     fileHolder: [],
@@ -413,32 +442,46 @@ export default {
 				name: e.name,
 				url: e,
 			})
-		},
-		async saveProcess() {
-			this.$parent.isLoading = true
-			this.uploadFile()
-			this.dataModal.eventId = this.$route.params.id
-			processService.save()
-			this.$parent.isLoading = false
-		},
-		async uploadFile() {
+    },
+    async uploadFile() {
 			this.fileHolder.forEach(async (item) => {
-				const formData = new FormData()
-				formData.append('file', item.file)
-				const tempRes = await uploadService.uploadFile(formData)
-				item.url = tempRes.fileDownloadUri
+				const formdataBP = new FormData()
+				formdataBP.append('file', item.url)
+        const tempRes = await uploadService.uploadFile(formdataBP)
+        item.url = tempRes.fileDownloadUri
 			})
     },
+		async saveProcess() {
+			this.$parent.isLoading = true
+      await this.uploadFile()
+      this.dataModal.docs = this.fileHolder;
+      this.dataModal.eventId = this.$route.params.id
+			const response = await processService.saveProcess(this.dataModal)
+			if (response) {
+				this.resetFormProcess()
+				this.$refs.addProcess.visible = false
+				this.$parent.isLoading = false
+			}
+		},
     async findEventById(idEvent) {
       const param = { id: idEvent }
       const response = await eventService.findById(param)
       this.event = response.data;
+    },
+    resetFormProcess() {
+      this.dataModal = {
+        description: '',
+        docs: [],
+        eventId: '',
+        name: '',
+        status: 'PENDING',
+        type: 'MAIN',
+      }
     }
   },
   created() {
-    this.findEventById(this.$route.params.id);
-  }
-
+    this.findEventById(this.$route.params.id)
+  },
 }
 </script>
 
