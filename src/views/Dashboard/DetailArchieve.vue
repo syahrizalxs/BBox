@@ -11,6 +11,7 @@
 				<div></div>
 				<div class="_btn-right">
 					<Button
+            v-if="isStaff"
 						title="Tambah Proses"
 						style="margin-left: 16px; width: 132px; height: 39px"
 						type="primary"
@@ -28,6 +29,7 @@
 						<tr>
 							<th style="text-align: left">Process Name</th>
 							<th style="text-align: left">Type</th>
+              <th style="text-align: left">Status</th>
 							<th style="text-align: left">Last Update</th>
 							<th />
 						</tr>
@@ -36,8 +38,9 @@
             <tr v-for="(item, index) in listProcess" :key="index">
               <td>{{ item.name }}</td>
               <td><span :class="item.type === 'MAIN'? 'label-table-main-process' : 'label-table-sub-process'">{{ item.type === 'MAIN'? 'Main Process' : 'Sub Process' }}</span></td>
+              <td>{{ item.status }}</td>
               <td>{{ item.modifiedDate | convertDate }}</td>
-              <td><img src="../../assets/icons/more.svg" /></td>
+              <td><img @click="editData(item)" src="../../assets/icons/more.svg" /></td>
             </tr>
 					</tbody>
 				</table>
@@ -134,7 +137,7 @@
 			</div>
 		</div>
 
-		<Modal ref="addProcess" :title="'Tambah Proses'">
+		<Modal ref="addProcess" :title="isEdit? 'Ubah Proses' : 'Tambah Proses'">
 			<template slot="body">
 				<label class="custom-label" for="process">Nama</label><br />
 				<input
@@ -143,6 +146,7 @@
 					class="custom-input"
 					type="text"
 					name="process"
+          :disabled="isEdit"
 				/><br />
 				<label class="custom-label" for="tipe">Tipe</label><br />
 				<div style="margin-bottom: 15px">
@@ -154,6 +158,7 @@
 						checked="MAIN"
 						value="MAIN"
 						style="margin-right: 14px"
+            :disabled="isEdit"
 					/>
 					<label
 						class="custom-label-radio"
@@ -169,6 +174,7 @@
 						name="tipe"
 						value="SUB"
 						style="margin-right: 14px"
+            :disabled="isEdit"
 					/>
 					<label class="custom-label-radio" for="sub">Sub Process</label>
 				</div>
@@ -313,6 +319,13 @@ export default {
 		Upload
 	},
 	data: () => ({
+    userID: '',
+    isRequester: false,
+		isStaff: false,
+		isManager: false,
+		isVP: false,
+    isDirectors: false,
+    
 		initialTab: 'activity',
 		tabs: ['activity', 'contact', 'file'],
 		dataModal: {
@@ -325,7 +338,8 @@ export default {
 		},
 		fileHolder: [],
     event: {},
-    listProcess: []
+    listProcess: [],
+    isEdit: false
 	}),
 	computed: {
 		starred() {
@@ -355,23 +369,70 @@ export default {
 		},
 		async saveProcess() {
 			this.$parent.isLoading = true
-			// await this.uploadFile()
-			this.dataModal.docs = this.fileHolder
-			this.dataModal.eventId = this.$route.params.id
-			console.log('before', { param: this.dataModal })
-			const response = await processService.saveProcess(this.dataModal)
-			console.log({ param: this.dataModal })
-			if (response) {
-				this.resetFormProcess()
-				this.$refs.addProcess.visible = false
-				this.$parent.isLoading = false
-			}
+      // await this.uploadFile()
+      if (this.isEdit) {
+        const param = Object.assign({
+          description: this.dataModal.description,
+          docs: this.fileHolder,
+          id: this.dataModal.eventId,
+          status: this.dataModal.status
+        })
+        const response = await processService.editProcess(param)
+        if (response) {
+          this.resetFormProcess()
+          this.$refs.addProcess.visible = false
+          this.$parent.isLoading = false
+          this.findEventById(this.$route.params.id)
+        }
+      } else {
+        this.dataModal.docs = this.fileHolder
+        this.dataModal.eventId = this.$route.params.id
+        console.log('before', { param: this.dataModal })
+        const response = await processService.saveProcess(this.dataModal)
+        console.log({ param: this.dataModal })
+        if (response) {
+          this.resetFormProcess()
+          this.$refs.addProcess.visible = false
+          this.$parent.isLoading = false
+          this.findEventById(this.$route.params.id)
+        }
+      }
+    },
+    editData(data) {
+			this.dataModal.description = data.description
+			this.dataModal.docs = data.docs
+			this.dataModal.eventId = data.id
+			this.dataModal.name = data.name
+			this.dataModal.status = data.status
+      this.dataModal.type = data.type
+      this.fileHolder = data.docs
+      if (this.userID === data.assignee.id) {
+        this.$refs.addProcess.visible = true
+        this.isEdit = true
+      }
 		},
 		async findEventById(idEvent) {
 			const param = { id: idEvent }
 			const response = await eventService.findById(param)
       this.event = response.data
       this.listProcess = response.data.processes
+    },
+    getRole() {
+      const dataUser = JSON.parse(localStorage.getItem('user_detail'))
+      console.log('user nya', dataUser)
+      this.userID = dataUser.id
+			const { role } = dataUser
+			if (role === 'CLIENT') {
+				this.isRequester = true
+			} else if (role === 'STAFF') {
+				this.isStaff = true
+			} else if (role === 'MANAGER') {
+				this.isManager = true
+			} else if (role === 'VP') {
+				this.isVP = true
+			} else if (role === 'DIRECTOR') {
+				this.isDirectors = true
+			}
 		},
 		resetFormProcess() {
 			this.dataModal = {
@@ -381,10 +442,12 @@ export default {
 				name: '',
 				status: 'PENDING',
 				type: 'MAIN'
-			}
+      },
+      this.isEdit = false
 		}
 	},
 	created() {
+    this.getRole()
     this.findEventById(this.$route.params.id)
 	}
 }
