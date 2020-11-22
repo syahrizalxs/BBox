@@ -1,40 +1,61 @@
 <template>
-	<nav class="sideNav">
-		<a class="closeBtn"><img :src="isCollapsible ? require('../assets/sidebar/times.svg') : require('../assets/sidebar/hamburger.svg')" @click.prevent="collapsible()"></a>
-		<div class="links">
-			<router-link to="/"><img class="__icon" :class="$route.name === 'Home' ? 'active' : ''" src="../assets/sidebar/home.svg"></router-link>
-			<router-link to="/archieve"><img class="__icon" :class="$route.name === 'Archieve' || $route.name === 'Detail Archieve' ? 'active' : ''" src="../assets/sidebar/archive.svg"></router-link>
-			<a href="#"><img class="__icon" src="../assets/sidebar/bookmark.svg"></a>
-			<a href="#"><img class="__icon" src="../assets/sidebar/message.svg"></a>
-		</div>
-		<div class="bottom-links">
-			<a href="#"><img src="../assets/sidebar/cog.svg"> <span @click="onLogout()">Logout</span></a>
-			<div class="line"></div>
-			<a href="#"><img src="../assets/sidebar/flag-id.svg"></a>
-		</div>
-	</nav>
+  <nav class="sideNav">
+    <a class="closeBtn"><img
+      :src="isCollapsible ? require('../assets/sidebar/times.svg') : require('../assets/sidebar/hamburger.svg')"
+      @click.prevent="collapsible()"
+    ></a>
+    <div class="links">
+      <router-link to="/">
+        <img
+          class="__icon"
+          :class="$route.name === 'Home' ? 'active' : ''"
+          src="../assets/sidebar/home.svg"
+        >
+      </router-link>
+      <router-link to="/archieve">
+        <img
+          class="__icon"
+          :class="$route.name === 'Archieve' || $route.name === 'Detail Archieve' ? 'active' : ''"
+          src="../assets/sidebar/archive.svg"
+        >
+      </router-link>
+      <a href="#"><img
+        class="__icon"
+        src="../assets/sidebar/bookmark.svg"
+      ></a>
+      <a href="#"><img
+        class="__icon"
+        src="../assets/sidebar/message.svg"
+      ></a>
+    </div>
+    <div class="bottom-links">
+      <a href="#"><img src="../assets/sidebar/cog.svg"> <span @click="onLogout()">Logout</span></a>
+      <div class="line" />
+      <a href="#"><img src="../assets/sidebar/flag-id.svg"></a>
+    </div>
+  </nav>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 
 export default {
-		name: 'sidebar',
-		data: () => ({
-			isCollapsible: false
-		}),
-		methods: {
-			...mapActions('auth', [
-				'logout'
-			]),
-			onLogout () {
-				this.logout()
-			},
-			collapsible () {
-				this.isCollapsible = !this.isCollapsible
-				document.querySelector('.sideNav').style.width = this.isCollapsible ? '300px' : '72px'
-			}
-		}
+	name: 'Sidebar',
+	data: () => ({
+		isCollapsible: false,
+	}),
+	methods: {
+		...mapActions('auth', [
+			'logout',
+		]),
+		onLogout() {
+			this.logout()
+		},
+		collapsible() {
+			this.isCollapsible = !this.isCollapsible
+			document.querySelector('.sideNav').style.width = this.isCollapsible ? '300px' : '72px'
+		},
+	},
 }
 </script>
 
@@ -115,5 +136,6 @@ export default {
 	border-radius: 30%;
 	padding: 6px;
 	margin-left: -6px;
+	transition: .4s;
 }
 </style>

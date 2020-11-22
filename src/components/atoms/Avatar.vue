@@ -1,13 +1,13 @@
 <template>
   <div class="avatar">
-		<img :src="path">
+    <img :src="path">
   </div>
 </template>
 
 <script>
 export default {
-	name: 'avatar',
-	props: ['path']
+	name: 'Avatar',
+	props: ['path'],
 }
 </script>
 

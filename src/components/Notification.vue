@@ -1,13 +1,16 @@
 <template>
   <div class="_notification">
     <span>You have 2 notifications</span>
-    <img src="../assets/icons/bell.svg" alt="">
+    <img
+      src="../assets/icons/bell.svg"
+      alt=""
+    >
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Notification'
+	name: 'Notification',
 }
 </script>
 

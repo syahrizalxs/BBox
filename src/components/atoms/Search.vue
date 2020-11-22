@@ -1,16 +1,25 @@
 <template>
   <div class="search-container">
     <div class="input-container">
-      <input type="text" class="text" placeholder="Type here..">
-      <img src="../../assets/icons/search.svg" aria-hidden="true">
+      <input
+        type="text"
+        class="text"
+        placeholder="Type here.."
+      >
+      <img
+        src="../../assets/icons/search.svg"
+        aria-hidden="true"
+      >
     </div>
-    <button class="button-search">Search</button>
+    <button class="button-search">
+      Search
+    </button>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Search-Component'
+	name: 'SearchComponent',
 }
 </script>
 
@@ -43,7 +52,7 @@ export default {
       letter-spacing: 0.01em;
 
       /* Gray 4 */
-      color: #434343; 
+      color: #434343;
     }
 
     img {

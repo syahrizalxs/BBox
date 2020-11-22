@@ -1,56 +1,81 @@
 <template>
   <div id="container">
-		<div class="_left">
-			<div class="content">
-				<div class="logo-content">
-					<img src="../assets/logo.svg" style="width: 24px;">
-					<span>BBOX</span>
-				</div>
-				<div class="tagline">
-					<span>All documents are stored and monitored on the screen</span>
-				</div>
-				<div class="action">
-					<button><span> More About Us </span></button>
-				</div>
-				<div class="line-group">
-					<div class="line"></div>
-					<img class="twitter-logo" src="../assets/icons/twitter.svg">
-					<img class="facebook-logo" src="../assets/icons/facebook.svg">
-				</div>
-			</div>
-		</div>
-		<div class="_right">
-			<div class="form">
-				<div class="headline">
-					<img src="../assets/logo.svg">
-					<img src="../assets/bbox-text.svg">
-				</div>
-				<div class="form-input">
-					<span style="margin-bottom: 20px;">Sign in to your Account</span>
-					<div class="input-container">
-						<input v-model="email" type="email" class="email" placeholder="Your Email">
-						<img src="../assets/icons/email.svg" aria-hidden="true">
-					</div>
-					<div class="input-container" style="margin-top: 24px">
-						<input v-model="password" :type="isShownPassword ? 'text' : 'password'" class="password" placeholder="Your Password">
-						<img src="../assets/icons/password.svg">
-						<img class="eye" src="../assets/icons/eye.svg" @click="isShownPassword = !isShownPassword">
-					</div>
-					<button @click="onLogin()">SIGN IN</button>
-					<span v-if="loginError" class="error-message">{{loginErrorMessage}}</span>
-					<!-- <span class="atau">ATAU</span>
-					<a class="google-btn" @click="redirectGoogle">
-						<div class="button-container">
-							<img :src="require('../assets/icons/flat-google.svg')">
-							<span class="google-text">
-								Masuk dengan Google
-							</span>
-						</div>
-					</a> -->
-				</div>
-			</div>
-		</div>
-	</div>
+    <div class="_left">
+      <div class="content">
+        <div class="logo-content">
+          <img
+            src="../assets/logo.svg"
+            style="width: 24px;"
+          >
+          <span>BBOX</span>
+        </div>
+        <div class="tagline">
+          <span>All documents are stored and monitored on the screen</span>
+        </div>
+        <div class="action">
+          <button><span> More About Us </span></button>
+        </div>
+        <div class="line-group">
+          <div class="line" />
+          <img
+            class="twitter-logo"
+            src="../assets/icons/twitter.svg"
+          >
+          <img
+            class="facebook-logo"
+            src="../assets/icons/facebook.svg"
+          >
+        </div>
+      </div>
+    </div>
+    <div class="_right">
+      <div class="form">
+        <div class="headline">
+          <img src="../assets/logo.svg">
+          <img src="../assets/bbox-text.svg">
+        </div>
+        <div class="form-input">
+          <span style="margin-bottom: 20px;">Sign in to your Account</span>
+          <div class="input-container">
+            <input
+              v-model="email"
+              type="email"
+              class="email"
+              placeholder="Your Email"
+            >
+            <img
+              src="../assets/icons/email.svg"
+              aria-hidden="true"
+            >
+          </div>
+          <div
+            class="input-container"
+            style="margin-top: 24px"
+          >
+            <input
+              v-model="password"
+              :type="isShownPassword ? 'text' : 'password'"
+              class="password"
+              placeholder="Your Password"
+            >
+            <img src="../assets/icons/password.svg">
+            <img
+              class="eye"
+              src="../assets/icons/eye.svg"
+              @click="isShownPassword = !isShownPassword"
+            >
+          </div>
+          <button @click="onLogin()">
+            SIGN IN
+          </button>
+          <span
+            v-if="loginError"
+            class="error-message"
+          >{{ loginErrorMessage }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -63,25 +88,25 @@ export default {
 		password: '',
 		isShownPassword: false,
 		loginError: false,
-		loginErrorMessage: ''
+		loginErrorMessage: '',
 	}),
 	methods: {
 		...mapActions('auth', [
-			'login'
+			'login',
 		]),
-		redirectGoogle () {
+		redirectGoogle() {
 			window.location.replace(process.env.VUE_APP_GOOGLE_AUTH)
 		},
-		onLogin () {
+		onLogin() {
 			this.login({ email: this.email, password: this.password, fcm: '' })
-			.then(res => {
-				if (!res.success) {
-					this.loginError = true
-					this.loginErrorMessage = res.message
-				}
-			})
-		}
-	}
+				.then((res) => {
+					if (!res.success) {
+						this.loginError = true
+						this.loginErrorMessage = res.message
+					}
+				})
+		},
+	},
 }
 </script>
 
@@ -108,7 +133,7 @@ export default {
 			align-self: center;
 			margin: 0 !important;
 			padding-right: 9px;
-		} 
+		}
 		.google-text {
 			padding-top: 7.3px;
 			font-weight: bold;
@@ -233,7 +258,7 @@ export default {
 				margin-left: 63px;
 				margin-top: 6px;
 			}
-			
+
 			.twitter-logo {
 				margin-left: 15.69px;
 			}
@@ -316,7 +341,7 @@ export default {
 				cursor: pointer;
 			}
 		}
-		
+
 		button {
 			margin-top: 24px;
 			width: 368px;

@@ -1,23 +1,27 @@
 <template>
   <v-app>
-    <Loading v-if="isLoading" ref="loader" />
+    <Loading
+      v-if="isLoading"
+      ref="loader"
+    />
     <router-view />
   </v-app>
 </template>
 
 <script>
 import Loading from './components/Loading'
+
 export default {
-  name: 'App',
+	name: 'App',
 
-  components: {
-    Loading
-  },
+	components: {
+		Loading,
+	},
 
-  data: () => ({
-    isLoading: false
-  }),
-};
+	data: () => ({
+		isLoading: false,
+	}),
+}
 </script>
 
 <style lang="scss">

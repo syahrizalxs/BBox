@@ -3,20 +3,24 @@
     <header class="card-header">
       <ul class="tab-heads">
         <li
-          class="tab-head"
           v-for="tab in tabs"
           :key="tab"
-          v-bind:class="{
+          class="tab-head"
+          :class="{
             'tab-head--active': activeTab === tab
           }"
-          v-on:click="switchTab(tab);"
+          @click="switchTab(tab);"
         >
-          <slot :name="tabHeadSlotName(tab)">{{ tab }} </slot>
+          <slot :name="tabHeadSlotName(tab)">
+            {{ tab }}
+          </slot>
         </li>
       </ul>
     </header>
     <main class="card-body">
-      <div class="tab-panel"><slot :name="tabPanelSlotName"> </slot></div>
+      <div class="tab-panel">
+        <slot :name="tabPanelSlotName" />
+      </div>
     </main>
   </div>
 </template>
@@ -24,30 +28,30 @@
 <script>
 
 export default {
-  props: {
-    initialTab: String,
-    tabs: Array
-  },
-  data() {
-    return {
-      activeTab: this.initialTab
-    };
-  },
-  computed: {
-    tabPanelSlotName() {
-      return `tab-panel-${this.activeTab}`;
-    }
-  },
-  methods: {
-    tabHeadSlotName(tabName) {
-      return `tab-head-${tabName}`;
-    },
+	props: {
+		initialTab: String,
+		tabs: Array,
+	},
+	data() {
+		return {
+			activeTab: this.initialTab,
+		}
+	},
+	computed: {
+		tabPanelSlotName() {
+			return `tab-panel-${this.activeTab}`
+		},
+	},
+	methods: {
+		tabHeadSlotName(tabName) {
+			return `tab-head-${tabName}`
+		},
 
-    switchTab(tabName) {
-      this.activeTab = tabName;
-    }
-  }
-};
+		switchTab(tabName) {
+			this.activeTab = tabName
+		},
+	},
+}
 </script>
 
 <style scoped>

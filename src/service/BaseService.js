@@ -2,17 +2,17 @@
  * @typedef {Service}
  */
 export default class BaseService {
-  /**
+	/**
    * @param {*} options
    */
-  constructor (options) {
-    this.options = options
-  }
+	constructor(options) {
+		this.options = options
+	}
 
-  /**
+	/**
    * @param {*} options
    */
-  static build (options) {
-    return new this(options)
-  }
+	static build(options) {
+		return new this(options)
+	}
 }

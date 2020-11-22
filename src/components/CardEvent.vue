@@ -1,15 +1,25 @@
 <template>
-  <div class="card-event" @click="handleClick($event)">
+  <div
+    class="card-event"
+    @click="handleClick($event)"
+  >
     <div class="_left-side">
-      <img v-if="starred" src="../assets/icons/star.svg" alt="">
-      <span>{{title}}</span>
+      <img
+        v-if="starred"
+        src="../assets/icons/star.svg"
+        alt=""
+      >
+      <span>{{ title }}</span>
     </div>
     <div class="_right-side">
       <span :class="statusStyle">{{ status | convertStatus }}</span>
       <div class="_dropdown">
-        <img class="pointer" src="../assets/icons/more.svg">
+        <img
+          class="pointer"
+          src="../assets/icons/more.svg"
+        >
         <div class="_dropdown-content">
-          <slot name="dropdown"></slot>
+          <slot name="dropdown" />
         </div>
       </div>
     </div>
@@ -18,42 +28,43 @@
 
 <script>
 import { convertStatus } from '../commons/utils/filter'
+
 export default {
-  name: 'CardEvent',
-  filters: {
-    convertStatus
-  },
-  props: ['title', 'status', 'starred', 'data'],
-  computed: {
-    statusStyle () {
-      let status = ''
-      if (this.currentStatus === 'DRAFT') {
-        status = 'draft'
-      } else if (this.currentStatus === 'REQUESTED') {
-        status = 'requested'
-      } else if (this.currentStatus === 'ACCEPTED_MANAGER' || this.currentStatus === 'ACCEPTED_VP' || this.currentStatus === 'ACCEPTED_DIREKSI') {
-        status = 'accepted'
-      } else if (this.currentStatus === 'REJECTED_MANAGER' || this.currentStatus === 'REJECTED_VP' || this.currentStatus === 'REJECTED_DIREKSI') {
-        status = 'rejected'
-      } else if (this.currentStatus === 'ON_PROGRESS') {
-        status = 'on-progress'
-      } else if (this.currentStatus === 'COMPLETED') {
-        status = 'completed'
-      } else if (this.currentStatus === 'APPROVED_MANAGER' || this.currentStatus === 'APPROVED_VP') {
-        status = 'approved'
-      } else if (this.currentStatus === 'DISAPPROVED_MANAGER' || this.currentStatus === 'DISAPPROVED_VP' || this.currentStatus === 'DISAPPROVED_DIREKSI') {
-        status = 'disapproved'
-      } else if (this.currentStatus === 'FINISHED') {
-        status = 'finished'
-      }
-      return status
-    }
-  },
-  methods: {
-    handleClick () {
-      this.$emit('click', this.data)
-    }
-  }
+	name: 'CardEvent',
+	filters: {
+		convertStatus,
+	},
+	props: ['title', 'status', 'starred', 'data'],
+	computed: {
+		statusStyle() {
+			let status = ''
+			if (this.status === 'DRAFT') {
+				status = 'draft'
+			} else if (this.status === 'REQUESTED') {
+				status = 'requested'
+			} else if (this.status === 'ACCEPTED_MANAGER' || this.status === 'ACCEPTED_VP' || this.status === 'ACCEPTED_DIRECTOR') {
+				status = 'accepted'
+			} else if (this.status === 'REJECTED_MANAGER' || this.status === 'REJECTED_VP' || this.status === 'REJECTED_DIRECTOR') {
+				status = 'rejected'
+			} else if (this.status === 'ON_PROGRESS') {
+				status = 'on-progress'
+			} else if (this.status === 'COMPLETED') {
+				status = 'completed'
+			} else if (this.status === 'APPROVED_MANAGER' || this.status === 'APPROVED_VP') {
+				status = 'approved'
+			} else if (this.status === 'DISAPPROVED_MANAGER' || this.status === 'DISAPPROVED_VP' || this.status === 'DISAPPROVED_DIRECTOR') {
+				status = 'disapproved'
+			} else if (this.status === 'FINISHED') {
+				status = 'finished'
+			}
+			return status
+		},
+	},
+	methods: {
+		handleClick() {
+			this.$emit('click', this.data)
+		},
+	},
 }
 </script>
 
@@ -70,15 +81,17 @@ export default {
     padding: 9px 15px;
 
     &:hover {
-      border: 3px solid #0378b8;
+      border: 2px solid #0378b8;
       cursor: pointer;
+      transition: .1s;
     }
 
     &.active {
       border: 3px solid #0075b4;
       cursor: pointer;
       background-color: rgba(253, 253, 253, 0.644);
-      box-shadow: 2px 4px rgba(0,0,0,0.2);
+      box-shadow: 2px 4px rgba(0, 0, 0, 0.097);
+      transition: .3s;
     }
     ._left-side {
       display: flex;
@@ -148,10 +161,10 @@ export default {
 
   ._dropdown {
     position: relative;
-    display: flex; 
+    display: flex;
     &:hover ._dropdown-content {
       display: flex;
-    }  
+    }
     ._dropdown-content {
       display: none;
       flex-direction: column;

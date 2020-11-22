@@ -1,6 +1,6 @@
 <template>
   <div id="home">
-    <Loading v-if="isLoading"/>
+    <Loading v-if="isLoading" />
     <Sidebar />
     <div class="main-content">
       <router-view />
@@ -11,17 +11,18 @@
 <script>
 import Sidebar from '@/components/Sidebar'
 import Loading from '@/components/Loading'
-  export default {
-    name: 'Home',
-    components: {
-      Sidebar,
-      Loading
-    },
-    data: () => ({ 
-      drawer: null,
-      isLoading: false
-    }),
-  }
+
+export default {
+	name: 'Home',
+	components: {
+		Sidebar,
+		Loading,
+	},
+	data: () => ({
+		drawer: null,
+		isLoading: false,
+	}),
+}
 </script>
 
 <style lang="scss" scoped>
