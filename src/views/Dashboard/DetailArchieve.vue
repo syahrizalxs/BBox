@@ -33,32 +33,12 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>Minutes of Meeting dengan Brightspace</td>
-							<td><span class="label-table-sub-process">Sub Process</span></td>
-							<td>Sep 27, 2020 at 1:29 PM</td>
-							<td><img src="../../assets/icons/more.svg" /></td>
-						</tr>
-						<tr class="active-row">
-							<td>Minutes of Meeting dengan Brightspace</td>
-							<td><span class="label-table-sub-process">Sub Process</span></td>
-							<td>Sep 27, 2020 at 1:29 PM</td>
-							<td><img src="../../assets/icons/more.svg" /></td>
-						</tr>
-						<tr>
-							<td>Minutes of Meeting dengan Brightspace</td>
-							<td>
-								<span class="label-table-main-process">Main Process</span>
-							</td>
-							<td>Sep 27, 2020 at 1:29 PM</td>
-							<td><img src="../../assets/icons/more.svg" /></td>
-						</tr>
-						<tr>
-							<td>Minutes of Meeting dengan Brightspace</td>
-							<td><span class="label-table-sub-process">Sub Process</span></td>
-							<td>Sep 27, 2020 at 1:29 PM</td>
-							<td><img src="../../assets/icons/more.svg" /></td>
-						</tr>
+            <tr v-for="(item, index) in listProcess" :key="index">
+              <td>{{ item.name }}</td>
+              <td><span :class="item.type === 'MAIN'? 'label-table-main-process' : 'label-table-sub-process'">{{ item.type === 'MAIN'? 'Main Process' : 'Sub Process' }}</span></td>
+              <td>{{ item.modifiedDate | convertDate }}</td>
+              <td><img src="../../assets/icons/more.svg" /></td>
+            </tr>
 					</tbody>
 				</table>
 			</div>
@@ -344,7 +324,8 @@ export default {
 			type: 'MAIN'
 		},
 		fileHolder: [],
-		event: {}
+    event: {},
+    listProcess: []
 	}),
 	computed: {
 		starred() {
@@ -389,7 +370,8 @@ export default {
 		async findEventById(idEvent) {
 			const param = { id: idEvent }
 			const response = await eventService.findById(param)
-			this.event = response.data
+      this.event = response.data
+      this.listProcess = response.data.processes
 		},
 		resetFormProcess() {
 			this.dataModal = {
@@ -403,7 +385,7 @@ export default {
 		}
 	},
 	created() {
-		this.findEventById(this.$route.params.id)
+    this.findEventById(this.$route.params.id)
 	}
 }
 </script>
