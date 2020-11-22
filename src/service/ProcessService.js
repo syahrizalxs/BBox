@@ -12,4 +12,9 @@ export default class ProcessService extends HttpService {
   	const api = `${this.api}/add`
   	return this.post(param, api)
   }
+
+  editProcess(param) {
+  	const api = `${this.api}/edit`
+  	return this.post(param, api)
+  }
 }

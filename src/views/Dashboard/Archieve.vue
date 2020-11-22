@@ -1790,8 +1790,8 @@ export default {
 			} else if (role === 'DIRECTOR') {
 				this.isDirectors = true
 			}
-		},
-	},
+		}
+	}
 }
 </script>
 
