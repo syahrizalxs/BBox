@@ -9,7 +9,7 @@ export default class EventService extends HttpService {
   }
 
   findById(param) {
-    const api = `${this.api}/find-by-id`
+    const api = `${this.api}/get`
     return this.get(param, api)
   }
 
