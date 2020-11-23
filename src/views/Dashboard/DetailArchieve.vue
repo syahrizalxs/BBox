@@ -15,7 +15,7 @@
 						title="Tambah Proses"
 						style="margin-left: 16px; width: 132px; height: 39px"
 						type="primary"
-						@click="$refs.addProcess.visible = true"
+						@click="addData()"
 					>
 						<template slot="icon">
 							<img src="../../assets/icons/button/plus-white.svg" />
@@ -41,6 +41,7 @@
               <td>{{ item.status }}</td>
               <td>{{ item.modifiedDate | convertDate }}</td>
               <td><img @click="editData(item)" src="../../assets/icons/more.svg" /></td>
+              <!-- <td><More :options="action"/></td> -->
             </tr>
 					</tbody>
 				</table>
@@ -289,6 +290,7 @@ import Button from '../../components/atoms/Button'
 // import CardEvent from '../../components/CardEvent'
 import Avatar from '../../components/atoms/Avatar'
 import Upload from '../../components/atoms/Upload'
+// import More from '../../components/atoms/More'
 
 import ProcessService from '../../service/ProcessService'
 import UploadService from '../../service/UploadService'
@@ -316,7 +318,8 @@ export default {
 		Avatar,
 		Tab,
 		Timeline,
-		Upload
+    Upload,
+    // More
 	},
 	data: () => ({
     userID: '',
@@ -339,7 +342,10 @@ export default {
 		fileHolder: [],
     event: {},
     listProcess: [],
-    isEdit: false
+    isEdit: false,
+    // action: [
+    //   { title: 'Edit Data', function: 'editData(item)'}
+    // ]
 	}),
 	computed: {
 		starred() {
@@ -397,6 +403,10 @@ export default {
           this.findEventById(this.$route.params.id)
         }
       }
+    },
+    addData () {
+      this.resetFormProcess()
+      this.$refs.addProcess.visible = true
     },
     editData(data) {
 			this.dataModal.description = data.description
